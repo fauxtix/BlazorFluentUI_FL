@@ -1,0 +1,208 @@
+﻿@page "/"
+@using EdamanFluentApi.Model
+@using EdamanFluentApi.Services
+@using System.Collections.ObjectModel
+@using EdamanFluentApi.Components.CustomComponents
+
+@inject IToastService ToastService
+
+@rendermode InteractiveServer
+<PageTitle>Edaman Recipes</PageTitle>
+
+<div class="d-flex gap-2">
+    <FluentSearch @ref=searchQuery
+                  @bind-Value="SearchValue"
+                  @bind-Value:after="HandleClear"
+                  @oninput="@(e => SearchValue = e.Value?.ToString())"
+                  Placeholder="Search for name" />
+    <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" @onclick="OnSearch">Pesquisar</FluentButton>
+</div>
+<div hidden="@(!errorVisibility)">
+    <FluentMessageBar Title="Pesquisa" Intent="@MessageIntent.Warning">Sem registos para mostrar</FluentMessageBar>
+</div>
+
+<div hidden="@(!isLoading)">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <FluentSkeleton Width="500px" Height="250px" Pattern="https://static.fast.design/assets/skeleton-test-pattern.svg" Shimmer="true"></FluentSkeleton>
+        <FluentSkeleton Width="500px" Height="250px" Pattern="https://static.fast.design/assets/skeleton-test-pattern.svg" Shimmer="true"></FluentSkeleton>
+    </div>
+    <div class="d-flex justify-content-center align-items-start" style="height: 100vh;">
+        <Spinner IsVisible="@isLoading" />
+    </div>
+</div>
+
+
+<div class="card-container mt-2">
+    @foreach (var recipe in recipes)
+    {
+        <FluentCard Data="@recipe" class="fluent-card" Width="100%" Height="auto">
+            <ChildContent>
+                <div style="font-weight:bold; font-size:large">@recipe.Label</div>
+                <hr />
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
+                        <div class="preparation-link mt-2">
+                            <a href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
+                        </div>
+                    </div>
+                    <div class="recipe-details">
+                        <div class="card" style="font-weight:bold; font-size:large;">
+                            Ingredients
+                        </div>
+                        <div class="ingredient-list">
+                            <ul class="list-group list-group-flush">
+                                @foreach (string ingredient in recipe.IngredientLines)
+                                {
+                                    <li class="list-group-item">@ingredient</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </FluentCard>
+    }
+</div>
+
+@code {
+    [Inject] public IRecipesService? recipeService { get; set; }
+    protected ObservableCollection<Recipe> recipes = new();
+    protected string recipeUrl = string.Empty;
+    protected string? SelectedItem { get; set; }
+    protected FluentSearch searchQuery;
+    private string searchValue = string.Empty;
+    protected bool errorVisibility = false;
+    protected bool isLoading = false;
+
+    private string SearchValue
+    {
+        get => searchValue;
+        set
+        {
+            if (value != searchValue)
+            {
+                searchValue = value;
+            }
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        recipes = new();
+    }
+
+    protected async void OnSearch(MouseEventArgs args)
+    {
+        errorVisibility = false;
+        recipes.Clear();
+        recipes = await GetRecipes(SearchValue);
+        if (recipes.Count == 0)
+        {
+            errorVisibility = true;
+            ShowToast($"No records found for {SearchValue}");
+        }
+        StateHasChanged();
+    }
+
+    protected async Task<ObservableCollection<Recipe>> GetRecipes(string query)
+    {
+        isLoading = true;
+        var output = await recipeService.SearchRecipes(query, "", "");
+        isLoading = false;
+        return output;
+    }
+
+    private void ShowToast(string message)
+    {
+        ToastService.ShowWarning(message);
+    }
+    private void HandleClear()
+    {
+        if (string.IsNullOrWhiteSpace(SearchValue))
+            return;
+
+        SearchValue = string.Empty;
+        StateHasChanged();
+    }
+}
+<style>
+    /* Define the layout for the card container */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .fluent-card {
+        flex: 1 1 auto; /* Let flexbox handle the sizing */
+        max-width: calc(33.33% - 10px); /* 3 cards per row on large screens */
+        min-width: 300px; /* Set a minimum width for the card */
+    }
+    /* Adjust the styles for medium screens */
+    @@media (max-width: 1199.98px) {
+        .fluent-card {
+            flex-basis: calc(50% - 10px); /* 2 cards per row on medium screens */
+            max-width: calc(50% - 10px); /* 2 cards per row on medium screens */
+        }
+    }
+
+    /* Adjust the styles for small screens */
+    @@media (max-width: 767px) {
+        .fluent-card {
+            flex-basis: calc(100% - 10px); /* 1 card per row on small screens */
+            max-width: calc(100% - 10px); /* 1 card per row on small screens */
+        }
+    }
+
+    /* Adjust the styles for when there's only one card to display on medium screens */
+    @@media (max-width: 1199.98px) {
+        .card-container > .fluent-card:nth-child(2):only-child {
+            flex-basis: calc(100% - 10px); /* 1 card per row */
+            max-width: calc(100% - 10px); /* 1 card per row */
+        }
+    }
+
+    .recipe-image {
+        flex: 0 0 30%; /* Set the width of the image to 30% */
+        align-self: flex-start; /* Align the image to the start of its container (top) */
+    }
+
+        .recipe-image img {
+            width: 100%;
+            height: auto;
+            border: 2px solid #ffffff; /* Add a border */
+            border-radius: 10px; /* Add rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth transitions */
+        }
+
+            .recipe-image img:hover {
+                transform: translateY(-2px) rotate(-2deg) scale(1.05); /* Apply a slight lift, tilt left, and scale increase on hover */
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
+            }
+
+                .recipe-image img:hover:hover {
+                    transform: translateY(-2px) rotate(2deg) scale(1.05); /* Tilt right on second hover */
+                }
+
+    /* Adjust the layout for recipe content */
+    .recipe-content {
+        display: flex; /* Use flexbox for layout */
+        flex-direction: row; /* Arrange items horizontally */
+        align-items: center; /* Align items vertically */
+        gap: 10px; /* Add space between items */
+        width: 100%; /* Ensure content fills the available space */
+    }
+
+    /* Adjust the layout for recipe details */
+    .recipe-details {
+        flex: 1 1 auto; /* Allow details to flexibly grow */
+    }
+
+    .ingredient-list {
+        max-height: 300px; /* Set the maximum height for the ingredient list */
+        overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+    }
+
+</style>
