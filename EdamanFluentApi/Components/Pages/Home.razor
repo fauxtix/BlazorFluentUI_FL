@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+
 @rendermode InteractiveServer
 <PageTitle>Edaman Recipes</PageTitle>
 
@@ -8,8 +9,9 @@
                   @bind-Value="SearchValue"
                   @bind-Value:after="HandleClear"
                   @oninput="@(e => SearchValue = e.Value?.ToString())"
+                  Size="60" Appearance="FluentInputAppearance.Outline" Spellcheck=false
                   Placeholder="Search recipe" />
-    <FluentButton IconStart="@(new Icons.Regular.Size16.Search())"
+    <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
                   @onclick="OnSearch">
         Search
     </FluentButton>
@@ -17,9 +19,6 @@
 
 <div hidden="@(!isLoading)">
     <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <FluentSkeleton Width="500px" Height="250px" Pattern="https://static.fast.design/assets/skeleton-test-pattern.svg" Shimmer="true"></FluentSkeleton>
-    </div>
-    <div class="d-flex justify-content-center align-items-start" style="height: 100vh;">
         <Spinner IsVisible="@isLoading" />
     </div>
 </div>
@@ -35,30 +34,51 @@
                 <div class="recipe-content">
                     <div class="recipe-image">
                         <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
-                        <div>
-                            <h6>Cook time</h6>
-                            <FluentBadge Appearance="Appearance.Accent">@recipe.Yield</FluentBadge>
+                        <div class="mt-1 mb-2">
+                            <div class="d-flex justify-content-start align-items-center gap-1 mb-1">
+                                <small>Servings</small><FluentEmoji  Value="@(new Emojis.PeopleBody.Color.Default.Man())" /><FluentEmoji Value="@(new Emojis.PeopleBody.Color.Default.Woman())" />
+                                <FluentBadge Appearance="Appearance.Accent">@recipe.Yield</FluentBadge>
+                            </div>
+
                             @if (recipe.Cautions.Length > 0)
                             {
-                                <h6>Cautions</h6>
-                                @foreach (var cautionMsg in recipe.Cautions)
-                                {
-                                    <FluentBadge Circular=true Appearance="Appearance.Accent">@cautionMsg</FluentBadge>
-                                }
+                                <div class="row">
+                                    <div class="col-lg-3"><small>Cautions</small></div>
+                                    <div class="d-flex gap-1 col-lg-9" style="flex-wrap:wrap">
+                                        @foreach (var cautionMsg in recipe.Cautions)
+                                        {
+                                            <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="red" Color="white">@cautionMsg</FluentBadge>
+                                        }
+                                    </div>
+                                </div>
                             }
-                            <h6>Source</h6>
-                            <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">@recipe.Source</FluentBadge>
+                            <div class="row my-1">
+                                <div class="col-lg-3"><small>Source</small></div>
+                                <div class="col-lg-9">
+                                    <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">@recipe.Source</FluentBadge>
+                                </div>
+                            </div>
 
                             @if (recipe.TotalTime > 0)
                             {
-                                <h6>Cook time</h6>
-                                <FluentBadge Appearance="Appearance.Neutral" Fill="lowlight" BackgroundColor="#000;" Color="#fff">@recipe.TotalTime</FluentBadge>
+                                <div class="row my-1">
+                                    <div class="col-lg-3"><small>Cook</small></div>
+                                    <div class="col-lg-9">
+                                        <FluentBadge Appearance="Appearance.Neutral" Fill="lowlight" BackgroundColor="#000;" Color="#fff">@recipe.TotalTime</FluentBadge>
+                                        <span> min.</span>
+                                    </div>
+                                </div>
                             }
-                            <h6>Calories</h6>
-                            <FluentBadge Appearance="Appearance.Accent">@recipe.Calories.ToString("0.##")</FluentBadge>
+                            <div class="row my-1">
+                                <div class="col-lg-3"><small>Calories</small></div>
+                                <div class="col-lg-9">
+                                    <FluentBadge Appearance="Appearance.Accent">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
+                                </div>
+                            </div>
                         </div>
-                        <div class="preparation-link mt-2">
-                            <a href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
+                        <div class="preparation-link mt-2 text-center">
+                            <hr />
+                            <a class="btn btn-outline-success" href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
                         </div>
                     </div>
                     <div class="recipe-details">
@@ -119,7 +139,7 @@
     }
 
     .recipe-image {
-        flex: 0 0 30%; /* Set the width of the image to 30% */
+        flex: 0 0 40%; /* Set the width of the image to 30% */
         align-self: flex-start; /* Align the image to the start of its container (top) */
     }
 
@@ -145,7 +165,7 @@
     .recipe-content {
         display: flex; /* Use flexbox for layout */
         flex-direction: row; /* Arrange items horizontally */
-        align-items:center;
+        align-items: center;
         gap: 10px; /* Add space between items */
         width: 100%; /* Ensure content fills the available space */
     }

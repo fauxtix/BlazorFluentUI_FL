@@ -9,7 +9,9 @@ namespace EdamanFluentApi.Components.Pages
 {
     public partial class Home
     {
-        [Inject] public IRecipesService? recipeService { get; set; }
+        [Inject] public IRecipesService recipeService { get; set; }
+        [Inject] public ILogger<App> Logger { get; set; }
+
         protected ObservableCollection<Recipe> recipes = new();
         protected string recipeUrl = string.Empty;
         protected string? SelectedItem { get; set; }
@@ -37,20 +39,38 @@ namespace EdamanFluentApi.Components.Pages
         protected async void OnSearch(MouseEventArgs args)
         {
             recipes.Clear();
-            recipes = await GetRecipes(SearchValue);
-            if (recipes.Count == 0)
+            try
             {
-                ShowToast($"No records found for {SearchValue}");
+                recipes = await GetRecipes(SearchValue);
+                if (recipes is null || recipes.Count == 0)
+                {
+                    ShowToast($"No records found for {SearchValue}");
+                }
+                StateHasChanged();
             }
-            StateHasChanged();
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.Message, ex);
+                ShowToast(ex.Message);
+            }
         }
 
         protected async Task<ObservableCollection<Recipe>> GetRecipes(string query)
         {
-            isLoading = true;
-            var output = await recipeService.SearchRecipes(query, "", "");
-            isLoading = false;
-            return output;
+            try
+            {
+                isLoading = true;
+                var output = await recipeService.SearchRecipes(query, "", "");
+                isLoading = false;
+                return output;
+
+            }
+            catch (Exception ex) 
+            {
+                Logger.LogError(ex.Message, ex);
+                ShowToast(ex.Message);
+                return [];
+            }
         }
 
         private void ShowToast(string message)
