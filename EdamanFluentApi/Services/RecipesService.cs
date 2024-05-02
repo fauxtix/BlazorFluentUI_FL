@@ -10,7 +10,7 @@ namespace EdamanFluentApi.Services
         const string BaseURL = "https://api.edamam.com/api/recipes/v2";
         const string APP_ID = "8aa2358e";
         const string API_KEY = "0130404d401d25aef31206a71a985fee";
-        public ObservableCollection<Recipe> recipes;
+        protected ObservableCollection<Recipe> recipes;
 
         private readonly HttpClient _httpClient;
         public RecipesService(HttpClient httpClient)
@@ -32,22 +32,24 @@ namespace EdamanFluentApi.Services
             try
             {
                 string search = "";
+                const string fromLimit = "0";
+                const string toLimit = "25";
 
                 if (diet.Equals("") && allergie.Equals(""))
                 {
-                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}";
+                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
                 }
                 else
                 {
                     if (!diet.Equals("") && !allergie.Equals(""))
                     {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}";
+                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
                     }
                     else if (!diet.Equals(""))
                     {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}";
+                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
                     }
-                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}";
+                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
                 }
 
                 var response = await BaseClient.GetAsync(string.Format(search, API_KEY,

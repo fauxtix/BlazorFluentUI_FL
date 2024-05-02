@@ -1,10 +1,4 @@
 ﻿@page "/"
-@using EdamanFluentApi.Model
-@using EdamanFluentApi.Services
-@using System.Collections.ObjectModel
-@using EdamanFluentApi.Components.CustomComponents
-
-@inject IToastService ToastService
 
 @rendermode InteractiveServer
 <PageTitle>Edaman Recipes</PageTitle>
@@ -14,16 +8,15 @@
                   @bind-Value="SearchValue"
                   @bind-Value:after="HandleClear"
                   @oninput="@(e => SearchValue = e.Value?.ToString())"
-                  Placeholder="Search for name" />
-    <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" @onclick="OnSearch">Pesquisar</FluentButton>
-</div>
-<div hidden="@(!errorVisibility)">
-    <FluentMessageBar Title="Pesquisa" Intent="@MessageIntent.Warning">Sem registos para mostrar</FluentMessageBar>
+                  Placeholder="Search recipe" />
+    <FluentButton IconStart="@(new Icons.Regular.Size16.Search())"
+                  @onclick="OnSearch">
+        Search
+    </FluentButton>
 </div>
 
 <div hidden="@(!isLoading)">
     <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <FluentSkeleton Width="500px" Height="250px" Pattern="https://static.fast.design/assets/skeleton-test-pattern.svg" Shimmer="true"></FluentSkeleton>
         <FluentSkeleton Width="500px" Height="250px" Pattern="https://static.fast.design/assets/skeleton-test-pattern.svg" Shimmer="true"></FluentSkeleton>
     </div>
     <div class="d-flex justify-content-center align-items-start" style="height: 100vh;">
@@ -42,6 +35,24 @@
                 <div class="recipe-content">
                     <div class="recipe-image">
                         <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
+                        <div>
+                            <FluentBadge Appearance="Appearance.Accent">@recipe.Yield</FluentBadge>
+                            @if (recipe.Cautions.Length > 0)
+                            {
+                                <h5>Cautions</h5>
+                                @foreach (var cautionMsg in recipe.Cautions)
+                                {
+                                     <FluentBadge Appearance="Appearance.Stealth">@cautionMsg</FluentBadge>
+                                }
+                            }
+                            <h6>Source: </h6><FluentBadge Appearance="Appearance.Outline">@recipe.Source</FluentBadge>
+                            
+                            @if(recipe.TotalTime > 0)
+                            {
+                                <h6>Cook time: </h6> <FluentBadge Appearance="Appearance.Lightweight">@recipe.TotalTime</FluentBadge>
+                            }
+                            <h6>Calories: </h6><FluentBadge Appearance="Appearance.Filled">@recipe.Calories.ToString("0.##")</FluentBadge>
+                        </div>
                         <div class="preparation-link mt-2">
                             <a href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
                         </div>
@@ -65,67 +76,7 @@
     }
 </div>
 
-@code {
-    [Inject] public IRecipesService? recipeService { get; set; }
-    protected ObservableCollection<Recipe> recipes = new();
-    protected string recipeUrl = string.Empty;
-    protected string? SelectedItem { get; set; }
-    protected FluentSearch searchQuery;
-    private string searchValue = string.Empty;
-    protected bool errorVisibility = false;
-    protected bool isLoading = false;
 
-    private string SearchValue
-    {
-        get => searchValue;
-        set
-        {
-            if (value != searchValue)
-            {
-                searchValue = value;
-            }
-        }
-    }
-
-    protected override void OnInitialized()
-    {
-        recipes = new();
-    }
-
-    protected async void OnSearch(MouseEventArgs args)
-    {
-        errorVisibility = false;
-        recipes.Clear();
-        recipes = await GetRecipes(SearchValue);
-        if (recipes.Count == 0)
-        {
-            errorVisibility = true;
-            ShowToast($"No records found for {SearchValue}");
-        }
-        StateHasChanged();
-    }
-
-    protected async Task<ObservableCollection<Recipe>> GetRecipes(string query)
-    {
-        isLoading = true;
-        var output = await recipeService.SearchRecipes(query, "", "");
-        isLoading = false;
-        return output;
-    }
-
-    private void ShowToast(string message)
-    {
-        ToastService.ShowWarning(message);
-    }
-    private void HandleClear()
-    {
-        if (string.IsNullOrWhiteSpace(SearchValue))
-            return;
-
-        SearchValue = string.Empty;
-        StateHasChanged();
-    }
-}
 <style>
     /* Define the layout for the card container */
     .card-container {
