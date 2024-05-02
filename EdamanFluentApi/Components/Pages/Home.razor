@@ -30,28 +30,32 @@
     {
         <FluentCard Data="@recipe" class="fluent-card" Width="100%" Height="auto">
             <ChildContent>
-                <div style="font-weight:bold; font-size:large">@recipe.Label</div>
+                <div style="font-weight:bold; font-size:large;">@recipe.Label</div>
                 <hr />
                 <div class="recipe-content">
                     <div class="recipe-image">
                         <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
                         <div>
+                            <h6>Cook time</h6>
                             <FluentBadge Appearance="Appearance.Accent">@recipe.Yield</FluentBadge>
                             @if (recipe.Cautions.Length > 0)
                             {
-                                <h5>Cautions</h5>
+                                <h6>Cautions</h6>
                                 @foreach (var cautionMsg in recipe.Cautions)
                                 {
-                                     <FluentBadge Appearance="Appearance.Stealth">@cautionMsg</FluentBadge>
+                                    <FluentBadge Circular=true Appearance="Appearance.Accent">@cautionMsg</FluentBadge>
                                 }
                             }
-                            <h6>Source: </h6><FluentBadge Appearance="Appearance.Outline">@recipe.Source</FluentBadge>
-                            
-                            @if(recipe.TotalTime > 0)
+                            <h6>Source</h6>
+                            <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">@recipe.Source</FluentBadge>
+
+                            @if (recipe.TotalTime > 0)
                             {
-                                <h6>Cook time: </h6> <FluentBadge Appearance="Appearance.Lightweight">@recipe.TotalTime</FluentBadge>
+                                <h6>Cook time</h6>
+                                <FluentBadge Appearance="Appearance.Neutral" Fill="lowlight" BackgroundColor="#000;" Color="#fff">@recipe.TotalTime</FluentBadge>
                             }
-                            <h6>Calories: </h6><FluentBadge Appearance="Appearance.Filled">@recipe.Calories.ToString("0.##")</FluentBadge>
+                            <h6>Calories</h6>
+                            <FluentBadge Appearance="Appearance.Accent">@recipe.Calories.ToString("0.##")</FluentBadge>
                         </div>
                         <div class="preparation-link mt-2">
                             <a href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
@@ -59,7 +63,7 @@
                     </div>
                     <div class="recipe-details">
                         <div class="card" style="font-weight:bold; font-size:large;">
-                            Ingredients
+                            <h5>Ingredients</h5>
                         </div>
                         <div class="ingredient-list">
                             <ul class="list-group list-group-flush">
@@ -141,7 +145,7 @@
     .recipe-content {
         display: flex; /* Use flexbox for layout */
         flex-direction: row; /* Arrange items horizontally */
-        align-items: center; /* Align items vertically */
+        align-items:center;
         gap: 10px; /* Add space between items */
         width: 100%; /* Ensure content fills the available space */
     }
@@ -149,6 +153,7 @@
     /* Adjust the layout for recipe details */
     .recipe-details {
         flex: 1 1 auto; /* Allow details to flexibly grow */
+        align-self: flex-start;
     }
 
     .ingredient-list {
