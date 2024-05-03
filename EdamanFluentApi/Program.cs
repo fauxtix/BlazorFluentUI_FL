@@ -12,6 +12,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddHttpClient();
 builder.Services.AddFluentUIComponents();
 builder.Services.AddTransient<IRecipesService, RecipesService>();
+builder.Services.AddTransient<IFoodDatabaseService, FoodDatabaseService>();
+builder.Services.AddTransient<IAutoCompleteFoodDatabaseService, AutoCompleteFoodDatabaseService>();
 
 var app = builder.Build();
 

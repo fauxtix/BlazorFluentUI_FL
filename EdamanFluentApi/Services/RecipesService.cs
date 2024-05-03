@@ -1,4 +1,5 @@
 ﻿using EdamanFluentApi.Model;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,16 +8,29 @@ namespace EdamanFluentApi.Services
 {
     public class RecipesService : IRecipesService
     {
-        const string BaseURL = "https://api.edamam.com/api/recipes/v2";
-        const string APP_ID = "8aa2358e";
-        const string API_KEY = "0130404d401d25aef31206a71a985fee";
+        string BaseURL = string.Empty;
+        string APP_ID = string.Empty;
+        string API_KEY = string.Empty;
+        string FROM_LIMIT = string.Empty;
+        string TO_LIMIT = string.Empty;
+
         protected ObservableCollection<Recipe> recipes;
 
         private readonly HttpClient _httpClient;
-        public RecipesService(HttpClient httpClient)
+        private readonly IConfiguration _configuration;
+        public RecipesService(HttpClient httpClient, IConfiguration config)
         {
             recipes = new ObservableCollection<Recipe>();
             _httpClient = httpClient;
+
+            _configuration = config;
+
+            BaseURL = _configuration["EdamanAPISettings:Recipes:BaseUrl"];
+            APP_ID = _configuration["EdamanAPISettings:Recipes:APP_ID"];
+            API_KEY = _configuration["EdamanAPISettings:Recipes:API_KEY"];
+            FROM_LIMIT = _configuration["EdamanAPISettings:Recipes:FROM_LIMIT"];
+            TO_LIMIT = _configuration["EdamanAPISettings:Recipes:TO_LIMIT"];
+
             _httpClient.BaseAddress = new Uri(BaseURL);
         }
 
@@ -32,24 +46,22 @@ namespace EdamanFluentApi.Services
             try
             {
                 string search = "";
-                const string fromLimit = "0";
-                const string toLimit = "25";
 
                 if (diet.Equals("") && allergie.Equals(""))
                 {
-                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
+                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
                 }
                 else
                 {
                     if (!diet.Equals("") && !allergie.Equals(""))
                     {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
+                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
                     }
                     else if (!diet.Equals(""))
                     {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
+                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
                     }
-                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={fromLimit}&to={toLimit}";
+                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
                 }
 
                 var response = await BaseClient.GetAsync(string.Format(search, API_KEY,

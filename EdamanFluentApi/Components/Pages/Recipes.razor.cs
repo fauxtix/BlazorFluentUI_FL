@@ -3,12 +3,14 @@ using EdamanFluentApi.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Collections.ObjectModel;
 
 namespace EdamanFluentApi.Components.Pages
 {
-    public partial class Home
+    public partial class Recipes
     {
+        [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] public IRecipesService recipeService { get; set; }
         [Inject] public ILogger<App> Logger { get; set; }
 
@@ -36,6 +38,11 @@ namespace EdamanFluentApi.Components.Pages
             recipes = new();
         }
 
+        private void ScrollTop()
+        {
+            // JS interop call to perform scroll top
+            JSRuntime.InvokeVoidAsync("scrollToTop");
+        }
         protected async void OnSearch(MouseEventArgs args)
         {
             recipes.Clear();
