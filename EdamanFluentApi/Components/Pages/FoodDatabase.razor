@@ -11,6 +11,8 @@
 }
 else
 {
+    <div class="card-box"/>
+
     <FluentHeader>
         <ChildContent>
             <div class="d-flex gap-2">
@@ -19,7 +21,7 @@ else
                               @bind-Value:after="HandleClear"
                               @oninput="@(e => SearchValue = e.Value?.ToString())"
                               Size="60" Appearance="FluentInputAppearance.Outline" Spellcheck=false
-                              Placeholder="Search recipe" />
+                              Placeholder="Search food database" />
                 <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
                               @onclick="OnSearch">
                     Search
@@ -184,5 +186,22 @@ else
         overflow-y: auto; /* Add a vertical scrollbar when content overflows */
     }
 
+    .card-box {
+        height: 200px;
+        width: 100%;
+        margin-bottom: 32px;
+        background-image: url('/images/foodimage.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message {
+        text-align: center;
+        color: white; /* Adjust text color for better visibility */
+    }
 </style>
 

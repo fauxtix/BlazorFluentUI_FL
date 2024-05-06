@@ -1,11 +1,13 @@
 ﻿@page "/recipes"
-
-
 @rendermode InteractiveServer
+
 <PageTitle>Edaman Recipes</PageTitle>
+<div class="card-box">
+</div>
+
 <FluentHeader>
     <ChildContent>
-        <div class="d-flex gap-2">
+        <div class="d-flex-row gap-2 my-4">
             <FluentSearch @ref=searchQuery
                           @bind-Value="SearchValue"
                           @bind-Value:after="HandleClear"
@@ -42,8 +44,8 @@
                                 <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
                                 <div class="mt-1 mb-2">
                                     <div class="d-flex justify-content-start align-items-center gap-1 mb-1">
-                                        <small>Servings</small><FluentEmoji Value="@(new Emojis.PeopleBody.Color.Default.Man())" /><FluentEmoji Value="@(new Emojis.PeopleBody.Color.Default.Woman())" />
-                                        <FluentBadge Appearance="Appearance.Accent">@recipe.Yield</FluentBadge>
+                                        <div class="col-lg-4"><small>Servings</small></div>
+                                        <FluentBadge Appearance="Appearance.Neutral"><b>@recipe.Yield</b></FluentBadge>
                                     </div>
 
                                     @if (recipe.Cautions.Length > 0)
@@ -78,7 +80,14 @@
                                     <div class="row my-1">
                                         <div class="col-lg-4"><small>Calories</small></div>
                                         <div class="col-lg-8">
-                                            <FluentBadge Appearance="Appearance.Accent">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
+                                            @if (@recipe.Calories <= 2000)
+                                            {
+                                                <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="green" Color="white">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
+                                            }
+                                            else
+                                            {
+                                                <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="red" Color="white">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -107,14 +116,14 @@
                 if ((index + 1) % 6 == 0 && index != 0 && index != recipes.Count - 1)
                 {
                     <p class="col-lg-12 mt-2 d-flex justify-content-center">
-                            <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowCircleUp())" 
-                            Appearance="Appearance.Accent" 
-                            BackgroundColor="steelblue" 
-                            Color="white" 
-                            Style="border-radius:18px;"
-                            @onclick="ScrollTop">
-                                Go Top
-                            </FluentButton>
+                        <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowCircleUp())"
+                                      Appearance="Appearance.Accent"
+                                      BackgroundColor="steelblue"
+                                      Color="white"
+                                      Style="border-radius:18px;"
+                                      @onclick="ScrollTop">
+                            Go Top
+                        </FluentButton>
                     </p>
                 }
                 index++;
@@ -206,4 +215,22 @@
         overflow-y: auto; /* Add a vertical scrollbar when content overflows */
     }
 
+    .card-box {
+        height: 200px;
+        width: 100%;
+        margin-bottom:32px;
+        background-image: url('/images/recipesimage.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message {
+        text-align: center;
+        color: white; /* Adjust text color for better visibility */
+    }
+ 
 </style>

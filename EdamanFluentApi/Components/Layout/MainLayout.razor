@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 <FluentLayout>
     <FluentHeader>
-        Edaman Fluent Api
+        Edaman Api using Blazor Fluent UI
     </FluentHeader>
     <FluentStack Class="main" Orientation="Orientation.Horizontal" Width="100%">
         <NavMenu />
@@ -12,10 +12,8 @@
         </FluentBodyContent>
     </FluentStack>
     <FluentFooter>
-        <div class="link1">
+        <div class="d-flex justify-content-between align-items-center gap-3">
             <a href="https://www.fluentui-blazor.net" target="_blank">Documentation and demos</a>
-        </div>
-        <div class="link2">
             <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor" target="_blank">About Blazor</a>
         </div>
     </FluentFooter>
@@ -23,8 +21,3 @@
 
 <FluentToastProvider />
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>

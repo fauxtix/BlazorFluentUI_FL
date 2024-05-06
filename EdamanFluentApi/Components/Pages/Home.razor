@@ -1,7 +1,17 @@
 ﻿@page "/"
-<h3>Home</h3>
+<div class="w-100" >
+    <img src="/images/recipes001.jpg" class="responsive" />
+</div>
 
+<style>
+    .responsive {
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin:0;
+        width: 100%;
+        height:100%;
+        max-height: calc(100vh - 120px);
+        overflow-y: hidden;
+    }
+</style>
 
-@code {
-
-}
