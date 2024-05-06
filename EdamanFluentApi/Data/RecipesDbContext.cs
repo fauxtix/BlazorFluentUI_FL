@@ -1,4 +1,5 @@
-﻿using EdamanFluentApi.Models.Recipes;
+﻿using EdamanFluentApi.Model.FoodDatabase;
+using EdamanFluentApi.Models.Recipes;
 using Microsoft.EntityFrameworkCore;
 
 namespace EdamanFluentApi.Data
@@ -9,11 +10,20 @@ namespace EdamanFluentApi.Data
         {
         }
 
+        // Recipes
         public DbSet<Result> Results { get; set; }
         public DbSet<Hit> Hits { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Digest> Digests { get; set; }
         public DbSet<Total> Totals { get; set; }
+
+        // Food database
+        public DbSet<EdamamApiDatabaseResponse> FoodDatabaseResponses { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Hint> Hints{ get; set; }
+        public DbSet<Measure> Measures { get; set; }
+        public DbSet<Nutrients> Nutrients { get; set; }
+        public DbSet<AutoCompleteItem> AutoCompleteItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
