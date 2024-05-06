@@ -1,4 +1,4 @@
-﻿using EdamanFluentApi.Model;
+﻿using EdamanFluentApi.Models.Recipes;
 using Microsoft.EntityFrameworkCore;
 
 namespace EdamanFluentApi.Data

@@ -1,4 +1,4 @@
-﻿using EdamanFluentApi.Model;
+﻿using EdamanFluentApi.Models.Recipes;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;

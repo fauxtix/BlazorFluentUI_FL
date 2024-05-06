@@ -1,4 +1,4 @@
-﻿using EdamanFluentApi.Model;
+﻿using EdamanFluentApi.Models.Recipes;
 using System.Collections.ObjectModel;
 
 namespace EdamanFluentApi.Services

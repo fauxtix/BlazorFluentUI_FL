@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EdamanFluentApi.Model
+namespace EdamanFluentApi.Models.Recipes
 {
     public interface IRecipe
     {

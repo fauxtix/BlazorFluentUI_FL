@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EdamanFluentApi.Model
+namespace EdamanFluentApi.Models.Recipes
 {
     public partial class Digest
     {

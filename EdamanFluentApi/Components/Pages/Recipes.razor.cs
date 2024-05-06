@@ -1,4 +1,4 @@
-using EdamanFluentApi.Model;
+using EdamanFluentApi.Models.Recipes;
 using EdamanFluentApi.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;

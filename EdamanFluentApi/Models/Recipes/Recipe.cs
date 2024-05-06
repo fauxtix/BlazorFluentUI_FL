@@ -3,19 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EdamanFluentApi.Model
+namespace EdamanFluentApi.Models.Recipes
 {
     public class Recipe : IRecipe
     {
         public Recipe() { }
 
-        public Recipe(string Label, Uri Image, Uri Url, long Yield, double Calories) {
+        public Recipe(string Label, Uri Image, Uri Url, long Yield, double Calories)
+        {
             this.Label = Label;
             this.Image = Image;
             this.Url = Url;
             this.Yield = Yield;
             this.Calories = Calories;
-            this.IngredientsRecipe = IngredientsRecipe;
+            IngredientsRecipe = IngredientsRecipe;
         }
 
         [JsonProperty("uri")]
