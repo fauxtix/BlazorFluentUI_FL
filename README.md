@@ -17,7 +17,7 @@ Edaman API with Fluent UI is a web application that utilizes the Edaman API to p
 ![RecipeSearch](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/e5f0c4f2-158f-4a08-81ed-c8c342fd2469)
 ![RecipeSearchResult](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/f1d5bc1a-1866-4413-9d0a-a763cdb9b80c)
 
-#*Recipe search*#
+###Recipe search*###
 
 ![FoodDatabaseSearch](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/de5d9040-4905-496e-930c-d8d990eb11fe)
 *Food database search*
