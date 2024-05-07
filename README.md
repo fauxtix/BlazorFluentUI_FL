@@ -1,4 +1,5 @@
-# Edaman API with Blazor Fluent UI [Site](https://fluentui-blazor.net/)
+# Edaman API with Blazor Fluent UI 
+[documentation](https://fluentui-blazor.net/)
 
 ## Overview
 
