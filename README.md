@@ -12,6 +12,14 @@ Edaman API with Fluent UI is a web application that utilizes the Edaman API to p
 - **Responsive Design:** The application is optimized for various screen sizes and devices.
 - **Fast responses:** Users can select recipes from prior searches, thus avoiding trips to the Edaman api, by allowing offline searches, for quick access.
 
+## Screenshots
+
+![RecipeSearch](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/e5f0c4f2-158f-4a08-81ed-c8c342fd2469)
+*Recipe search*
+
+![FoodDatabaseSearch](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/de5d9040-4905-496e-930c-d8d990eb11fe)
+*Food database search*
+
 ## Installation
 
 To install the Edaman API with Fluent UI locally, follow these steps:
