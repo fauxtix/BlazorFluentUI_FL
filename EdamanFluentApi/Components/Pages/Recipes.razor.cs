@@ -13,13 +13,17 @@ namespace EdamanFluentApi.Components.Pages
         [Inject] IJSRuntime JSRuntime { get; set; }
         [Inject] public IRecipesService recipeService { get; set; }
         [Inject] public ILogger<App> Logger { get; set; }
+        [Inject] IConfiguration _config { get; set; }
 
         protected ObservableCollection<Recipe> recipes = new();
         protected string recipeUrl = string.Empty;
         protected string? SelectedItem { get; set; }
         protected FluentSearch searchQuery;
         private string searchValue = string.Empty;
+        private int maxTries;
+        private string configMaxTries;
         protected bool isLoading = false;
+        protected List<string> jsonFiles = new();
 
         private string SearchValue
         {
@@ -35,7 +39,9 @@ namespace EdamanFluentApi.Components.Pages
 
         protected override void OnInitialized()
         {
-            recipes = new();
+            jsonFiles = recipeService.GetJsonFiles();
+            configMaxTries = _config["EdamanAPISettings:Recipes:TO_LIMIT"];
+            maxTries = int.Parse(configMaxTries);
         }
 
         private void ScrollTop()
@@ -45,6 +51,12 @@ namespace EdamanFluentApi.Components.Pages
         }
         protected async void OnSearch(MouseEventArgs args)
         {
+            if (string.IsNullOrEmpty(SearchValue))
+            {
+                ShowToast("Please fill the recipe(s) to search");
+                return;
+            }
+
             recipes.Clear();
             try
             {
@@ -67,12 +79,12 @@ namespace EdamanFluentApi.Components.Pages
             try
             {
                 isLoading = true;
-                var output = await recipeService.SearchRecipes(query, "", "");
+                var output = await recipeService.SearchRecipes(query, "", "", maxTries.ToString());
                 isLoading = false;
                 return output;
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Logger.LogError(ex.Message, ex);
                 ShowToast(ex.Message);

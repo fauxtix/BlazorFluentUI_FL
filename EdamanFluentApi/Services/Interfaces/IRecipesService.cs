@@ -5,6 +5,7 @@ namespace EdamanFluentApi.Services.Interfaces
 {
     public interface IRecipesService
     {
-        Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient, string diet, string allergie);
+        List<string> GetJsonFiles();
+        Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient, string diet, string allergie, string limit="");
     }
 }

@@ -14,8 +14,6 @@ else
 {
     <div class="card-box"/>
 
-    <FluentHeader>
-        <ChildContent>
             <div class="d-flex gap-2">
                 <FluentSearch @ref=searchQuery
                               @bind-Value="SearchValue"
@@ -34,8 +32,6 @@ else
                     <Spinner IsVisible="@isLoading" />
                 </div>
             </div>
-        </ChildContent>
-    </FluentHeader>
     <hr />
     <FluentBodyContent>
         <div class="card-container mt-2">

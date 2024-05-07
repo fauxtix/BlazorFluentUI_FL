@@ -22,6 +22,7 @@ namespace EdamanFluentApi.Services.Implementations
         private readonly ProtectedSessionStorage _sessionStorage;
         private readonly IJsonFileManager _jsonFileManager;
         private readonly IWebHostEnvironment _environment;
+
         public RecipesService(HttpClient httpClient, IConfiguration config, ProtectedSessionStorage SessionStorage,
             IJsonFileManager jsonFileManager, IWebHostEnvironment environment)
         {
@@ -49,10 +50,16 @@ namespace EdamanFluentApi.Services.Implementations
                 return _httpClient;
             }
         }
-        public async Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient, string diet, string allergie)
+        
+        public async Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient, string diet, string allergie, string limit = "")
         {
             try
             {
+                if (string.IsNullOrEmpty(limit))
+                {
+                    limit = TO_LIMIT;
+                }
+
                 string folderPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
 
                 var fileName = $"{ingredient}.json";
@@ -72,19 +79,19 @@ namespace EdamanFluentApi.Services.Implementations
 
                 if (diet.Equals("") && allergie.Equals(""))
                 {
-                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
+                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
                 }
                 else
                 {
                     if (!diet.Equals("") && !allergie.Equals(""))
                     {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
+                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
                     }
                     else if (!diet.Equals(""))
                     {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
+                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
                     }
-                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={TO_LIMIT}";
+                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
                 }
 
                 var response = await BaseClient.GetAsync(string.Format(search, API_KEY,
@@ -145,6 +152,32 @@ namespace EdamanFluentApi.Services.Implementations
         {
             ObservableCollection<Recipe> recipes = _jsonFileManager.ReadFromJsonFile<ObservableCollection<Recipe>>(fileName, folderPath);
             return recipes;
+        }
+
+        public List<string> GetJsonFiles()
+        {
+
+            // Get the physical path to the wwwroot directory
+            var wwwRootPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
+
+            // Check if the directory exists
+            if (!Directory.Exists(wwwRootPath))
+            {
+                // Handle the case when the directory does not exist
+                return new List<string>();
+            }
+
+            // Get the list of files in the JsonFiles directory
+            var files = Directory.GetFiles(wwwRootPath);
+
+            // Extract filenames from full paths
+            var filenames = new List<string>();
+            foreach (var file in files)
+            {
+                filenames.Add(Path.GetFileNameWithoutExtension(file));
+            }
+
+            return filenames;
         }
     }
 }
