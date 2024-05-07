@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using EdamanFluentApi.Services.Interfaces;
+using Newtonsoft.Json;
 
-namespace EdamanFluentApi.Services
+namespace EdamanFluentApi.Services.Implementations
 {
     public class AutoCompleteFoodDatabaseService : IAutoCompleteFoodDatabaseService
     {
@@ -13,7 +14,7 @@ namespace EdamanFluentApi.Services
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
-        public AutoCompleteFoodDatabaseService(HttpClient httpClient, IConfiguration configuration) 
+        public AutoCompleteFoodDatabaseService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;

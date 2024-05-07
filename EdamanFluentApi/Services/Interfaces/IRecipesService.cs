@@ -1,7 +1,7 @@
 ﻿using EdamanFluentApi.Models.Recipes;
 using System.Collections.ObjectModel;
 
-namespace EdamanFluentApi.Services
+namespace EdamanFluentApi.Services.Interfaces
 {
     public interface IRecipesService
     {

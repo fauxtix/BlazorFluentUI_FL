@@ -1,7 +1,8 @@
 ﻿using EdamanFluentApi.Model.FoodDatabase;
+using EdamanFluentApi.Services.Interfaces;
 using Newtonsoft.Json;
 
-namespace EdamanFluentApi.Services
+namespace EdamanFluentApi.Services.Implementations
 {
     public class FoodDatabaseService : IFoodDatabaseService
     {

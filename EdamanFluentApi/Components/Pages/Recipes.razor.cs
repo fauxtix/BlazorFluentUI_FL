@@ -1,5 +1,5 @@
 using EdamanFluentApi.Models.Recipes;
-using EdamanFluentApi.Services;
+using EdamanFluentApi.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.FluentUI.AspNetCore.Components;

@@ -1,10 +1,11 @@
 ﻿using EdamanFluentApi.Models.Recipes;
-using Microsoft.Extensions.Configuration;
+using EdamanFluentApi.Services.Interfaces;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace EdamanFluentApi.Services
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+namespace EdamanFluentApi.Services.Implementations
 {
     public class RecipesService : IRecipesService
     {
@@ -18,7 +19,11 @@ namespace EdamanFluentApi.Services
 
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        public RecipesService(HttpClient httpClient, IConfiguration config)
+        private readonly ProtectedSessionStorage _sessionStorage;
+        private readonly IJsonFileManager _jsonFileManager;
+        private readonly IWebHostEnvironment _environment;
+        public RecipesService(HttpClient httpClient, IConfiguration config, ProtectedSessionStorage SessionStorage,
+            IJsonFileManager jsonFileManager, IWebHostEnvironment environment)
         {
             recipes = new ObservableCollection<Recipe>();
             _httpClient = httpClient;
@@ -32,6 +37,9 @@ namespace EdamanFluentApi.Services
             TO_LIMIT = _configuration["EdamanAPISettings:Recipes:TO_LIMIT"];
 
             _httpClient.BaseAddress = new Uri(BaseURL);
+            _sessionStorage = SessionStorage;
+            _jsonFileManager = jsonFileManager;
+            _environment = environment;
         }
 
         private HttpClient BaseClient
@@ -45,6 +53,21 @@ namespace EdamanFluentApi.Services
         {
             try
             {
+                string folderPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
+
+                var fileName = $"{ingredient}.json";
+                bool fileExists = _jsonFileManager.JsonFileExists(fileName, folderPath);
+                if (fileExists)
+                {
+                    return LoadFromJsonFile(fileName, folderPath);
+                }
+
+                //var localstorageResults = await GetSearchedIngredientFromLocalStorage(ingredient);
+                //if (localstorageResults is not null)
+                //{
+                //    return localstorageResults;
+                //}
+
                 string search = "";
 
                 if (diet.Equals("") && allergie.Equals(""))
@@ -79,13 +102,49 @@ namespace EdamanFluentApi.Services
                 {
                     recipes.Add(result.hits[i].Recipe);
                 }
+
+                SaveToJsonFile(fileName, folderPath, recipes);
+                //await _sessionStorage.SetAsync(ingredient, recipes);
+
                 return recipes;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("EXCEPTION" + ex);
+                Debug.WriteLine("EXCEPTION: " + ex);
                 return null;
             }
+        }
+
+        private async Task<ObservableCollection<Recipe>> GetSearchedIngredientFromLocalStorage(string ingredientKey)
+        {
+            try
+            {
+                var storedIngredientData = await  _sessionStorage.GetAsync<ObservableCollection<Recipe>>(ingredientKey);
+                if (storedIngredientData.Success)
+                {
+                    return storedIngredientData.Value;
+                }
+                else
+                {
+                    return null; // Return null if no ingredient is stored locally
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error retrieving searched ingredient data from local storage: " + ex.Message);
+                return null;
+            }
+        }
+
+        private void SaveToJsonFile(string fileName, string folderPath, ObservableCollection<Recipe> recipes)
+        {
+            _jsonFileManager.WriteToJsonFile(fileName, folderPath, recipes);
+        }
+
+        private ObservableCollection<Recipe> LoadFromJsonFile(string fileName, string folderPath)
+        {
+            ObservableCollection<Recipe> recipes = _jsonFileManager.ReadFromJsonFile<ObservableCollection<Recipe>>(fileName, folderPath);
+            return recipes;
         }
     }
 }
