@@ -67,7 +67,7 @@ Browse through the food database to discover new ingredients, recipes, and nutri
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.TXT](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/EdamanFluentApi/LICENSE.txt) file for details.
+This project is licensed under the MIT License - see the [MIT-LICENSE.TXT](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/EdamanFluentApi/MIT-LICENSE.txt) file for details.
 
 ## Acknowledgments
 
