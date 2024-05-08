@@ -63,11 +63,14 @@ cd EdamanApiWithFluentUI
 3. **Instalar Dependências:**
 dotnet restore
 
-4. **Executar a Aplicação:**
+4. **Atualize appsettings.json**
+   Inclua as chaves APP_ID and API_KEY da Api Edaman
+
+5. **Executar a Aplicação:**
 dotnet run
 
 
-5. **Aceder à Aplicação:**
+6. **Aceder à Aplicação:**
 Abra um navegador da web e aceda a `http://localhost:<porta>`.
 
 ## Utilização
