@@ -26,7 +26,7 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 
 ## Visão Geral
 
-O **EdamanApiWithFluentUI** é uma aplicação web, que utiliza a API do Edaman para fornecer funcionalidade de *_pesquisa de receitas_*, e acesso a uma _base de dados abrangente de alimentos_.
+O **EdamanApiWithFluentUI** é uma aplicação web, que utiliza a API do Edaman para fornecer funcionalidade de **_pesquisa de receitas_**, e acesso a uma _base de dados abrangente de alimentos_.
 Para o frontend foram usados componentes do Blazor Fluent UI; este aplicativo oferece uma interface amigável para pesquisa, navegação e guardar (em ficheiros .json) receitas favoritas.
 
 ## Recursos
