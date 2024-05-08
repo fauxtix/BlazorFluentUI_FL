@@ -27,15 +27,15 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 ## Visão Geral
 
 O **EdamanApiWithFluentUI** é uma aplicação web, que utiliza a API do Edaman para fornecer funcionalidade de _pesquisa de receitas_, e acesso a uma _base de dados abrangente de alimentos_.
-Para o frontend foram usados componentes do Blazor Fluent UI; este aplicativo oferece uma interface amigável para pesquisa, navegação e guardar (em ficheiros .json) receitas favoritas.
+Para o frontend foram usados componentes do Blazor Fluent UI; esta aplicação oferece uma interface amigável para pesquisa, navegação e oferece a possibilidade de guardar (em ficheiros .json) receitas favoritas.
 
 ## Recursos
 
 - **Pesquisa de Receitas:** Os utilizadores podem pesquisar receitas com base em palavras-chave, ingredientes ou preferências alimentares.
 - **Base de Dados de Alimentos:** Acesso a uma vasta base de dados de ingredientes, informações nutricionais e receitas.
-- **Interface Amigável:** Design intuitivo e navegação para uma experiência do utilizador perfeita.
-- **Design Responsivo:** A aplicação é otimizada para vários ecrãs e dispositivos.
-- **Respostas Rápidas:** Os utilizadores podem selecionar receitas de pesquisas anteriores, evitando assim viagens à API do Edaman, permitindo pesquisas offline para acesso rápido.
+- **Interface Amigável:** Design intuitivo.
+- **Design Responsivo:** A aplicação é optimizada para vários ecrãs e dispositivos.
+- **Respostas Rápidas:** Os utilizadores podem selecionar receitas de pesquisas anteriores (guardadas em ficheiros .json), evitando assim viagens à API do Edaman; permite, assim, pesquisas offline para acesso rápido.
 
 ## Capturas de Ecrã
 
@@ -73,10 +73,11 @@ Abra um navegador da web e aceda a `http://localhost:<porta>`.
 ## Utilização
 
 1. **Pesquisar Receitas:**
-Insira palavras-chave, ingredientes ou preferências alimentares na barra de pesquisa e pressione enter para ver receitas relevantes.
+Insira palavras-chave, ingredientes ou preferências alimentares na barra de pesquisa e use a opção 'Search' para ver receitas relevantes
+Limitar o número de receitas a extrair, e selecionar uma pesquisa préviamente usada.
 
 2. **Visualizar Detalhes da Receita:**
-Clique no botão 'Preparação' no cartão e navegue até ao site 'fonte' para visualizar informações detalhadas, incluindo ingredientes, instruções e factos nutricionais.
+Clique no botão 'Preparation' no 'cartão' e navegue até ao site 'fonte' para visualizar informações detalhadas, incluindo ingredientes, instruções e factos nutricionais.
 
 3. **Explorar a Base de Dados de Alimentos:**
 Navegue pela base de dados de alimentos para descobrir novos ingredientes, receitas e informações nutricionais.
