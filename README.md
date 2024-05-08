@@ -1,4 +1,4 @@
-# Edaman API with Blazor Fluent UI 
+# Blazor Fluent UI with the Edaman API
 [documentation](https://fluentui-blazor.net/)
 
 [Portuguese](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/README_PORTUGUESE.MD)
