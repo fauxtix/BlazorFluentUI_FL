@@ -3,7 +3,7 @@
 
 ## Propósito Educacional
 
-Este projeto foi desenvolvido como uma forma de aprender e explorar as capacidades do Blazor Fluent UI. O objetivo principal é o de conhecer e experimentar os vários componentes e padrões do Blazor Fluent UI; foi usado o API Edaman para obter dados de receitas para testar o frontend.
+Este projeto foi desenvolvido como uma forma de aprender e explorar as capacidades do Blazor Fluent UI. O objetivo principal é o de conhecer e experimentar os vários componentes e padrões do Blazor Fluent UI; foi usado a API Edaman para obter dados de receitas para testar o frontend.
 
 ### Objetivos de Aprendizagem
 
