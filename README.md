@@ -61,8 +61,8 @@ To install the Edaman API with Fluent UI locally, follow these steps:
 3. **Install Dependencies:**
    dotnet restore
 
-4. **Update appsettings.json**
-   Include your Edaman APP_ID and API_KEY
+4. **Update appsettings.json:**
+   Include your Edaman APP_ID and API_KEY keys
    
 5. **Run Application:**
    dotnet run
