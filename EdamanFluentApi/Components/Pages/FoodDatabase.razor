@@ -12,26 +12,26 @@
 }
 else
 {
-    <div class="card-box"/>
+    <div class="card-box" />
 
-            <div class="d-flex gap-2">
-                <FluentSearch @ref=searchQuery
-                              @bind-Value="SearchValue"
-                              @bind-Value:after="HandleClear"
-                              @oninput="@(e => SearchValue = e.Value?.ToString())"
-                              Size="60" Appearance="FluentInputAppearance.Outline" Spellcheck=false
-                              Placeholder="Search food database" />
-                <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
-                              @onclick="OnSearch">
-                    Search
-                </FluentButton>
-            </div>
+    <div class="d-flex gap-2">
+        <FluentSearch @ref=searchQuery
+                      @bind-Value="SearchValue"
+                      @bind-Value:after="HandleClear"
+                      @oninput="@(e => SearchValue = e.Value?.ToString())"
+                      Size="60" Appearance="FluentInputAppearance.Outline" Spellcheck=false
+                      Placeholder="Search food database" />
+        <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
+                      @onclick="OnSearch">
+            Search
+        </FluentButton>
+    </div>
 
-            <div hidden="@(!isLoading)">
-                <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-                    <Spinner IsVisible="@isLoading" />
-                </div>
-            </div>
+    <div hidden="@(!isLoading)">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <Spinner IsVisible="@isLoading" />
+        </div>
+    </div>
     <hr />
     <FluentBodyContent>
         <div class="card-container mt-2">

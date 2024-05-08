@@ -2,139 +2,146 @@
 @rendermode InteractiveServer
 
 <PageTitle>Edaman Recipes</PageTitle>
-<div class="card-box"/>
+@if (recipes is null)
+{
+    <Spinner IsVisible="true" />
+}
+else
+{
 
-<div></div>
-<div class="d-flex justify-content-center align-items-center gap-3">
-    <FluentNumberField @bind-Value=maxTries Label="Recipes (max: 25)"
-                       Appearance="FluentInputAppearance.Outline" Style="width:90px;"
-                       Min="0" Max="25" Step="5"></FluentNumberField>
-    <FluentCombobox Items="@jsonFiles" 
-                    Appearance="Appearance.Outline" Style="width:120px;"
-                    Label="Saved searches" Height="250px"
-                    @bind-Value="@SearchValue"></FluentCombobox>
-    <FluentSearch @ref=searchQuery
-                  @bind-Value="SearchValue"
-                  @bind-Value:after="HandleClear"
-                  @oninput="@(e => SearchValue = e.Value?.ToString())"
-                  Size="40" Appearance="FluentInputAppearance.Outline" Spellcheck=false />
-    <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
-                  @onclick="OnSearch">
-        Search
-    </FluentButton>
-    <div hidden="@(!isLoading)">
-        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-            <Spinner IsVisible="@isLoading" />
+    <div class="card-box" />
+
+    <div></div>
+    <div class="d-flex justify-content-center align-items-center gap-2">
+        <FluentNumberField @bind-Value=maxTries Label="Recipes (max: 25)"
+                           Appearance="FluentInputAppearance.Outline" Style="width:90px;"
+                           Min="0" Max="25" Step="5"></FluentNumberField>
+        <FluentCombobox Items="@jsonFiles"
+                        Appearance="Appearance.Outline" Style="width:120px;"
+                        Label="Saved searches" Height="250px"
+                        @bind-Value="@SearchValue"></FluentCombobox>
+        <FluentSearch @ref=searchQuery
+                      @bind-Value="SearchValue"
+                      @bind-Value:after="HandleClear" Placeholder="Recipe to search"
+                      @oninput="@(e => SearchValue = e.Value?.ToString())"
+                      Appearance="FluentInputAppearance.Outline" Spellcheck=false />
+        <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
+                      @onclick="OnSearch">
+            Search
+        </FluentButton>
+        <div hidden="@(!isLoading)">
+            <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <Spinner IsVisible="@isLoading" />
+            </div>
         </div>
     </div>
-</div>
-<hr />
-<FluentBodyContent>
-    <div class="card-container mt-2">
-        @{
-            int index = 0;
+    <hr />
+    <FluentBodyContent>
+        <div class="card-container mt-2">
+            @{
+                int index = 0;
 
-            foreach (var recipe in recipes)
-            {
-                <FluentCard Data="@recipe" class="fluent-card" Width="100%" Height="auto">
-                    <ChildContent>
-                        <div style="font-weight:bold; font-size:large;">@recipe.Label</div>
-                        <hr />
-                        <div class="recipe-content">
-                            <div class="recipe-image">
-                                <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
-                                <div class="mt-1 mb-2">
-                                    <div class="d-flex justify-content-start align-items-center gap-1 mb-1">
-                                        <div class="col-lg-4"><small>Servings</small></div>
-                                        <FluentBadge Appearance="Appearance.Neutral"><b>@recipe.Yield</b></FluentBadge>
-                                    </div>
+                foreach (var recipe in recipes)
+                {
+                    <FluentCard Data="@recipe" class="fluent-card" Width="100%" Height="auto">
+                        <ChildContent>
+                            <div style="font-weight:bold; font-size:large;">@recipe.Label</div>
+                            <hr />
+                            <div class="recipe-content">
+                                <div class="recipe-image">
+                                    <img src="@recipe.Image" class="img-fluid" alt="Recipe Image" />
+                                    <div class="mt-1 mb-2">
+                                        <div class="d-flex justify-content-start align-items-center gap-1 mb-1">
+                                            <div class="col-lg-4"><small>Servings</small></div>
+                                            <FluentBadge Appearance="Appearance.Neutral"><b>@recipe.Yield</b></FluentBadge>
+                                        </div>
 
-                                    @if (recipe.Cautions.Length > 0)
-                                    {
-                                        <div class="row">
-                                            <div class="col-lg-4"><small>Cautions</small></div>
-                                            <div class="d-flex gap-1 col-lg-8" style="flex-wrap:wrap">
-                                                @foreach (var cautionMsg in recipe.Cautions)
+                                        @if (recipe.Cautions.Length > 0)
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg-4"><small>Cautions</small></div>
+                                                <div class="d-flex gap-1 col-lg-8" style="flex-wrap:wrap">
+                                                    @foreach (var cautionMsg in recipe.Cautions)
+                                                    {
+                                                        <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="red" Color="white">@cautionMsg</FluentBadge>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="row my-1">
+                                            <div class="col-lg-4"><small>Source</small></div>
+                                            <div class="col-lg-8">
+                                                <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">@recipe.Source</FluentBadge>
+                                            </div>
+                                        </div>
+
+                                        @if (recipe.TotalTime > 0)
+                                        {
+                                            <div class="row my-1">
+                                                <div class="col-lg-4"><small>Cook</small></div>
+                                                <div class="col-lg-8">
+                                                    <FluentBadge Appearance="Appearance.Neutral" Fill="lowlight" BackgroundColor="#000;" Color="#fff">@recipe.TotalTime</FluentBadge>
+                                                    <span> min.</span>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="row my-1">
+                                            <div class="col-lg-4"><small>Calories</small></div>
+                                            <div class="col-lg-8">
+                                                @if (@recipe.Calories <= 2000)
                                                 {
-                                                    <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="red" Color="white">@cautionMsg</FluentBadge>
+                                                    <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="green" Color="white">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
+                                                }
+                                                else
+                                                {
+                                                    <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="red" Color="white">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
                                                 }
                                             </div>
                                         </div>
-                                    }
-                                    <div class="row my-1">
-                                        <div class="col-lg-4"><small>Source</small></div>
-                                        <div class="col-lg-8">
-                                            <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="#ffd800;" Color="#000">@recipe.Source</FluentBadge>
-                                        </div>
                                     </div>
-
-                                    @if (recipe.TotalTime > 0)
-                                    {
-                                        <div class="row my-1">
-                                            <div class="col-lg-4"><small>Cook</small></div>
-                                            <div class="col-lg-8">
-                                                <FluentBadge Appearance="Appearance.Neutral" Fill="lowlight" BackgroundColor="#000;" Color="#fff">@recipe.TotalTime</FluentBadge>
-                                                <span> min.</span>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="row my-1">
-                                        <div class="col-lg-4"><small>Calories</small></div>
-                                        <div class="col-lg-8">
-                                            @if (@recipe.Calories <= 2000)
-                                            {
-                                                <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="green" Color="white">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
-                                            }
-                                            else
-                                            {
-                                                <FluentBadge Appearance="Appearance.Neutral" Fill="highlight" BackgroundColor="red" Color="white">@recipe.Calories.ToString("#,##0.00")</FluentBadge>
-                                            }
-                                        </div>
+                                    <div class="preparation-link mt-2 text-center">
+                                        <hr />
+                                        <a class="btn btn-outline-success" href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
                                     </div>
                                 </div>
-                                <div class="preparation-link mt-2 text-center">
-                                    <hr />
-                                    <a class="btn btn-outline-success" href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
+                                <div class="recipe-details">
+                                    <div class="card" style="font-weight:bold; font-size:large;">
+                                        <h5>Ingredients</h5>
+                                    </div>
+                                    <div class="ingredient-list">
+                                        <ul class="list-group list-group-flush">
+                                            @foreach (string ingredient in recipe.IngredientLines)
+                                            {
+                                                <li class="list-group-item">@ingredient</li>
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="recipe-details">
-                                <div class="card" style="font-weight:bold; font-size:large;">
-                                    <h5>Ingredients</h5>
-                                </div>
-                                <div class="ingredient-list">
-                                    <ul class="list-group list-group-flush">
-                                        @foreach (string ingredient in recipe.IngredientLines)
-                                        {
-                                            <li class="list-group-item">@ingredient</li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </ChildContent>
-                </FluentCard>
+                        </ChildContent>
+                    </FluentCard>
 
-                if ((index + 1) % 6 == 0 && index != 0 && index != recipes.Count - 1)
-                {
-                    <p class="col-lg-12 mt-2 d-flex justify-content-center">
-                        <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowCircleUp())"
-                                      Appearance="Appearance.Accent"
-                                      BackgroundColor="steelblue"
-                                      Color="white"
-                                      Style="border-radius:18px;"
-                                      @onclick="ScrollTop">
-                            Go Top
-                        </FluentButton>
-                    </p>
+                    if ((index + 1) % 6 == 0 && index != 0 && index != recipes.Count - 1)
+                    {
+                        <p class="col-lg-12 mt-2 d-flex justify-content-center">
+                            <FluentButton IconStart="@(new Icons.Regular.Size24.ArrowCircleUp())"
+                                          Appearance="Appearance.Accent"
+                                          BackgroundColor="steelblue"
+                                          Color="white"
+                                          Style="border-radius:18px;"
+                                          @onclick="ScrollTop">
+                                Go Top
+                            </FluentButton>
+                        </p>
+                    }
+                    index++;
+
                 }
-                index++;
 
             }
-
-        }
-    </div>
-</FluentBodyContent>
-
+        </div>
+    </FluentBodyContent>
+}
 
 <style>
     /* Define the layout for the card container */
