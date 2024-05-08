@@ -11,21 +11,22 @@ else
 
     <div class="card-box" />
 
-    <div class="d-lg-flex justify-lg-content-center align-items-lg-start gap-2">
-        <FluentNumberField @bind-Value=maxTries Label="Number of Recipes"
-                           Appearance="FluentInputAppearance.Outline" Style="width:90px;"
+    <div class="d-lg-flex justify-lg-content-center align-items-lg-center lh-lg gap-2">
+        <FluentNumberField @bind-Value=maxTries Label="Results"
+                           Appearance="FluentInputAppearance.Outline" 
                            Min="0" Max="@maxTries.ToString()" Step="5"></FluentNumberField>
         <FluentCombobox Items="@jsonFiles"
-                        Appearance="Appearance.Outline" Style="width:120px;"
-                        Label="Saved searches" Height="250px"
+                        Appearance="Appearance.Outline" 
+                        Placeholder="<Select>"
+                        Label="Saved searches" 
                         @bind-Value="@SearchValue"></FluentCombobox>
         <FluentSearch @ref=searchQuery
                       @bind-Value="SearchValue"
-                      @bind-Value:after="HandleClear" Placeholder="Recipe to search"
+                      @bind-Value:after="HandleClear" Placeholder="Keyword(s)"
                       @oninput="@(e => SearchValue = e.Value?.ToString())"
                       Appearance="FluentInputAppearance.Outline" Spellcheck=false />
         <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" BackgroundColor="green" Color="white" Style="border-radius:22px;"
-                      @onclick="OnSearch">
+                      @onclick="OnSearch" >
             Search
         </FluentButton>
         <div hidden="@(!isLoading)">
