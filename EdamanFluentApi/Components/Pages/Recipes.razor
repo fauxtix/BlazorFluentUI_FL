@@ -13,9 +13,9 @@ else
 
     <div></div>
     <div class="d-flex justify-content-center align-items-center gap-2">
-        <FluentNumberField @bind-Value=maxTries Label="Recipes (max: 25)"
+        <FluentNumberField @bind-Value=maxTries Label="Number of Recipes"
                            Appearance="FluentInputAppearance.Outline" Style="width:90px;"
-                           Min="0" Max="25" Step="5"></FluentNumberField>
+                           Min="0" Max="@maxTries.ToString()" Step="5"></FluentNumberField>
         <FluentCombobox Items="@jsonFiles"
                         Appearance="Appearance.Outline" Style="width:120px;"
                         Label="Saved searches" Height="250px"
