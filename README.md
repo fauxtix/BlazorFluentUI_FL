@@ -86,15 +86,8 @@ Browse through the food database to discover new ingredients, recipes, and nutri
 
 - Fausto Luís (fauxtix.luix@hotmail.com)
 - Filipa Luís (filipaluis@gmail.com)
-- Margarida Luís (margaridaluis@gmail.com)
+- Margarida Luís (margaridaluis@gmail.com
 
-  ### Disclaimer
-
-This project is intended for educational purposes only. It was built as a learning exercise to enhance skills in web development and does not serve any commercial or production purposes. 
-
-## License
-
-This project is licensed under the MIT License - see the [MIT-LICENSE.TXT](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/EdamanFluentApi/MIT-LICENSE.txt) file for details.
 
 ## Acknowledgments
 
@@ -107,3 +100,8 @@ Contributions are welcome! If you have suggestions for new features or improveme
 ### Disclaimer
 
 This project is a work in progress and may undergo changes and updates without prior notice. It is being developed for educational purposes and may include experimental features and components.
+It does not serve any commercial or production purposes.
+
+## License
+
+This project is licensed under the MIT License - see the [MIT-LICENSE.TXT](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/EdamanFluentApi/MIT-LICENSE.txt) file for details.
