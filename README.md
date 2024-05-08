@@ -27,7 +27,7 @@ Please note that this project is currently a work in progress. While it provides
   ---
 ## Overview
 
-Edaman API with Fluent UI is a web application that utilizes the Edaman API to provide recipe search functionality and access to a comprehensive food database. Built with Blazor Fluent UI, this application offers a user-friendly interface for searching, browsing, and saving favorite recipes.
+**Blazor Fluent UI with Edaman API** is a web application that utilizes the Edaman API to provide _recipe search_ functionality and access to a comprehensive _food database_. Built with Blazor Fluent UI, this application offers a user-friendly interface for searching, browsing, and saving favorite recipes.
 
 ## Features
 
