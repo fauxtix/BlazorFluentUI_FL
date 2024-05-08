@@ -5,7 +5,7 @@
 
 ## Educational Purpose
 
-This project was developed as a means to learn and explore the capabilities of Blazor Fluent UI. While the primary objective was to access the Edaman API for recipe data, the focus was equally on leveraging various Fluent UI components and patterns.
+This project was developed as a way of learning and exploring the capabilities of Blazor Fluent UI. The main objective is to get to know and experiment with the various components and standards of Blazor Fluent UI; the Edaman API was used to obtain recipe data (to test the frontend).
 
 ### Learning Objectives
 
