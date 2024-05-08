@@ -1,4 +1,4 @@
-# Edaman API com Blazor Fluent UI
+# Blazor Fluent UI com Edaman API
 [documentação](https://fluentui-blazor.net/)
 
 ## Propósito Educacional
