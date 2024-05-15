@@ -50,8 +50,12 @@ namespace EdamanFluentApi.Services.Implementations
                 return _httpClient;
             }
         }
-        
-        public async Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient, string diet, string allergie, string limit = "")
+
+        public async Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient,
+                                                                      string diet,
+                                                                      string allergie,
+                                                                      string limit = "",
+                                                                      string cuisineType = "")
         {
             try
             {
@@ -63,10 +67,10 @@ namespace EdamanFluentApi.Services.Implementations
                 string folderPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
 
                 var fileName = $"{ingredient}.json";
-                bool fileExists = _jsonFileManager.JsonFileExists(fileName, folderPath);
+                bool fileExists = _jsonFileManager.JsonFileExists(fileName, folderPath, cuisineType);
                 if (fileExists)
                 {
-                    return LoadFromJsonFile(fileName, folderPath);
+                    return LoadFromJsonFile(fileName, folderPath, cuisineType);
                 }
 
                 //var localstorageResults = await GetSearchedIngredientFromLocalStorage(ingredient);
@@ -77,13 +81,18 @@ namespace EdamanFluentApi.Services.Implementations
 
                 string search = "";
 
-                if (diet.Equals("") && allergie.Equals(""))
+                if (diet.Equals("") && allergie.Equals("") && cuisineType.Equals(""))
                 {
                     search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
                 }
                 else
                 {
-                    if (!diet.Equals("") && !allergie.Equals(""))
+                    if(!string.IsNullOrEmpty(cuisineType) && cuisineType != "All")
+                    {
+                        search = "/search?q=" + ingredient + $"&cuisineType={cuisineType}" + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
+
+                    }
+                    else if (!diet.Equals("") && !allergie.Equals(""))
                     {
                         search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
                     }
@@ -110,7 +119,7 @@ namespace EdamanFluentApi.Services.Implementations
                     recipes.Add(result.hits[i].Recipe);
                 }
 
-                SaveToJsonFile(fileName, folderPath, recipes);
+                SaveToJsonFile(fileName, folderPath, cuisineType, recipes);
                 //await _sessionStorage.SetAsync(ingredient, recipes);
 
                 return recipes;
@@ -126,7 +135,7 @@ namespace EdamanFluentApi.Services.Implementations
         {
             try
             {
-                var storedIngredientData = await  _sessionStorage.GetAsync<ObservableCollection<Recipe>>(ingredientKey);
+                var storedIngredientData = await _sessionStorage.GetAsync<ObservableCollection<Recipe>>(ingredientKey);
                 if (storedIngredientData.Success)
                 {
                     return storedIngredientData.Value;
@@ -143,22 +152,46 @@ namespace EdamanFluentApi.Services.Implementations
             }
         }
 
-        private void SaveToJsonFile(string fileName, string folderPath, ObservableCollection<Recipe> recipes)
+        public List<string> GetCuisineTypes()
         {
-            _jsonFileManager.WriteToJsonFile(fileName, folderPath, recipes);
+            return new List<string>
+            {
+                "American",
+                "Asian",
+                "British",
+                "Caribbean" ,
+                "Central Euope",
+                "Chinese" ,
+                "Eastern Europe",
+                "French",
+                "Indian",
+                "Italian",
+                "Japanese",
+                "Kosher",
+                "Mediterranean",
+                "Mexican",
+                "Moddle Eastern",
+                "Nordic",
+                "South American",
+                "South East Asian"
+            };
+        }
+        private void SaveToJsonFile(string fileName, string folderPath, string cuisineType, ObservableCollection<Recipe> recipes)
+        {
+            _jsonFileManager.WriteToJsonFile(fileName, folderPath, cuisineType, recipes);
         }
 
-        private ObservableCollection<Recipe> LoadFromJsonFile(string fileName, string folderPath)
+        private ObservableCollection<Recipe> LoadFromJsonFile(string fileName, string folderPath, string cuisineType)
         {
-            ObservableCollection<Recipe> recipes = _jsonFileManager.ReadFromJsonFile<ObservableCollection<Recipe>>(fileName, folderPath);
+            ObservableCollection<Recipe> recipes = _jsonFileManager.ReadFromJsonFile<ObservableCollection<Recipe>>(fileName, folderPath, cuisineType);
             return recipes;
         }
 
-        public List<string> GetJsonFiles()
+        public List<string> GetJsonFiles( string cuisineType = "")
         {
 
             // Get the physical path to the wwwroot directory
-            var wwwRootPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
+            var wwwRootPath = Path.Combine(_environment.WebRootPath, "JsonFiles", cuisineType);
 
             // Check if the directory exists
             if (!Directory.Exists(wwwRootPath))
@@ -168,15 +201,16 @@ namespace EdamanFluentApi.Services.Implementations
             }
 
             // Get the list of files in the JsonFiles directory
-            var files = Directory.GetFiles(wwwRootPath);
+            var files = Directory.GetFiles(wwwRootPath, "", SearchOption.AllDirectories);
 
             // Extract filenames from full paths
             var filenames = new List<string>();
             foreach (var file in files)
             {
-                filenames.Add(Path.GetFileNameWithoutExtension(file));
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                string directoryName = new DirectoryInfo(Path.GetDirectoryName(file)).Name;
+                filenames.Add($"({directoryName}) {fileName}");
             }
-
             return filenames;
         }
     }

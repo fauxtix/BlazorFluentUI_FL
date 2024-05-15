@@ -1,55 +1,76 @@
-﻿using EdamanFluentApi.Services.Interfaces;
+﻿using EdamanFluentApi.Models.Recipes;
+using EdamanFluentApi.Services.Interfaces;
 using Newtonsoft.Json;
 
 namespace EdamanFluentApi.Services.Implementations
 {
     public class JsonFileManager : IJsonFileManager
     {
-        private readonly string _folderPath;
-        public JsonFileManager(IWebHostEnvironment environment)
+        public void WriteToJsonFile<T>(string fileName, string folderPath, string cuisineType, T data)
         {
-            _folderPath = Path.Combine(environment.WebRootPath, "JsonFiles");
-
-            if (!Directory.Exists(_folderPath))
+            string filePath;
+            if (string.IsNullOrEmpty(cuisineType))
             {
-                Directory.CreateDirectory(_folderPath);
+                cuisineType = "General";
+                int closingParenthesisIndex = fileName.IndexOf(')');
+                if (closingParenthesisIndex != -1)
+                {
+                    fileName = fileName.Substring(closingParenthesisIndex + 2);
+                }
             }
-        }
-        public void WriteToJsonFile<T>(string filePath, T data)
-        {
+            filePath = Path.Combine(folderPath, cuisineType, fileName);
+            string directoryName = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
             string json = JsonConvert.SerializeObject(data);
             File.WriteAllText(filePath, json);
         }
 
-        public T ReadFromJsonFile<T>(string filePath)
+        public T ReadFromJsonFile<T>(string fileName, string folderPath, string cuisineType)
         {
+            if (string.IsNullOrEmpty(cuisineType))
+            {
+                var strippedFilename = StripFileNameAndCuisineType(fileName);
+                cuisineType = strippedFilename.type;
+                fileName = strippedFilename.filename;
+            }
+            string filePath = Path.Combine(folderPath, cuisineType, fileName);
             string json = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        public void WriteToJsonFile<T>(string fileName, string folderPath, T data)
+        public bool JsonFileExists(string fileName, string folderPath, string cuisineType)
         {
-            string filePath = Path.Combine(folderPath, fileName);
-            string json = JsonConvert.SerializeObject(data);
-            File.WriteAllText(filePath, json);
-        }
-
-        public T ReadFromJsonFile<T>(string fileName, string folderPath)
-        {
-            string filePath = Path.Combine(folderPath, fileName);
-            string json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-
-        public bool JsonFileExists(string filePath)
-        {
+            if (string.IsNullOrEmpty(cuisineType))
+            {
+                var strippedFilename = StripFileNameAndCuisineType(fileName);
+                cuisineType = strippedFilename.type;
+                fileName = strippedFilename.filename;
+            }
+            string filePath = Path.Combine(folderPath, cuisineType, fileName);
             return File.Exists(filePath);
         }
 
-        public bool JsonFileExists(string fileName, string folderPath)
+        private (string filename, string type) StripFileNameAndCuisineType(string fileName)
         {
-            string filePath = Path.Combine(folderPath, fileName);
-            return File.Exists(filePath);
+            string cuisineType = "";
+            int openingParenthesisIndex = fileName.IndexOf('(');
+            if ((openingParenthesisIndex >=0))
+            {
+                int closingParenthesisIndex = fileName.IndexOf(')');
+                cuisineType = fileName.Substring(openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1);
+
+                int closingfFileNameParenthesisIndex = fileName.IndexOf(')');
+                fileName = fileName.Substring(closingfFileNameParenthesisIndex + 2);
+            }
+            else
+            {
+                cuisineType = "General";
+            }
+            return (fileName, cuisineType);
+
         }
     }
 }

@@ -13,13 +13,19 @@ else
 
     <div class="d-lg-flex justify-lg-content-center align-items-lg-center lh-lg gap-2">
         <FluentNumberField @bind-Value=maxTries Label="Results"
-                           Appearance="FluentInputAppearance.Outline" 
-                           Min="0" Max="@maxTries.ToString()" Step="5"></FluentNumberField>
+                           Appearance="FluentInputAppearance.Outline"
+                           Min="0" Max="@configMaxTries.ToString()" Step="5"></FluentNumberField>
         <FluentCombobox Items="@jsonFiles"
                         Appearance="Appearance.Outline" 
                         Placeholder="<Select>"
                         Label="Saved searches" 
                         @bind-Value="@SearchValue"></FluentCombobox>
+        <FluentCombobox Items="@cuisineTypes"
+                        Appearance="Appearance.Outline"
+                        Placeholder="<Select>"
+                        Label="Cuisine type"
+                        @bind-Value="@selectedCuisineType"></FluentCombobox>
+
         <FluentSearch @ref=searchQuery
                       @bind-Value="SearchValue"
                       @bind-Value:after="HandleClear" Placeholder="Keyword(s)"
@@ -29,6 +35,11 @@ else
                       @onclick="OnSearch" >
             Search
         </FluentButton>
+        <FluentButton IconStart="@(new Icons.Regular.Size16.ClearFormatting())" Appearance="Appearance.Accent" BackgroundColor="stellcase" Color="white" Style="border-radius:22px;"
+                      @onclick="RefreshPage">
+            Refresh
+        </FluentButton>
+
         <div hidden="@(!isLoading)">
             <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
                 <Spinner IsVisible="@isLoading" />

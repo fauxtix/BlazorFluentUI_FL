@@ -14,16 +14,21 @@ namespace EdamanFluentApi.Components.Pages
         [Inject] public IRecipesService recipeService { get; set; }
         [Inject] public ILogger<App> Logger { get; set; }
         [Inject] IConfiguration _config { get; set; }
+        [Inject] NavigationManager NavigationManager{ get; set; }
 
         protected ObservableCollection<Recipe> recipes = new();
+        protected List<string> cuisineTypes = new();
         protected string recipeUrl = string.Empty;
-        protected string? SelectedItem { get; set; }
+        protected string SelectedItem { get; set; } = string.Empty;
         protected FluentSearch searchQuery;
         private string searchValue = string.Empty;
         private int maxTries;
+        private int defaultTries = 25;
         private string configMaxTries;
         protected bool isLoading = false;
         protected List<string> jsonFiles = new();
+        protected List<CuisineType> cuisines = new();
+        protected string selectedCuisineType = string.Empty;
 
         private string SearchValue
         {
@@ -41,9 +46,16 @@ namespace EdamanFluentApi.Components.Pages
         {
             jsonFiles = recipeService.GetJsonFiles();
             configMaxTries = _config["EdamanAPISettings:Recipes:TO_LIMIT"];
-            maxTries = int.Parse(configMaxTries);
+            maxTries = 25; // default
+            cuisineTypes.Clear();
+            cuisineTypes.Add("All");
+            cuisineTypes.AddRange( recipeService.GetCuisineTypes());
         }
 
+        protected void RefreshPage()
+        {
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
         private void ScrollTop()
         {
             // JS interop call to perform scroll top
@@ -56,7 +68,7 @@ namespace EdamanFluentApi.Components.Pages
                 ShowToast("Please fill the recipe(s) to search");
                 return;
             }
-
+            
             recipes.Clear();
             try
             {
@@ -79,7 +91,7 @@ namespace EdamanFluentApi.Components.Pages
             try
             {
                 isLoading = true;
-                var output = await recipeService.SearchRecipes(query, "", "", maxTries.ToString());
+                var output = await recipeService.SearchRecipes(query, "", "", maxTries.ToString(), selectedCuisineType);
                 isLoading = false;
                 return output;
 

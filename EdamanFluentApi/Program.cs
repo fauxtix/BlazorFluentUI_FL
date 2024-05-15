@@ -2,9 +2,8 @@ using EdamanFluentApi.Components;
 using EdamanFluentApi.Services.Implementations;
 using EdamanFluentApi.Services.Interfaces;
 using Microsoft.FluentUI.AspNetCore.Components;
-using Microsoft.AspNetCore.DataProtection;
 
-const string BaseURL = "https://api.edamam.com";
+//const string BaseURL = "https://api.edamam.com";
 
 var builder = WebApplication.CreateBuilder(args);
 
