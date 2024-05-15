@@ -5,7 +5,7 @@
 
 ## Educational Purpose
 
-This project was developed as a means to learn and explore the capabilities of Blazor Fluent UI. While the primary objective was to access the Edaman API for recipe data, the focus was equally on leveraging various Fluent UI components and patterns.
+This project was developed as a way of learning and exploring the capabilities of Blazor Fluent UI. The main objective is to get to know and experiment with the various components and standards of Blazor Fluent UI; the Edaman API was used to obtain recipe data (to test the frontend).
 
 ### Learning Objectives
 
@@ -27,7 +27,7 @@ Please note that this project is currently a work in progress. While it provides
   ---
 ## Overview
 
-Edaman API with Fluent UI is a web application that utilizes the Edaman API to provide recipe search functionality and access to a comprehensive food database. Built with Blazor Fluent UI, this application offers a user-friendly interface for searching, browsing, and saving favorite recipes.
+**Blazor Fluent UI with Edaman API** is a web application that utilizes the Edaman API to provide _recipe search_ functionality and access to a comprehensive _food database_. Built with Blazor Fluent UI, this application offers a user-friendly interface for searching, browsing, and saving favorite recipes.
 
 ## Features
 
@@ -61,8 +61,8 @@ To install the Edaman API with Fluent UI locally, follow these steps:
 3. **Install Dependencies:**
    dotnet restore
 
-4. **Update appsettings.json**
-   Include your Edaman APP_ID and API_KEY
+4. **Update appsettings.json:**
+   Include your Edaman APP_ID and API_KEY keys
    
 5. **Run Application:**
    dotnet run
