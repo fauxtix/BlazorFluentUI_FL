@@ -1,4 +1,4 @@
-﻿namespace EdamanFluentApi.Services.Interfaces
+﻿namespace EdamanFluentApi.Services.Interfaces.Edaman
 {
     public interface IAutoCompleteFoodDatabaseService
     {

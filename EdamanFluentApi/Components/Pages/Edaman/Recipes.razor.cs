@@ -1,12 +1,12 @@
 using EdamanFluentApi.Models.Recipes;
-using EdamanFluentApi.Services.Interfaces;
+using EdamanFluentApi.Services.Interfaces.Edaman;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Collections.ObjectModel;
 
-namespace EdamanFluentApi.Components.Pages
+namespace EdamanFluentApi.Components.Pages.Edaman
 {
     public partial class Recipes
     {
@@ -14,7 +14,7 @@ namespace EdamanFluentApi.Components.Pages
         [Inject] public IRecipesService recipeService { get; set; }
         [Inject] public ILogger<App> Logger { get; set; }
         [Inject] IConfiguration _config { get; set; }
-        [Inject] NavigationManager NavigationManager{ get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
 
         protected ObservableCollection<Recipe> recipes = new();
         protected List<string> cuisineTypes = new();
@@ -23,7 +23,6 @@ namespace EdamanFluentApi.Components.Pages
         protected FluentSearch searchQuery;
         private string searchValue = string.Empty;
         private int maxTries;
-        private int defaultTries = 25;
         private string configMaxTries;
         protected bool isLoading = false;
         protected List<string> jsonFiles = new();
@@ -49,7 +48,7 @@ namespace EdamanFluentApi.Components.Pages
             maxTries = 25; // default
             cuisineTypes.Clear();
             cuisineTypes.Add("All");
-            cuisineTypes.AddRange( recipeService.GetCuisineTypes());
+            cuisineTypes.AddRange(recipeService.GetCuisineTypes());
         }
 
         protected void RefreshPage()
@@ -68,7 +67,7 @@ namespace EdamanFluentApi.Components.Pages
                 ShowToast("Please fill the recipe(s) to search");
                 return;
             }
-            
+
             recipes.Clear();
             try
             {

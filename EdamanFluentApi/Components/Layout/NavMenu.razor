@@ -5,8 +5,14 @@
     <nav class="sitenav" aria-labelledby="main-menu" onclick="document.getElementById('navmenu-toggle').click();">
         <FluentNavMenu Id="main-menu" Collapsible="true" Width="250" Title="Navigation menu" @bind-Expanded="expanded" >
             <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
+            <FluentDivider Role="DividerRole.Separator" Orientation="Orientation.Horizontal"></FluentDivider>
             <FluentNavLink Href="/recipes" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Food())" IconColor="Color.Accent">Recipes</FluentNavLink>
             <FluentNavLink Href="/fooddatabase" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Database())" IconColor="Color.Accent">Food database</FluentNavLink>
+            <FluentDivider Role="DividerRole.Separator" Orientation="Orientation.Horizontal"></FluentDivider>
+            <FluentNavLink Href="/youtubemanager" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Database())" IconColor="Color.Accent">Youtube</FluentNavLink>
+            <FluentDivider Role="DividerRole.Separator" Orientation="Orientation.Horizontal"></FluentDivider>
+            <FluentNavLink Href="/settings" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Database())" IconColor="Color.Accent">Settings</FluentNavLink>
+
         </FluentNavMenu>
     </nav>
 </div>

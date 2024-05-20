@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
-<FluentLayout>
+@rendermode InteractiveServer
+<FluentLayout Style="background-color: var(--neutral-layer-1);
+                    color: var(--neutral-foreground-rest);">
     <FluentHeader>
         Edaman Api using Blazor Fluent UI
     </FluentHeader>
@@ -20,4 +22,8 @@
 </FluentLayout>
 
 <FluentToastProvider />
+<FluentDialogProvider/>
+<FluentDesignTheme StorageName="theme" />
+<FluentTooltipProvider />
+<FluentMessageBarProvider />
 

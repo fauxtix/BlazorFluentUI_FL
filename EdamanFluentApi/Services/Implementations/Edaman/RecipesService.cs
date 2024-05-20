@@ -1,11 +1,11 @@
 ﻿using EdamanFluentApi.Models.Recipes;
-using EdamanFluentApi.Services.Interfaces;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-namespace EdamanFluentApi.Services.Implementations
+using EdamanFluentApi.Services.Interfaces.Edaman;
+namespace EdamanFluentApi.Services.Implementations.Edaman
 {
     public class RecipesService : IRecipesService
     {
@@ -87,7 +87,7 @@ namespace EdamanFluentApi.Services.Implementations
                 }
                 else
                 {
-                    if(!string.IsNullOrEmpty(cuisineType) && cuisineType != "All")
+                    if (!string.IsNullOrEmpty(cuisineType) && cuisineType != "All")
                     {
                         search = "/search?q=" + ingredient + $"&cuisineType={cuisineType}" + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
 
@@ -187,7 +187,7 @@ namespace EdamanFluentApi.Services.Implementations
             return recipes;
         }
 
-        public List<string> GetJsonFiles( string cuisineType = "")
+        public List<string> GetJsonFiles(string cuisineType = "")
         {
 
             // Get the physical path to the wwwroot directory

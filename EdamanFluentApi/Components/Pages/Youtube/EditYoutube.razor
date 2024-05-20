@@ -1,0 +1,221 @@
+﻿@page "/fluentdialog"
+
+@using EdamanFluentApi.Models.Youtube.Dtos
+@using EdamanFluentApi.Services.Interfaces.Youtube
+@using static EdamanFluentApi.Data.Enums.AppDefinitions
+
+@if (categoryList == null || formatList == null)
+{
+    <Spinner IsVisible=@isLoadingData />
+}
+else
+{
+    <div class="row mb-2" style="width:100%;">
+        <div class="col-md-12">
+            @* Header *@
+            <FluentDialogHeader ShowDismiss="true">
+                <FluentStack VerticalAlignment="VerticalAlignment.Center">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Airplane())" />
+                    <FluentLabel Typo="Typography.PaneHeader">
+                        @SelectedRecord.FileName
+                    </FluentLabel>
+                </FluentStack>
+            </FluentDialogHeader>
+
+            @* Body *@
+            <FluentDialogBody>
+                <EditForm Model="@SelectedRecord" OnValidSubmit="ValidHandlerAsync">
+                    <div class="d-flex gap-2">
+                        <FluentTextField Label="Youtube Url: *"
+                                         Placeholder="Url"
+                                         Required
+                                         @bind-Value="@SelectedRecord.FileUrl" />
+
+                        <FluentButton Appearance="Appearance.Accent"
+                                      OnClick="@GetMetadata">
+                            Get metadata
+                        </FluentButton>
+                    </div>
+                    <div hidden="@(hideLowerDiv)" class="e-youtube-form">
+                        <div class="row m-2">
+                            <div class="img-box">
+                                @if (!string.IsNullOrEmpty(SelectedRecord.CoverFile))
+                                {
+                                    <img class="img-fluid img-thumbnail" alt=""
+                                         src="@SelectedRecord.CoverFile" />
+                                }
+                                else
+                                {
+                                    <img class="img-fluid img-thumbnail" alt=""
+                                         src="/images/No_Image_Available.jpg" />
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+                </EditForm>
+            </FluentDialogBody>
+
+            @* Footer *@
+            <FluentDialogFooter>
+                <FluentButton Appearance="Appearance.Accent"
+                              OnClick="@AddOrSaveRecord">
+                    Save
+                </FluentButton>
+            </FluentDialogFooter>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter] public MediaVM SelectedRecord { get; set; }
+    [Parameter] public int CurrentCategory { get; set; }
+    [Parameter] public bool EditMode { get; set; }
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    [Inject] public IFormatos_MediaService FormatosService { get; set; }
+    [Inject] public NavigationManager NavigationManager { get; set; }
+
+    [Inject] public IYoutubeService YoutubeService { get; set; }
+    [Inject] public ICategoriasService CategoriasService { get; set; }
+    [Inject] public IGetYoutubeVideoMetadata YoutubeMetadataService { get; set; }
+
+    private IEnumerable<FormatoMediaVM> formatList;
+    private IEnumerable<CategoryVM> categoryList;
+
+    private bool isLoadingData = false;
+    private bool AcceptToCreate = false;
+    private bool Loading = false;
+
+    protected DateTime transDate;
+
+    private bool showAlertMessage = false;
+    private bool DisableSaveButton = true;
+    private string alertMessage = "";
+    private bool hideLowerDiv = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task ValidHandlerAsync()
+    {
+        Loading = true;
+
+        // Simulate asynchronous loading
+        await Task.Delay(1000);
+
+        Loading = false;
+    }
+    private async Task LoadData()
+    {
+        formatList = await FormatosService.Listar();
+        categoryList = await CategoriasService.AllAsync(CategoryType.Media); // true = Publicacoes, false = Media
+
+    }
+
+    public async Task AddOrSaveRecord()
+    {
+        if (EditMode)
+        {
+            await UpdateRecord();
+        }
+        else
+        {
+            await InsertRecord();
+        }
+
+        await InformUserAndRefreshGrid();
+    }
+
+
+    private async Task InsertRecord()
+    {
+        await YoutubeService.AddMediaAsync(SelectedRecord);
+        StateHasChanged();
+        await Task.Delay(100);
+        //await ToastObj.ShowAsync();
+    }
+
+    private async Task UpdateRecord()
+    {
+        await YoutubeService.UpdateMediaAsync(SelectedRecord);
+        // ToastContent = InsertUpdateOk ? localizerApp["SuccessUpdate"] : localizerApp["FalhaGravacaoRegisto"];
+        // ToastTitle = localizerApp["editionMsg"];
+        // ToastTimeOut = 3000;
+    }
+
+    private async Task InformUserAndRefreshGrid()
+    {
+        // YouTubePlayerDialogVisibility = false;
+        // EditMediaDialogVisibility = false;
+        // YouTubeDialogVisibility = false;
+        // StateHasChanged();
+
+        // await Task.Delay(200);
+        // await ToastObj.ShowAsync();
+
+        // await SpinnerObj.ShowAsync();
+
+        await LoadData();
+        // await SpinnerObj.HideAsync();
+    }
+
+    private async Task GetMetadata()
+    {
+        showAlertMessage = false;
+        alertMessage = "";
+        if (!string.IsNullOrEmpty(SelectedRecord.FileUrl))
+        {
+            int indexPos = SelectedRecord.FileUrl.IndexOf("v=") + 2;
+            string videoId = SelectedRecord.FileUrl.Substring(indexPos);
+            var videoMetadata = await YoutubeMetadataService.GetVideoMetadata(videoId);
+
+            if (videoMetadata is not null)
+            {
+                if (SelectedRecord.Id == 0) // Create new entry, try to fill the form Fields
+                {
+                    var categoriasMedia = (await CategoriasService.GetCategoriesWithMediaEntries()).ToList();
+                    var idCategoriaMedia = (byte)categoriasMedia.SingleOrDefault(f => f.Descricao.ToLower().Contains("other")).Id;
+
+                    var formatosMedia = (await FormatosService.GetAllAsync()).ToList();
+                    var idFormatoMedia = formatosMedia.SingleOrDefault(f => f.Descricao.ToLower().Contains("url")).Id;
+                    SelectedRecord.AnoEdicao = videoMetadata.PublicationDate.Value.Year.ToString();
+                    SelectedRecord.Autor = videoMetadata.ChannelTitle;
+                    SelectedRecord.FileName = videoMetadata.Title;
+                    SelectedRecord.Tempo = videoMetadata.Duration;
+                    SelectedRecord.IdGenero = idCategoriaMedia;
+                    SelectedRecord.IdFormato_Media = idFormatoMedia;
+                    SelectedRecord.Notas = videoMetadata.Description;
+                    transDate = videoMetadata.PublicationDate.Value;
+                    SelectedRecord.CoverFile = videoMetadata.Thumbnail ?? "";
+
+                    hideLowerDiv = false;
+                    DisableSaveButton = false;
+                    StateHasChanged();
+                }
+                else
+                {
+                    SelectedRecord.Tempo = videoMetadata.Duration;
+                }
+            }
+            else
+            {
+                showAlertMessage = true;
+                alertMessage = "Api não devolveu qualquer resultado";
+            }
+        }
+        else
+        {
+        }
+    }
+
+
+}

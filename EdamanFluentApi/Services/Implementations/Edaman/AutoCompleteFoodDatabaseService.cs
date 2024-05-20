@@ -1,7 +1,7 @@
-﻿using EdamanFluentApi.Services.Interfaces;
+﻿using EdamanFluentApi.Services.Interfaces.Edaman;
 using Newtonsoft.Json;
 
-namespace EdamanFluentApi.Services.Implementations
+namespace EdamanFluentApi.Services.Implementations.Edaman
 {
     public class AutoCompleteFoodDatabaseService : IAutoCompleteFoodDatabaseService
     {

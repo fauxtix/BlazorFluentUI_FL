@@ -1,8 +1,8 @@
 ﻿using EdamanFluentApi.Models.Recipes;
-using EdamanFluentApi.Services.Interfaces;
+using EdamanFluentApi.Services.Interfaces.Edaman;
 using Newtonsoft.Json;
 
-namespace EdamanFluentApi.Services.Implementations
+namespace EdamanFluentApi.Services.Implementations.Edaman
 {
     public class JsonFileManager : IJsonFileManager
     {
@@ -57,7 +57,7 @@ namespace EdamanFluentApi.Services.Implementations
         {
             string cuisineType = "";
             int openingParenthesisIndex = fileName.IndexOf('(');
-            if ((openingParenthesisIndex >=0))
+            if (openingParenthesisIndex >= 0)
             {
                 int closingParenthesisIndex = fileName.IndexOf(')');
                 cuisineType = fileName.Substring(openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1);

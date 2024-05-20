@@ -1,21 +1,39 @@
 using EdamanFluentApi.Components;
-using EdamanFluentApi.Services.Implementations;
-using EdamanFluentApi.Services.Interfaces;
+using EdamanFluentApi.Data;
+using EdamanFluentApi.Mappings;
+using EdamanFluentApi.Repositories.Interfaces;
+using EdamanFluentApi.Services.Implementations.Edaman;
+using EdamanFluentApi.Services.Interfaces.Edaman;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
+
 
 //const string BaseURL = "https://api.edamam.com";
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+var connectionString = builder.Configuration.GetConnectionString("YoutubeDB");
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddDbContextFactory<YoutubeDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddAutoMapper(typeof(AppMappings));
+
 builder.Services.AddHttpClient();
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddDataGridEntityFrameworkAdapter();
+
 builder.Services.AddTransient<IRecipesService, RecipesService>();
 builder.Services.AddTransient<IFoodDatabaseService, FoodDatabaseService>();
 builder.Services.AddTransient<IAutoCompleteFoodDatabaseService, AutoCompleteFoodDatabaseService>();
 builder.Services.AddTransient<IJsonFileManager, JsonFileManager>();
+
+builder.Services.AddTransient<IYoutubeService, YoutubeService>();
+builder.Services.AddScoped<IYoutubeRepository, YoutubeRepository>();
 
 var app = builder.Build();
 

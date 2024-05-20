@@ -1,11 +1,11 @@
 using EdamanFluentApi.Model.FoodDatabase;
-using EdamanFluentApi.Services.Interfaces;
+using EdamanFluentApi.Services.Interfaces.Edaman;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace EdamanFluentApi.Components.Pages
+namespace EdamanFluentApi.Components.Pages.Edaman
 {
     public partial class FoodDatabase
     {

@@ -1,6 +1,6 @@
 ﻿using EdamanFluentApi.Model.FoodDatabase;
 
-namespace EdamanFluentApi.Services.Interfaces
+namespace EdamanFluentApi.Services.Interfaces.Edaman
 {
     public interface IFoodDatabaseService
     {

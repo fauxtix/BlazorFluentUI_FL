@@ -8,11 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="AutoMapper" Version="13.0.1" />
+	<PackageReference Include="FluentValidation" Version="11.9.1" />
+	<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
+	<PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3373" />
+	<PackageReference Include="Google.Apis.YouTube.v3" Version="1.68.0.3421" />
 	<PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.4" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.5" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
 	<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.*-* " />
+	<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.7.2" />
 	<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.6.0" />
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.*-* " />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\" />
   </ItemGroup>
 </Project>
