@@ -3,6 +3,7 @@ using System;
 using EdamanFluentApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EdamanFluentApi.Migrations.Youtube
 {
     [DbContext(typeof(YoutubeDbContext))]
-    partial class YoutubeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522113759_third")]
+    partial class third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
@@ -115,6 +118,9 @@ namespace EdamanFluentApi.Migrations.Youtube
                     b.Property<string>("Descricao")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("TipoCategoria")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
@@ -200,10 +206,15 @@ namespace EdamanFluentApi.Migrations.Youtube
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Descricao")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("CategoryTypes");
                 });
@@ -227,8 +238,17 @@ namespace EdamanFluentApi.Migrations.Youtube
                     b.Navigation("Formato_Media");
                 });
 
+            modelBuilder.Entity("EdamanFluentApi.Models.Youtube.Entities.TipoCategoria", b =>
+                {
+                    b.HasOne("EdamanFluentApi.Models.Youtube.Entities.Categoria", null)
+                        .WithMany("CategoryTypes")
+                        .HasForeignKey("CategoriaId");
+                });
+
             modelBuilder.Entity("EdamanFluentApi.Models.Youtube.Entities.Categoria", b =>
                 {
+                    b.Navigation("CategoryTypes");
+
                     b.Navigation("MediaFiles");
                 });
 

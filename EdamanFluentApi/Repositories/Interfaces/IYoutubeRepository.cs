@@ -5,6 +5,8 @@ namespace EdamanFluentApi.Repositories.Interfaces;
 
 public interface IYoutubeRepository : IRepository<Media>
 {
+    Task<IEnumerable<MediaVM>> GetMediaAsync();
+    Task<MediaVM> GetMediaFileByIdAsync(int id);
     Task<Media> GetMediaByTitle(string fileName);
     Task<IEnumerable<Formato_Media>> GetMediaFormats();
     Task<string> GetMediaFormat(int mediaId);
@@ -15,5 +17,5 @@ public interface IYoutubeRepository : IRepository<Media>
     Task<IEnumerable<VideoCategoryLocations>> GetAllMusicTitles();
     Task UpdateMediaFile_Cover(int Id, string coverUrl);
     Task<VideoCategoryLocations> GetMusicFile(int Id);
-    Task<IEnumerable<MediaVM>> GetMediaAsync();
+
 }

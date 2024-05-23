@@ -1,0 +1,42 @@
+﻿@implements Microsoft.FluentUI.AspNetCore.Components.IDialogContentComponent
+@if (Content is not null)
+{
+    <div class="d-flex gap-2">
+        <div class="row mb-2">
+            <div class="col-md-12">
+                @* Header *@
+                <FluentDialogHeader ShowDismiss="true">
+                    <FluentStack VerticalAlignment="VerticalAlignment.Center">
+                        <FluentIcon Value="@(new Icons.Regular.Size48.VideoClip())" />
+                        <FluentLabel Typo="Typography.PaneHeader">
+                            @(Content.SelectedRecord.Id > 0 ? Content.SelectedRecord.FileName : "New Youtube API search")
+                        </FluentLabel>
+                    </FluentStack>
+                </FluentDialogHeader>
+                <FluentDialogBody>
+                    <MediaPlayer SelectedRecord="Content.SelectedRecord" mediaFileName="@Content.SelectedRecord.FileUrl" />
+                </FluentDialogBody>
+                @* Footer *@
+                <FluentDialogFooter>
+                    <FluentButton Appearance="Appearance.Accent"
+                                  OnClick="@CancelAsync">
+                        Close
+                    </FluentButton>
+
+                </FluentDialogFooter>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
+    [Parameter] public YoutubeManager.MediaRecord Content { get; set; } = default!;
+
+    private async Task CancelAsync()
+    {
+        await Dialog.CancelAsync();
+    }
+
+}

@@ -2,8 +2,6 @@ using AutoMapper;
 using EdamanFluentApi.Models.Youtube.Dtos;
 using EdamanFluentApi.Models.Youtube.Entities;
 using EdamanFluentApi.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class YoutubeService : IYoutubeService
 {
@@ -116,5 +114,10 @@ public class YoutubeService : IYoutubeService
     public async Task<IEnumerable<MediaVM>> GetMediaAsync()
     {
         return await _youtubeRepository.GetMediaAsync();
+    }
+
+    public async Task<MediaVM> GetMediaFileByIdAsync(int id)
+    {
+        return await _youtubeRepository.GetMediaFileByIdAsync(id);
     }
 }

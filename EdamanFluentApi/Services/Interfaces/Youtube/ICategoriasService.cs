@@ -22,6 +22,6 @@ namespace EdamanFluentApi.Services.Interfaces.Youtube
         Task<IEnumerable<CategoryVM>> GetCategoriesWithMediaEntries();
         Task<List<CategoryVM>> Listar_Categoria_List(string sDescricao, bool CalledFromPubs);
         Task<List<CategoryVM>> Listar_Categoria(bool CalledFromPubs);
-        Task<IEnumerable<CategoryVM>> AllAsync(CategoryType category);
+        Task<IEnumerable<CategoryVM>> AllAsync();
     }
 }

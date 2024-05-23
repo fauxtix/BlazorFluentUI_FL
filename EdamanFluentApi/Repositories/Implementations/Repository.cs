@@ -1,8 +1,5 @@
 ﻿using EdamanFluentApi.Data;
-using EdamanFluentApi.Models.Youtube.Dtos;
-using EdamanFluentApi.Models.Youtube.Entities;
 using EdamanFluentApi.Repositories.Interfaces;
-using Google;
 using Microsoft.EntityFrameworkCore;
 
 namespace EdamanFluentApi.Repositories.Implementations;
@@ -22,10 +19,14 @@ public class Repository<T> : IRepository<T> where T : class
     {
         try
         {
-            return await _dbSet.ToListAsync();
+            var output = await _dbSet
+                .AsNoTracking()
+                .ToListAsync();
+            return output;
         }
         catch (Exception ex)
         {
+            var error = ex.Message;
             throw;
         }
     }

@@ -1,9 +1,12 @@
 using EdamanFluentApi.Components;
 using EdamanFluentApi.Data;
 using EdamanFluentApi.Mappings;
+using EdamanFluentApi.Repositories.Implementations;
 using EdamanFluentApi.Repositories.Interfaces;
 using EdamanFluentApi.Services.Implementations.Edaman;
+using EdamanFluentApi.Services.Implementations.Youtube;
 using EdamanFluentApi.Services.Interfaces.Edaman;
+using EdamanFluentApi.Services.Interfaces.Youtube;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -32,8 +35,16 @@ builder.Services.AddTransient<IFoodDatabaseService, FoodDatabaseService>();
 builder.Services.AddTransient<IAutoCompleteFoodDatabaseService, AutoCompleteFoodDatabaseService>();
 builder.Services.AddTransient<IJsonFileManager, JsonFileManager>();
 
+// youtube services
+builder.Services.AddTransient<IFormatos_MediaService, FormatosMediaService>();
+builder.Services.AddTransient<ICategoriasService, CategoriasService>();
+builder.Services.AddTransient<IGetYoutubeVideoMetadata, GetYoutubeVideoMetadata>();
 builder.Services.AddTransient<IYoutubeService, YoutubeService>();
+
+// youtube repositories
 builder.Services.AddScoped<IYoutubeRepository, YoutubeRepository>();
+builder.Services.AddScoped<IFormatos_MediaRepository, Formatos_MediaRepository>();
+builder.Services.AddScoped<ICategoriasRepository, CategoriasRepository>();
 
 var app = builder.Build();
 

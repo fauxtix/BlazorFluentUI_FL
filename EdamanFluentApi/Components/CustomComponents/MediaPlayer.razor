@@ -1,0 +1,41 @@
+﻿@using EdamanFluentApi.Models.Youtube.Dtos
+@if (!string.IsNullOrEmpty(Mp4_FileToPlay))
+{
+    <div class="d-flex flex-column p-2 align-content-center border border-info">
+
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="700" height="400"
+                    src="@Mp4_FileToPlay"
+                    class="embed-responsive-item"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
+            @*<iframe id="videoPlayer" class="embed-responsive-item" src="@Mp4_FileToPlay" allowfullscreen></iframe>*@
+        </div>
+    </div>
+}
+
+
+@code{
+    [Parameter] public MediaVM SelectedRecord { get; set; }
+    [Parameter] public string mediaFileName { get; set; }
+
+    protected string Mp4_FileToPlay = "";
+    protected override void OnParametersSet()
+    {
+        if (!string.IsNullOrEmpty(SelectedRecord.FileUrl))
+        {
+            Mp4_FileToPlay = DecodeYoutubeUrl(SelectedRecord.FileUrl);
+        }
+    }
+
+    private string DecodeYoutubeUrl(string url)
+    {
+        string output = url.Replace("watch?v=", "embed/");
+        return output;
+    }
+
+
+}

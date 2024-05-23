@@ -1,9 +1,15 @@
 ﻿@page "/youtubemanager"
 
 @using EdamanFluentApi.Models.Youtube.Dtos
+@using EdamanFluentApi.Services.Interfaces.Youtube
 
 @inject IYoutubeService youtubeService
+@inject IGetYoutubeVideoMetadata YoutubeMetadataService
+@inject IFormatos_MediaService FormatosService
+@inject ICategoriasService CategoriasService
 @inject IDialogService DialogService
+
+@rendermode InteractiveServer
 
 
 @if (items is null)
@@ -12,34 +18,46 @@
 }
 else
 {
-    <div class="col-lg-12">
-        <FluentButton Class="e-btn e-primary e-round-corner"
-                      @onclick="NotifyAddingYoutubeRecord">
-            New<i class="fa fa-youtube" />
-        </FluentButton>
-        <div>
+    <div class="col-lg-12 text-right">
+        <div class="d-flex justify-content-end my-3">
+            <FluentButton Class="e-btn e-primary e-round-corner"
+                          IconStart="@(new Icons.Regular.Size24.Add())"
+                          Appearance="Appearance.Accent"
+                          @onclick="NotifyAddingYoutubeRecord">
+                New<i class="fa fa-youtube" />
+            </FluentButton>
+        </div>
+        <div class="my-3">
+        <FluentDivider Orientation="Orientation.Horizontal" />
+        </div>
+        <div class="my-3">
             <FluentDataGrid Items="@items" Style="width: 100%;"
-                            Pagination="@pagination"
-                            RowClass="@rowClass" RowStyle="@rowStyle">
-                <TemplateColumn Tooltip="true" Title="Image" Style="width:80px">
-                    <img src="@(context.CoverFile)" alt="Flag of @(context.CoverFile)" width="72" height="72" />
+                            GenerateHeader="GenerateHeaderOption.Sticky"
+                            GridTemplateColumns="0.2fr 1.2fr 0.8fr 0.2fr 1fr 0.6fr"
+                            Pagination="@pagination" TGridItem="MediaVM">
+                <TemplateColumn Tooltip="true" Title="Image">
+                    <img class="cover" src="@(context.CoverFile)" alt="Image of @(context.CoverFile)" width="80" height="60" />
                 </TemplateColumn>
-                <FluentGridItem>
 
-                </FluentGridItem>
-                <PropertyColumn Property="@(c => c.FileName)" 
-                                Sortable="true" Filtered="!string.IsNullOrWhiteSpace(nameFilter)" Title="Title">
+                <PropertyColumn Property="@(c => c.FileName)"
+                                Sortable="true" Filtered="!string.IsNullOrWhiteSpace(nameFilter)" Title="Title" Tooltip="true"
+                                Style="font-weight:bold;">
                     <ColumnOptions>
                         <div class="search-box">
                             <FluentSearch Autofocus=true @bind-Value=nameFilter @oninput="HandleCountryFilter" @bind-Value:after="HandleClear" Placeholder="Search...." />
                         </div>
                     </ColumnOptions>
                 </PropertyColumn>
-                <PropertyColumn Property="@(c => c.Autor)" Sortable="true" Style="width:180px" Title="Author" />
-                <PropertyColumn Property="@(c => c.AnoEdicao)" Sortable="true" Style="width:80px" Title="Edition" />
-                <PropertyColumn Property="@(c => c.FormatoMedia)" Sortable="true" Style="width:180px" Title="Format" />
-                <PropertyColumn Property="@(c => c.Tempo)" Style="width:120px" Title="Duration" />
-                <PropertyColumn Property="@(c => c.Tamanho)" Style="width:120px" Title="Size (Kb)" />
+                <PropertyColumn Property="@(c => c.Autor)" Sortable="true" Title="Author" />
+                <PropertyColumn Property="@(c => c.AnoEdicao)" Sortable="true" Title="Edition" />
+                <PropertyColumn Property="@(c => c.Genero)" Sortable="true" Title="Category" />
+                <TemplateColumn Title="Actions" Align=Align.Center>
+                    <FluentStack>
+                        <FluentButton IconStart="@(new Icons.Regular.Size24.Edit())" Appearance="Appearance.Outline" OnClick="@( async () => await EditMediaRecord(context))" />
+                        <FluentButton IconStart="@(new Icons.Regular.Size24.Delete())" Appearance="Appearance.Outline" OnClick="@( async () => await DeleteMedia(context.Id, context.FileName))" />
+                        <FluentButton IconStart="@(new Icons.Regular.Size24.Play())" Appearance="Appearance.Outline" OnClick="@( async () => await PlayMedia(context))" />
+                    </FluentStack>
+                </TemplateColumn>
             </FluentDataGrid>
         </div>
     </div>
@@ -53,111 +71,25 @@ else
               CheckedMessage="Restore all results">
 </FluentSwitch>
 
-@code {
-    bool _clearItems = false;
-    protected IQueryable<MediaVM>? items { get; set; }
 
-    protected MediaVM SelectedRecord = new();
-
-    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
-    string nameFilter = string.Empty;
-    bool spinnerVisible;
-
-
-    GridSort<MediaVM> rankSort = GridSort<MediaVM>
-        .ByDescending(x => x.FileName);
-
-    Func<MediaVM, string?> rowClass = x => x.Id % 2 == 0 ? "highlighted-row" : null;
-
-    Func<MediaVM, string> rowStyle2 = x => $"height: 150px;";
-    Func<MediaVM, string?> rowStyle = x => x.Id % 2 == 0 ? "background-color: var(--highlight-bg);" : null;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await GetMediaFiles();
-    }
-
-    private void HandleCountryFilter(ChangeEventArgs args)
-    {
-        if (args.Value is string value)
-        {
-            nameFilter = value;
-        }
-    }
-
-    private void HandleClear()
-    {
-        if (string.IsNullOrWhiteSpace(nameFilter))
-        {
-            nameFilter = string.Empty;
-        }
-    }
-
-    private async Task ToggleItemsAsync()
-    {
-        if (_clearItems)
-        {
-            items = null;
-        }
-        else
-        {
-            await GetMediaFiles();
-        }
-    }
-
-    private async Task GetMediaFiles()
-    {
-        spinnerVisible = true;
-        var result = await youtubeService.GetMediaAsync();
-        items = result.AsQueryable();
-        spinnerVisible = false;
-    }
-
-    public async Task NotifyAddingYoutubeRecord()
-    {
-        int iFormato = await youtubeService.GetMediaFormatByDescription("A partir de URL");
-        int iGenero = await youtubeService.GetMediaCategoryByDescription("Tutorial - Vídeo - .Net");
-        SelectedRecord = new MediaVM()
-            {
-                Titulo = "",
-                DataMov = DateTime.Now,
-                TipoMedia = 1, // Default Audio -- doesn't work !!
-                Visualizado = true, // we'll assume that we've already listen/read the title about to be created
-                IdFormato_Media = iFormato,
-                IdGenero = iGenero
-            };
-
-        // blnEdit = false;
-        // CriarEditarMsg = localizerApp["NewMsg"] + " (Youtube)";
-
-        // YouTubeDialogVisibility = true;
-        // StateHasChanged();
-
-
-        DialogParameters<MediaVM> parameters = new()
-            {
-                Title = $"Hello {SelectedRecord.FileName}",
-                PrimaryAction = "Yes",
-                PrimaryActionEnabled = false,
-                SecondaryAction = "No",
-                Width = "500px",
-                Height = "500px",
-                Content = SelectedRecord,
-            };
-
-        //        var  dialog = await DialogService.ShowDialogAsync<FluentDialog>(parameters)
-        //DialogResult? result = await dialog.Result;
-    }
-
-}
 
 <style>
     fluent-data-grid-row:has([row-selected]) {
         background-color: var(--neutral-fill-stealth-hover)
     }
 
-    .flag {
-        height: 1rem;
+    .fluent-dialog-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border: solid;
+    }
+
+    .cover {
+        height: 4rem;
         margin: auto;
         border: 1px solid var(--neutral-layer-3);
     }

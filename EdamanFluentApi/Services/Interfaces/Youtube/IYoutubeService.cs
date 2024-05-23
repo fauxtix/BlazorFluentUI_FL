@@ -4,6 +4,9 @@ public interface IYoutubeService
 {
     Task AddMediaAsync(MediaVM media);
     Task DeleteMediaAsync(int id);
+    Task<IEnumerable<MediaVM>> GetMediaAsync();
+    Task<MediaVM> GetMediaFileByIdAsync(int id);
+
     Task<IEnumerable<MediaVM>> GetAllMediaAsync();
     Task<IEnumerable<VideoCategoryLocations>> GetAllMusicTitles();
     Task<MediaVM> GetMediaByIdAsync(int id);
@@ -17,6 +20,6 @@ public interface IYoutubeService
     Task<IEnumerable<VideoCategoryLocations>> GetVideoLocations(int categoryId);
     Task UpdateMediaAsync(MediaVM media);
     Task UpdateMediaFile_Cover(int id, string coverUrl);
-    Task<IEnumerable<MediaVM>> GetMediaAsync();
+
 
 }
