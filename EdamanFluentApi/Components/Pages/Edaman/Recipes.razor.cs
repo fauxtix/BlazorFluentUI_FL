@@ -15,7 +15,10 @@ namespace EdamanFluentApi.Components.Pages.Edaman
         [Inject] public ILogger<App> Logger { get; set; }
         [Inject] IConfiguration _config { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-
+        [Inject] IJsonFileManager _jsonFileManager { get; set; }
+        [Inject] IDialogService DialogService{ get; set; }
+        [Inject] IWebHostEnvironment _environment { get; set; }
+       
         protected ObservableCollection<Recipe> recipes = new();
         protected List<string> cuisineTypes = new();
         protected string recipeUrl = string.Empty;
@@ -41,6 +44,8 @@ namespace EdamanFluentApi.Components.Pages.Edaman
             }
         }
 
+
+
         protected override void OnInitialized()
         {
             jsonFiles = recipeService.GetJsonFiles();
@@ -55,10 +60,9 @@ namespace EdamanFluentApi.Components.Pages.Edaman
         {
             NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
         }
-        private void ScrollTop()
+        private async void ScrollTop()
         {
-            // JS interop call to perform scroll top
-            JSRuntime.InvokeVoidAsync("scrollToTop");
+            await JSRuntime.InvokeVoidAsync("scrollToTop");
         }
         protected async void OnSearch(MouseEventArgs args)
         {
@@ -92,6 +96,24 @@ namespace EdamanFluentApi.Components.Pages.Edaman
                 isLoading = true;
                 var output = await recipeService.SearchRecipes(query, "", "", maxTries.ToString(), selectedCuisineType);
                 isLoading = false;
+
+                string folderPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
+
+                var fileName = $"{query}.json";
+                bool fileExists = _jsonFileManager.JsonFileExists(fileName, folderPath, selectedCuisineType);
+                if (!fileExists)
+                {
+                    var title = "Edaman Recipes search";
+                    var dialog = await DialogService.ShowConfirmationAsync("Save in 'Favorites'?", "Yes", "No", title);
+                    var result = await dialog.Result;
+                    var canceled = result.Cancelled;
+                    if (!canceled)
+                    {
+                        SaveToJsonFile(fileName, folderPath, selectedCuisineType, output);
+
+                    }
+                }
+
                 return output;
 
             }
@@ -101,6 +123,11 @@ namespace EdamanFluentApi.Components.Pages.Edaman
                 ShowToast(ex.Message);
                 return [];
             }
+        }
+
+        private void SaveToJsonFile(string fileName, string folderPath, string cuisineType, ObservableCollection<Recipe> recipes)
+        {
+            _jsonFileManager.WriteToJsonFile(fileName, folderPath, cuisineType, recipes);
         }
 
         private void ShowToast(string message)

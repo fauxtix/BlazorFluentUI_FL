@@ -35,5 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="wwwroot\JsonFiles\" />
   </ItemGroup>
 </Project>

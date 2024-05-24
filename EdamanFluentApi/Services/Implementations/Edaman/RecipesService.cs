@@ -2,133 +2,113 @@
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using EdamanFluentApi.Services.Interfaces.Edaman;
+
 namespace EdamanFluentApi.Services.Implementations.Edaman
 {
     public class RecipesService : IRecipesService
     {
-        string BaseURL = string.Empty;
-        string APP_ID = string.Empty;
-        string API_KEY = string.Empty;
-        string FROM_LIMIT = string.Empty;
-        string TO_LIMIT = string.Empty;
-
-        protected ObservableCollection<Recipe> recipes;
-
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         private readonly ProtectedSessionStorage _sessionStorage;
         private readonly IJsonFileManager _jsonFileManager;
         private readonly IWebHostEnvironment _environment;
 
-        public RecipesService(HttpClient httpClient, IConfiguration config, ProtectedSessionStorage SessionStorage,
+        private readonly string _baseURL;
+        private readonly string _appID;
+        private readonly string _apiKey;
+        private readonly string _fromLimit;
+        private readonly string _toLimit;
+        private readonly ObservableCollection<Recipe> _recipes;
+
+        public RecipesService(HttpClient httpClient, IConfiguration configuration, ProtectedSessionStorage sessionStorage,
             IJsonFileManager jsonFileManager, IWebHostEnvironment environment)
         {
-            recipes = new ObservableCollection<Recipe>();
             _httpClient = httpClient;
-
-            _configuration = config;
-
-            BaseURL = _configuration["EdamanAPISettings:Recipes:BaseUrl"];
-            APP_ID = _configuration["EdamanAPISettings:Recipes:APP_ID"];
-            API_KEY = _configuration["EdamanAPISettings:Recipes:API_KEY"];
-            FROM_LIMIT = _configuration["EdamanAPISettings:Recipes:FROM_LIMIT"];
-            TO_LIMIT = _configuration["EdamanAPISettings:Recipes:TO_LIMIT"];
-
-            _httpClient.BaseAddress = new Uri(BaseURL);
-            _sessionStorage = SessionStorage;
+            _configuration = configuration;
+            _sessionStorage = sessionStorage;
             _jsonFileManager = jsonFileManager;
             _environment = environment;
+
+            _baseURL = _configuration["EdamanAPISettings:Recipes:BaseUrl"];
+            _appID = _configuration["EdamanAPISettings:Recipes:APP_ID"];
+            _apiKey = _configuration["EdamanAPISettings:Recipes:API_KEY"];
+            _fromLimit = _configuration["EdamanAPISettings:Recipes:FROM_LIMIT"];
+            _toLimit = _configuration["EdamanAPISettings:Recipes:TO_LIMIT"];
+
+            _httpClient.BaseAddress = new Uri(_baseURL);
+
+            _recipes = new ObservableCollection<Recipe>();
         }
 
-        private HttpClient BaseClient
-        {
-            get
-            {
-                return _httpClient;
-            }
-        }
-
-        public async Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient,
-                                                                      string diet,
-                                                                      string allergie,
-                                                                      string limit = "",
-                                                                      string cuisineType = "")
+        public async Task<ObservableCollection<Recipe>> SearchRecipes(string ingredient, string diet, string allergie, string limit = "", string cuisineType = "")
         {
             try
             {
-                if (string.IsNullOrEmpty(limit))
-                {
-                    limit = TO_LIMIT;
-                }
-
+                limit = string.IsNullOrEmpty(limit) ? _toLimit : limit;
                 string folderPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
+                string fileName = $"{ingredient}.json";
 
-                var fileName = $"{ingredient}.json";
-                bool fileExists = _jsonFileManager.JsonFileExists(fileName, folderPath, cuisineType);
-                if (fileExists)
+                if (_jsonFileManager.JsonFileExists(fileName, folderPath, cuisineType))
                 {
                     return LoadFromJsonFile(fileName, folderPath, cuisineType);
                 }
 
-                //var localstorageResults = await GetSearchedIngredientFromLocalStorage(ingredient);
-                //if (localstorageResults is not null)
-                //{
-                //    return localstorageResults;
-                //}
+                string searchQuery = BuildSearchQuery(ingredient, diet, allergie, limit, cuisineType);
+                HttpResponseMessage response = await _httpClient.GetAsync(searchQuery);
+                string json = await response.Content.ReadAsStringAsync();
 
-                string search = "";
-
-                if (diet.Equals("") && allergie.Equals("") && cuisineType.Equals(""))
+                if (string.IsNullOrEmpty(json))
                 {
-                    search = "/search?q=" + ingredient + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
+                    return null;
                 }
-                else
-                {
-                    if (!string.IsNullOrEmpty(cuisineType) && cuisineType != "All")
-                    {
-                        search = "/search?q=" + ingredient + $"&cuisineType={cuisineType}" + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
-
-                    }
-                    else if (!diet.Equals("") && !allergie.Equals(""))
-                    {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
-                    }
-                    else if (!diet.Equals(""))
-                    {
-                        search = "/search?q=" + ingredient + "&diet=" + diet + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
-                    }
-                    else search = "/search?q=" + ingredient + "&allergie=" + allergie + $"&app_id={APP_ID}&app_key={API_KEY}&from={FROM_LIMIT}&to={limit}";
-                }
-
-                var response = await BaseClient.GetAsync(string.Format(search, API_KEY,
-                   ingredient));
-
-                var json = await response.Content.ReadAsStringAsync();
-
-                if (string.IsNullOrEmpty(json)) return null;
 
                 var allRecipesResult = JsonConvert.DeserializeObject<Result>(json);
-
-                var result = new Result(allRecipesResult.hits);
-
-                for (int i = 0; i < result.hits.Count; i++)
+                foreach (var hit in allRecipesResult.hits)
                 {
-                    recipes.Add(result.hits[i].Recipe);
+                    _recipes.Add(hit.Recipe);
                 }
 
-                SaveToJsonFile(fileName, folderPath, cuisineType, recipes);
-                //await _sessionStorage.SetAsync(ingredient, recipes);
-
-                return recipes;
+                //await _sessionStorage.SetAsync(ingredient, _recipes);
+                return _recipes;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("EXCEPTION: " + ex);
+                Debug.WriteLine($"EXCEPTION: {ex}");
                 return null;
             }
+        }
+
+        private string BuildSearchQuery(string ingredient, string diet, string allergie, string limit, string cuisineType)
+        {
+            var queryParams = new List<string>
+            {
+                $"q={ingredient}",
+                $"app_id={_appID}",
+                $"app_key={_apiKey}",
+                $"from={_fromLimit}",
+                $"to={limit}"
+            };
+
+            if (!string.IsNullOrEmpty(cuisineType) && cuisineType.ToLower() != "all")
+            {
+                queryParams.Add($"cuisineType={cuisineType}");
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(diet))
+                {
+                    queryParams.Add($"diet={diet}");
+                }
+
+                if (!string.IsNullOrEmpty(allergie))
+                {
+                    queryParams.Add($"allergie={allergie}");
+                }
+            }
+
+            return $"/search?{string.Join("&", queryParams)}";
         }
 
         private async Task<ObservableCollection<Recipe>> GetSearchedIngredientFromLocalStorage(string ingredientKey)
@@ -136,18 +116,11 @@ namespace EdamanFluentApi.Services.Implementations.Edaman
             try
             {
                 var storedIngredientData = await _sessionStorage.GetAsync<ObservableCollection<Recipe>>(ingredientKey);
-                if (storedIngredientData.Success)
-                {
-                    return storedIngredientData.Value;
-                }
-                else
-                {
-                    return null; // Return null if no ingredient is stored locally
-                }
+                return storedIngredientData.Success ? storedIngredientData.Value : null;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error retrieving searched ingredient data from local storage: " + ex.Message);
+                Debug.WriteLine($"Error retrieving searched ingredient data from local storage: {ex.Message}");
                 return null;
             }
         }
@@ -156,26 +129,12 @@ namespace EdamanFluentApi.Services.Implementations.Edaman
         {
             return new List<string>
             {
-                "American",
-                "Asian",
-                "British",
-                "Caribbean" ,
-                "Central Euope",
-                "Chinese" ,
-                "Eastern Europe",
-                "French",
-                "Indian",
-                "Italian",
-                "Japanese",
-                "Kosher",
-                "Mediterranean",
-                "Mexican",
-                "Moddle Eastern",
-                "Nordic",
-                "South American",
-                "South East Asian"
+                "American", "Asian", "British", "Caribbean", "Central European", "Chinese", "Eastern European",
+                "French", "Indian", "Italian", "Japanese", "Kosher", "Mediterranean", "Mexican",
+                "Middle Eastern", "Nordic", "South American", "South East Asian"
             };
         }
+
         private void SaveToJsonFile(string fileName, string folderPath, string cuisineType, ObservableCollection<Recipe> recipes)
         {
             _jsonFileManager.WriteToJsonFile(fileName, folderPath, cuisineType, recipes);
@@ -183,35 +142,22 @@ namespace EdamanFluentApi.Services.Implementations.Edaman
 
         private ObservableCollection<Recipe> LoadFromJsonFile(string fileName, string folderPath, string cuisineType)
         {
-            ObservableCollection<Recipe> recipes = _jsonFileManager.ReadFromJsonFile<ObservableCollection<Recipe>>(fileName, folderPath, cuisineType);
-            return recipes;
+            return _jsonFileManager.ReadFromJsonFile<ObservableCollection<Recipe>>(fileName, folderPath, cuisineType);
         }
 
         public List<string> GetJsonFiles(string cuisineType = "")
         {
+            string wwwRootPath = Path.Combine(_environment.WebRootPath, "JsonFiles", cuisineType);
 
-            // Get the physical path to the wwwroot directory
-            var wwwRootPath = Path.Combine(_environment.WebRootPath, "JsonFiles", cuisineType);
-
-            // Check if the directory exists
             if (!Directory.Exists(wwwRootPath))
             {
-                // Handle the case when the directory does not exist
                 return new List<string>();
             }
 
-            // Get the list of files in the JsonFiles directory
-            var files = Directory.GetFiles(wwwRootPath, "", SearchOption.AllDirectories);
-
-            // Extract filenames from full paths
-            var filenames = new List<string>();
-            foreach (var file in files)
-            {
-                string fileName = Path.GetFileNameWithoutExtension(file);
-                string directoryName = new DirectoryInfo(Path.GetDirectoryName(file)).Name;
-                filenames.Add($"({directoryName}) {fileName}");
-            }
-            return filenames;
+            var files = Directory.GetFiles(wwwRootPath, "*", SearchOption.AllDirectories);
+            return files
+                .Select(file => $"({new DirectoryInfo(Path.GetDirectoryName(file)).Name}) {Path.GetFileNameWithoutExtension(file)}")
+                .ToList();
         }
     }
 }
