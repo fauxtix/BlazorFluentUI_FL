@@ -8,7 +8,7 @@ namespace EdamanFluentApi.Repositories.Implementations
 {
     public class CategoriasRepository : Repository<Categoria>, ICategoriasRepository
     {
-        protected new readonly YoutubeDbContext _context;
+        protected readonly YoutubeDbContext _context;
         public CategoriasRepository(YoutubeDbContext context) : base(context)
         {
             _context = context;

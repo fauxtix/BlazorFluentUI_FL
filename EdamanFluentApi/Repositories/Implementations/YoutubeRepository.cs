@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class YoutubeRepository : Repository<Media>, IYoutubeRepository
 {
-    protected new readonly YoutubeDbContext _context;
+    protected  readonly YoutubeDbContext _context;
     public YoutubeRepository(YoutubeDbContext context) : base(context)
     {
         _context = context;

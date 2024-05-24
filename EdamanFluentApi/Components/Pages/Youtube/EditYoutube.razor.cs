@@ -24,8 +24,7 @@ public partial class EditYoutube
     private IEnumerable<CategoryVM> categoryList;
 
     private bool isLoadingData = false;
-    private bool Loading = false;
-
+    private bool Loading;
     protected DateTime? transDate;
 
     private bool showAlertMessage = false;

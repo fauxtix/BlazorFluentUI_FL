@@ -10,7 +10,7 @@ namespace EdamanFluentApi.Repositories.Implementations
 {
     public class Formatos_MediaRepository : Repository<Formato_Media>, IFormatos_MediaRepository
     {
-        protected new readonly YoutubeDbContext _context;
+        protected readonly YoutubeDbContext _context;
         public Formatos_MediaRepository(YoutubeDbContext context) : base(context)
         {
             _context = context;

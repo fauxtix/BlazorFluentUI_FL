@@ -8,12 +8,23 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
 {
     public class GetYoutubeVideoMetadata : IGetYoutubeVideoMetadata
     {
+        private readonly IConfiguration _configuration;
+        private readonly string _apiKey;
+        private readonly string _appName;
+
+        public GetYoutubeVideoMetadata(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _apiKey = _configuration["YoutubeKeys:YouTubeApiKey"];
+            _appName = _configuration["YoutubeKeys:YouTubeApplicationName"];
+        }
+
         public async Task<YouTubeVideoDetails> GetVideoMetadata(string searchRequest_Id)
         {
             using (var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = Keys.YouTubeApiKey,
-                ApplicationName = Keys.YouTubeApplicationName,
+                ApiKey = _apiKey,
+                ApplicationName = _appName
             }))
             {
                 var searchRequest = youtubeService.Videos.List("snippet,contentDetails");
@@ -52,9 +63,8 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
         {
             using (var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = Keys.YouTubeApiKey,
-                ApplicationName = Keys.YouTubeApplicationName
-
+                ApiKey = _apiKey,
+                ApplicationName = _appName
             }))
             {
                 var searchListRequest = youtubeService.Search.List("snippet");
@@ -115,8 +125,8 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
             {
                 using (var YouTubeService = new YouTubeService(new BaseClientService.Initializer()
                 {
-                    ApiKey = Keys.YouTubeApiKey,
-                    ApplicationName = Keys.YouTubeApplicationName
+                    ApiKey = _apiKey,
+                    ApplicationName = _appName
 
                 }))
                 {
@@ -165,8 +175,8 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
             {
                 using (var youtubeService = new YouTubeService(new BaseClientService.Initializer()
                 {
-                    ApiKey = Keys.YouTubeApiKey,
-                    ApplicationName = Keys.YouTubeApplicationName
+                    ApiKey = _apiKey,
+                    ApplicationName = _appName
                 }))
                 {
                     // Construct a search query combining artist and song name
@@ -221,9 +231,8 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
             string duration = "";
             using (var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = Keys.YouTubeApiKey,
-                ApplicationName = Keys.YouTubeApplicationName
-
+                ApiKey = _apiKey,
+                ApplicationName = _appName
             }))
             {
 

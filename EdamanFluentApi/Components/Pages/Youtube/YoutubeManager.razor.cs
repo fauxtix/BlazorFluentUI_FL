@@ -1,11 +1,19 @@
 using EdamanFluentApi.Models.Youtube.Dtos;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
+using EdamanFluentApi.Services.Interfaces.Youtube;
 
 namespace EdamanFluentApi.Components.Pages.Youtube;
 
 public partial class YoutubeManager
 {
+    [Inject] IGetYoutubeVideoMetadata YoutubeMetadataService { get; set; }
+    [Inject] IFormatos_MediaService FormatosService { get; set; }
+    [Inject] ICategoriasService CategoriasService { get; set; }
+    [Inject] IYoutubeService YoutubeService { get; set; }
+
+    [Inject] IDialogService DialogService { get; set; }
+
     bool _clearItems = false;
     protected IQueryable<MediaVM> items { get; set; }
 
@@ -67,7 +75,7 @@ public partial class YoutubeManager
     private async Task GetMediaFiles()
     {
         spinnerVisible = true;
-        var result = await youtubeService.GetMediaAsync();
+        var result = await YoutubeService.GetMediaAsync();
         items = result.AsQueryable();
         spinnerVisible = false;
     }
@@ -134,8 +142,8 @@ public partial class YoutubeManager
     }
     public async Task NotifyAddingYoutubeRecord()
     {
-        int iFormato = await youtubeService.GetMediaFormatByDescription("A partir de URL");
-        int iGenero = await youtubeService.GetMediaCategoryByDescription("Tutorial - Vídeo - .Net");
+        int iFormato = await YoutubeService.GetMediaFormatByDescription("A partir de URL");
+        int iGenero = await YoutubeService.GetMediaCategoryByDescription("Tutorial - Vídeo - .Net");
 
         var mediaClassToUseInDialog = new MediaVM()
         {
@@ -186,10 +194,10 @@ public partial class YoutubeManager
         var canceled = result.Cancelled;
         if (!canceled)
         {
-            var mediaFile = await youtubeService.GetMediaByIdAsync(mediaId);
+            var mediaFile = await YoutubeService.GetMediaByIdAsync(mediaId);
             if (mediaFile is not null)
             {
-                await youtubeService.DeleteMediaAsync(mediaId);
+                await YoutubeService.DeleteMediaAsync(mediaId);
                 ShowToast("Record successfully deleted", ToastIntent.Success);
 
                 await GetMediaFiles();
