@@ -1,7 +1,7 @@
 # Brincando com Blazor Fluent UI usando as APIs Edaman e YouTube
 [Documentação](https://fluentui-blazor.net/)
 
-[Inglês](https://github.com/fauxtix/BlazorFluentUI_FL/edit/master/README.md)
+[Inglês](https://github.com/fauxtix/BlazorFluentUI_FL/blob/master//README.md)
 
 ## Propósito Educacional
 
