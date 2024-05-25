@@ -101,10 +101,6 @@ Open a web browser and go to `http://localhost:<port>`.
 4. **Explore Video Database:**
    Browse through the database to discover a wide range of videos covering various topics of interest. Videos from YouTube can be accessed and their information stored in a SQLite database for future reference.
 
-5. **Standard Features:**
-   The application includes standard features for searching and viewing recipes, exploring the food database, and accessing the video database.
-
-
 ## Technologies Used
 
 - Blazor Fluent UI
