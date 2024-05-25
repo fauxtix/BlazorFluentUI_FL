@@ -102,7 +102,7 @@ Abra um navegador da web e aceda a `http://localhost:<porta>`.
 - Blazor Fluent UI
 - .NET Core 8
 
-## Contribuidores
+## Contribuições
 
 - Fausto Luís (fauxtix.luix@hotmail.com)
 - Filipa Luís (filipaluis@gmail.com)
