@@ -35,7 +35,7 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 
 1. **API Edaman:** Esta aplicação utiliza a API Edaman para funcionalidade de _pesquisa de receitas_ e acesso a um _banco de dados de alimentos_ abrangente. Permite que os utilizadores pesquisem, naveguem e salvem as suas receitas favoritas.
 
-2. **API do YouTube:** A aplicação também integra a API do YouTube para navegar em qualquer vídeo no YouTube. Além disso, armazena conteúdo de vídeo num banco de dados SQLite para um fácil acesso.
+2. **API do YouTube:** A aplicação também integra a API do YouTube para navegar em qualquer vídeo no YouTube. Além disso, armazena conteúdo de vídeo numa base de dados SQLite para um fácil acesso.
 
 Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável para uma experiência culinária e multimídia aprimorada.
 
