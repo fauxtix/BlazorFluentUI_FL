@@ -1,67 +1,125 @@
-# Blazor Fluent UI with Edaman API
-[documentation](https://fluentui-blazor.net/)
+# Brincando com Blazor Fluent UI usando as APIs Edaman e YouTube
+[Documentação](https://fluentui-blazor.net/)
+
+[Português](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/README_PORTUGUESE.MD)
 
 ## Propósito Educacional
 
-Este projeto foi desenvolvido como uma forma de aprender e explorar as capacidades do Blazor Fluent UI. O objetivo principal é o de conhecer e experimentar os vários componentes e padrões do Blazor Fluent UI; foi usado a API Edaman, para obter dados de receitas (para testar o frontend).
+Este projeto foi desenvolvido como uma forma de aprender e explorar as capacidades do Blazor Fluent UI.
+O objetivo principal é conhecer e experimentar os vários componentes e padrões do Blazor Fluent UI.
+Além disso, a API do YouTube foi incorporada para ampliar o escopo de exploração, permitindo a experimentação com a integração de recursos multimídia na aplicação.
+As APIs Edaman e YouTube foram utilizadas para obter dados de receitas e conteúdo multimídia, respectivamente, para testar o frontend e explorar suas capacidades.
 
 ### Objetivos de Aprendizagem
 
 - Ganhar familiaridade com os componentes do Blazor Fluent UI e sua utilização.
 - Compreender como integrar APIs externas em aplicações Blazor.
-- Praticar a construção de interfaces web responsivas e amigáveis ao utilizador.
+- Praticar a construção de interfaces web responsivas e amigáveis ao usuário.
 - Explorar técnicas de visualização e apresentação de dados.
 
-## Trabalho em Curso
+## Trabalho em Progresso
 
 Por favor, note que este projeto está atualmente em desenvolvimento. Embora forneça funcionalidades básicas para pesquisa de receitas e acesso à API do Edaman, espera-se que evolua ao longo do tempo.
 
 ### Melhorias Futuras
 
 - **Componentes Adicionais:** O projeto pode incorporar novos componentes e recursos para melhorar a usabilidade e funcionalidade.
-- **Experiência do Utilizador Aprimorada:** Esforços serão feitos para melhorar a interface do utilizador e a experiência geral do utilizador.
-- **Correções de Bugs e Otimizações:** Quaisquer bugs relatados serão corrigidos, e otimizações de código serão realizadas para melhor desempenho.
+- **Experiência do Usuário Aprimorada:** Esforços serão feitos para melhorar a interface do usuário e a experiência geral do usuário.
+- **Correções de Bugs e Otimização:** Quaisquer bugs relatados serão corrigidos, e otimizações de código serão realizadas para melhor desempenho.
 
 ---
 
 ## Visão Geral
 
-O **EdamanApiWithFluentUI** é uma aplicação web, que utiliza a API do Edaman para fornecer funcionalidade de _pesquisa de receitas_, e acesso a uma _base de dados abrangente de alimentos_.
-Para o frontend foram usados componentes do Blazor Fluent UI; esta aplicação oferece uma interface amigável para pesquisa, navegação e oferece a possibilidade de guardar (em ficheiros .json) receitas favoritas.
+**Blazor Fluent UI_FL** é uma aplicação web que aproveita várias APIs para fornecer um recurso culinário abrangente.
+
+1. **API Edaman:** Esta aplicação utiliza a API Edaman para funcionalidade de _pesquisa de receitas_ e acesso a um _banco de dados de alimentos_ abrangente. Ele permite que os usuários pesquisem, naveguem e salvem suas receitas favoritas.
+
+2. **API do YouTube:** A aplicação também integra a API do YouTube para navegar em qualquer vídeo no YouTube. Além disso, armazena conteúdo de vídeo em um banco de dados SQLite para acesso fácil.
+
+Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável para uma experiência culinária e multimídia aprimorada.
 
 ## Recursos
 
-- **Pesquisa de Receitas:** Os utilizadores podem pesquisar receitas com base em palavras-chave, ingredientes ou preferências alimentares. As escolhas do utilizador para salvar pesquisas de receitas favoritas são armazenadas em arquivos JSON para fácil acesso e recuperação.
-- **Detalhes da Receita:** Clique no botão 'Preparation' no 'card', e navegue até ao site 'source' para visualizar informações detalhadas, incluindo ingredientes, instruções e factos nutricionais.
-- **Explorar Base de Dados de Alimentos:** Navegue pela base de dados de alimentos para descobrir novos ingredientes, receitas e informações nutricionais.
+- **Pesquisa de Receitas:** Os usuários podem pesquisar receitas com base em palavras-chave, ingredientes ou preferências alimentares. As escolhas do usuário para salvar pesquisas de receitas favoritas são armazenadas em arquivos JSON para fácil acesso e recuperação.
+- **Base de Dados de Alimentos:** Acesso a uma vasta base de dados de ingredientes, informações nutricionais e receitas.
+- **Interface Amigável:** Design intuitivo e navegação para uma experiência de usuário perfeita.
+- **Design Responsivo:** A aplicação é otimizada para vários tamanhos de tela e dispositivos.
+- **Respostas Rápidas:** Os usuários podem selecionar receitas de pesquisas anteriores, evitando viagens à API do Edaman, permitindo pesquisas offline para acesso rápido.
+- **Pesquisa de Vídeo do YouTube:** Os usuários podem navegar e assistir a qualquer vídeo no YouTube.
+- **Armazenamento de Banco de Dados de Vídeo:** URLs de vídeo podem ser armazenados em um banco de dados SQLite, permitindo que os usuários acompanhem vídeos que chamaram sua atenção, estão marcados como favoritos ou úteis.
 
-## Funcionalidades Adicionais
-
-- **Explorar Base de Dados de Vídeos:** Navegue pela base de dados para descobrir uma vasta gama de vídeos sobre diversos tópicos de interesse. Os vídeos do YouTube podem ser acessados e suas informações armazenadas em um banco de dados SQLite para referência futura.
-
-## Funcionalidades Padrão
-
-A aplicação inclui funcionalidades padrão para pesquisa e visualização de receitas, exploração da base de dados de alimentos e acesso à base de dados de vídeos.
-
-## Capturas de Ecrã
+## Capturas de Tela
 
 ![Pesquisa de Receitas](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/e5f0c4f2-158f-4a08-81ed-c8c342fd2469)
-*Pesquisa de Receitas*
-
 ![Resultado da Pesquisa de Receitas](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/f1d5bc1a-1866-4413-9d0a-a763cdb9b80c)
-*Resultado da Pesquisa de Receitas*
 
+**Pesquisa de Receitas**
+***
 ![Pesquisa da Base de Dados de Alimentos](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/de5d9040-4905-496e-930c-d8d990eb11fe)
-*Pesquisa da Base de Dados de Alimentos*
 
----
-
+**Pesquisa da Base de Dados de Alimentos**
+***
 ## Instalação
 
-Para instalar o Edaman API com Fluent UI localmente, siga estes passos:
+Para instalar a API Edaman com Fluent UI localmente, siga estas etapas:
 
-1. **Clonar o Repositório:**
-git clone https://github.com/fauxtix/EdamanApiWithFluentUI
+1. **Clonar Repositório:**
+   git clone https://github.com/fauxtix/BlazorFluentUI_FL
 
 2. **Navegar para o Diretório:**
-cd EdamanFluentApi
+   cd EdamanFluentApi
+
+3. **Instalar Dependências:**
+   dotnet restore
+
+4. **Atualizar appsettings.json:**
+   Inclua suas chaves APP_ID e API_KEY do Edaman
+   Inclua suas chaves do Youtube (YouTubeApiKey, YouTubeApplicationName, ClientId e SecretClientId)
+   
+6. **Executar Aplicação:**
+   dotnet run
+
+7. **Acessar Aplicação:**
+Abra um navegador da web e acesse `http://localhost:<porta>`.
+
+## Utilização
+
+1. **Pesquisar Receitas:**
+   Insira palavras-chave, ingredientes ou preferências alimentares na barra de pesquisa e pressione enter para ver receitas relevantes. As escolhas do usuário para salvar pesquisas de receitas favoritas são armazenadas em arquivos JSON para fácil acesso e recuperação.
+
+2. **Visualizar Detalhes da Receita:**
+   Clique no botão 'Preparation' no cartão da receita e navegue até o site de origem para visualizar informações detalhadas, incluindo ingredientes, instruções e fatos nutricionais.
+
+3. **Explorar Base de Dados de Alimentos:**
+   Navegue pela base de dados de alimentos para descobrir novos ingredientes, receitas e informações nutricionais.
+
+4. **Explorar Base de Dados de Vídeo:**
+   Navegue pelo banco de dados para descobrir uma ampla variedade de vídeos cobrindo vários tópicos de interesse. Vídeos do YouTube podem ser acessados e suas informações armazenadas
+
+## Tecnologias Utilizadas
+
+- Blazor Fluent UI
+- .NET Core 8
+
+## Contribuidores
+
+- Fausto Luís (fauxtix.luix@hotmail.com)
+- Filipa Luís (filipaluis@gmail.com)
+- Margarida Luís (margaridaluis@gmail.com)
+
+## Agradecimentos
+
+Um agradecimento especial aos contribuidores e à comunidade pelo seu apoio e feedback.
+
+### Contribuições
+
+As contribuições são bem-vindas! Se tiver sugestões para novas funcionalidades ou melhorias, sinta-se à vontade para enviar um pull request ou abrir uma issue no GitHub.
+
+### Aviso Legal
+
+Este projeto está em desenvolvimento e pode sofrer alterações e atualizações sem aviso prévio. Está sendo desenvolvido apenas para fins educacionais e pode incluir recursos e componentes experimentais. Não serve a nenhum propósito comercial ou de produção.
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT - consulte o arquivo [MIT-LICENSE.TXT](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/EdamanFluentApi/MIT-LICENSE.txt) para mais detalhes.
