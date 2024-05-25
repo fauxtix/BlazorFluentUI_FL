@@ -68,7 +68,7 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 ![FluentUI_Youtube_Edit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/ac82d00a-bf7c-47b7-b4e9-b47527b9326d)
 ![FluentUI_Youtube_Player](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a96a4b0-535b-4df3-a65a-3d4e56335e3d)
 
-**Settings (App themes)**
+**Configuração (Temas da aplição)**
 ***
 ![fluentUI_Settings](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/31ce2c8c-d401-4a2b-88f2-7cc2cca522d9)
 
