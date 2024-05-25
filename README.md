@@ -44,7 +44,7 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 - **Responsive Design:** The application is optimized for various screen sizes and devices.
 - **Fast Responses:** Users can select recipes from prior searches, thus avoiding trips to the Edaman API, allowing offline searches for quick access.
 - **YouTube Video Search:** Users can browse and watch any videos on YouTube.
-- **Video Storage:** Video URLs can be stored in a SQLite database for easy access.
+- **Video Database Storage:** Video URLs can be stored in a SQLite database, allowing users to keep track of videos that have caught their attention, are marked as favorites, or found useful.
 
 ## Screenshots
 
