@@ -119,6 +119,7 @@ Abra um navegador da web e aceda a `http://localhost:<porta>`.
 
 ## Tecnologias Utilizadas
 
+- Blazor Server
 - Blazor Fluent UI
 - .NET Core 8
 
