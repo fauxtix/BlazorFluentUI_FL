@@ -56,7 +56,13 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 ![fluentUI_Recipes](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e0ded43c-54f4-46a2-b8f9-6ed95e01ebee)
 ![fluentUI_Recipes_Output](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/00752e20-5350-488d-af77-80f839b6feaa)
 ![fluentUI_Recipes_Favories](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/89f0f8cf-38e1-4bdc-b154-c797e7fdd460)
+
+Em cada receita existe uma opção ('__Preparation__') para aceder à preparação da receita (site de origem).
+
 ![fluentUI_Recipes_ViewInSite](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/6fd77bca-6e84-42cb-a6b5-209a9362fc10)
+
+Pesquisando receitas por regiões do mundo
+
 ![fluentUI_Recipes_CuisineType](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/4cb984fd-a460-4635-8dae-90bf377b55da)
 
 **Base de dados de comida**
