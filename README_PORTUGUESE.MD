@@ -71,9 +71,12 @@ Pesquisando receitas por regiões do mundo (neste caso, 'French' - Francesas / '
 **Youtube**
 ***
 ![FluentUI_Youtube](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e2f98621-f74f-492e-91d3-fea61581ba70)
+
+Criando uma nova entrada. Basta incluir o url do vídeo no Youtube e escolher '%%Get metadata%%'
+
 ![FluentUI_Youtube_Search](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/a71164aa-566e-4d1c-a7ed-18773d52385d)
 
-Depois de pesquisar o Api, dados são preenchidos com os __metadados__ recebidos, com a opção de gravação na base de dados.
+Depois de pesquisar o Api, o ecrã é preenchido com os __metadados__ recebidos, com a opção de gravação na base de dados.
 
 ![FluentUI_Youtube_Edit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/ac82d00a-bf7c-47b7-b4e9-b47527b9326d)
 
