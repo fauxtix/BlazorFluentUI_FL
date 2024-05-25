@@ -23,7 +23,7 @@ The Edaman and YouTube APIs were used to obtain recipe data and multimedia conte
 
 ## Work in Progress
 
-Please note that this project is currently a work in progress. While it provides basic functionality for recipe search and access to the Edaman API, it is expected to evolve over time.
+Please note that this project is currently a work in progress. While it provides basic functionality for recipe search and access to the Edaman and Youtube APIs, it is expected to evolve over time.
 
 ### Future Enhancements
 
@@ -34,7 +34,7 @@ Please note that this project is currently a work in progress. While it provides
   ---
 ## Overview
 
-**Blazor Fluent UI_FL** is a web application that leverages multiple APIs to provide a comprehensive cooking resource.
+**BlazorFluentUI_FL** is a web application that leverages multiple APIs to provide a comprehensive cooking and multimedia resources.
 
 1. **Edaman API**: This application utilizes the Edaman API for _recipe search_ functionality and access to a comprehensive _food database_. It allows users to search, browse, and save their favorite recipes.
 
