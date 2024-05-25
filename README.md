@@ -69,21 +69,22 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 To install the Edaman API with Fluent UI locally, follow these steps:
 
 1. **Clone Repository:**
-   git clone https://github.com/fauxtix/EdamanApiWithFluentUI
+   git clone https://github.com/fauxtix/BlazorFluentUI_FL
 
 2. **Navigate to Directory:**
-   cd EdamanApiWithFluentUI
+   cd EdamanFluentApi
 
 3. **Install Dependencies:**
    dotnet restore
 
 4. **Update appsettings.json:**
    Include your Edaman APP_ID and API_KEY keys
+   Include your Youtube keys (YouTubeApiKey, YouTubeApplicationName, ClientId and SecretClientId)
    
-5. **Run Application:**
+6. **Run Application:**
    dotnet run
 
-6. **Access Application:**
+7. **Access Application:**
 Open a web browser and go to `http://localhost:<port>`.
 
 ## Usage
