@@ -75,7 +75,7 @@ Na grelha de apresentação dos dados, existe uma opção para reprodução de v
 
 ![FluentUI_Youtube_Player](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a96a4b0-535b-4df3-a65a-3d4e56335e3d)
 
-**Configuração (Temas da aplição)**
+**Configuração (Temas da aplicação)**
 ***
 ![fluentUI_Settings](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/31ce2c8c-d401-4a2b-88f2-7cc2cca522d9)
 
