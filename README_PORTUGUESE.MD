@@ -51,8 +51,27 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 
 ## Capturas de Tela
 
-![Pesquisa de Receitas](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/e5f0c4f2-158f-4a08-81ed-c8c342fd2469)
-![Resultado da Pesquisa de Receitas](https://github.com/fauxtix/EdamanApiWithFluentUI/assets/49880538/f1d5bc1a-1866-4413-9d0a-a763cdb9b80c)
+**Recipes**
+
+![fluentUI_Recipes](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e0ded43c-54f4-46a2-b8f9-6ed95e01ebee)
+![fluentUI_Recipes_Output](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/00752e20-5350-488d-af77-80f839b6feaa)
+![fluentUI_Recipes_Favories](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/89f0f8cf-38e1-4bdc-b154-c797e7fdd460)
+![fluentUI_Recipes_ViewInSite](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/6fd77bca-6e84-42cb-a6b5-209a9362fc10)
+![fluentUI_Recipes_CuisineType](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/4cb984fd-a460-4635-8dae-90bf377b55da)
+
+**Food Database**
+
+![fluentUI_FoodDatabase](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a2f414e-df2f-41d8-ac03-7fa91bb8a581)
+
+**Youtube**
+
+![FluentUI_Youtube](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e2f98621-f74f-492e-91d3-fea61581ba70)
+![FluentUI_Youtube_Edit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/ac82d00a-bf7c-47b7-b4e9-b47527b9326d)
+![FluentUI_Youtube_Player](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a96a4b0-535b-4df3-a65a-3d4e56335e3d)
+
+**Settings (App themes)**
+
+![fluentUI_Settings](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/31ce2c8c-d401-4a2b-88f2-7cc2cca522d9)
 
 **Pesquisa de Receitas**
 ***
