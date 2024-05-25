@@ -61,7 +61,7 @@ Em cada receita existe uma opção ('__Preparation__') para aceder à preparaç�
 
 ![fluentUI_Recipes_ViewInSite](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/6fd77bca-6e84-42cb-a6b5-209a9362fc10)
 
-Pesquisando receitas por regiões do mundo (neste caso, 'French' - Francesas)
+Pesquisando receitas por regiões do mundo (neste caso, 'French' - Francesas / 'deserts' - sobremesesas)
 
 ![fluentUI_Recipes_CuisineType](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/4cb984fd-a460-4635-8dae-90bf377b55da)
 
