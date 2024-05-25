@@ -8,7 +8,7 @@
 ## Educational Purpose
 
 This project was developed as a way of learning and exploring the capabilities of Blazor Fluent UI. 
-The main objective is to get to know and experiment with the various components and standards of Blazor Fluent UI. 
+The main objective is to get to know and experiment its various components and standards. 
 Additionally, the YouTube API was incorporated to broaden the scope of exploration, allowing for experimentation with integrating multimedia features into the application.
 The Edaman and YouTube APIs were used to obtain recipe data and multimedia content, respectively, to test the frontend and explore their capabilities.
 
