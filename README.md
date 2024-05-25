@@ -42,7 +42,9 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 - **Food Database:** Access to a vast database of ingredients, nutritional information, and recipes.
 - **User-friendly Interface:** Intuitive design and navigation for a seamless user experience.
 - **Responsive Design:** The application is optimized for various screen sizes and devices.
-- **Fast responses:** Users can select recipes from prior searches, thus avoiding trips to the Edaman api, allowing offline searches for quick access.
+- **Fast Responses:** Users can select recipes from prior searches, thus avoiding trips to the Edaman API, allowing offline searches for quick access.
+- **YouTube Video Search:** Users can browse and watch any videos on YouTube.
+- **Video Storage:** Video URLs can be stored in a SQLite database for easy access.
 
 ## Screenshots
 
