@@ -80,7 +80,7 @@ Depois de pesquisar o Api, o ecrã é preenchido com os _metadados_ recebidos, c
 
 ![FluentUI_Youtube_Edit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/ac82d00a-bf7c-47b7-b4e9-b47527b9326d)
 
-Na grelha de apresentação dos dados, existe uma opção para reprodução de vídeos
+Na grelha de apresentação dos dados, existe uma opção para reprodução de vídeos, que abrirá um _media player_.
 
 ![FluentUI_Youtube_Player](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a96a4b0-535b-4df3-a65a-3d4e56335e3d)
 
