@@ -57,7 +57,7 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 ![fluentUI_Recipes_Output](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/00752e20-5350-488d-af77-80f839b6feaa)
 ![fluentUI_Recipes_Favories](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/89f0f8cf-38e1-4bdc-b154-c797e7fdd460)
 
-Em cada receita existe uma opção ('__Preparation__') para aceder à preparação da receita (site de origem).
+Em cada receita existe uma opção ('_Preparation_') para aceder à preparação da receita (site de origem).
 
 ![fluentUI_Recipes_ViewInSite](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/6fd77bca-6e84-42cb-a6b5-209a9362fc10)
 
@@ -72,11 +72,11 @@ Pesquisando receitas por regiões do mundo (neste caso, 'French' - Francesas / '
 ***
 ![FluentUI_Youtube](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e2f98621-f74f-492e-91d3-fea61581ba70)
 
-Criando uma nova entrada. Basta incluir o url do vídeo no Youtube e escolher '%%Get metadata%%'
+Criando uma nova entrada. Basta incluir o url do vídeo no Youtube e escolher '_Get metadata_'
 
 ![FluentUI_Youtube_Search](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/a71164aa-566e-4d1c-a7ed-18773d52385d)
 
-Depois de pesquisar o Api, o ecrã é preenchido com os __metadados__ recebidos, com a opção de gravação na base de dados.
+Depois de pesquisar o Api, o ecrã é preenchido com os _metadados_ recebidos, com a opção de gravação na base de dados.
 
 ![FluentUI_Youtube_Edit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/ac82d00a-bf7c-47b7-b4e9-b47527b9326d)
 
