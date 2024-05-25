@@ -23,7 +23,7 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 
 ### Melhorias Futuras
 
-- **Componentes Adicionais:** O projeto pode incorporar novos componentes e recursos para melhorar a usabilidade e funcionalidade.
+- **Componentes Adicionais:** O projeto pode incorporar novos componentes e recursos para melhorar a sua utilização e funcionalidade.
 - **Experiência do Usuário Aprimorada:** Esforços serão feitos para melhorar a interface do usuário e a experiência geral do usuário.
 - **Correções de Bugs e Otimização:** Quaisquer bugs relatados serão corrigidos, e otimizações de código serão realizadas para melhor desempenho.
 
