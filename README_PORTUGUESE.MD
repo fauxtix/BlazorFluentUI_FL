@@ -49,7 +49,7 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 - **Pesquisa de Vídeo do YouTube:** Os utilizadores podem navegar e assistir a qualquer vídeo no YouTube, através de 'Player' incluído.
 - **Armazenamento de Banco de Dados de Vídeo:** Os URLs dos vídeo são armazenados numa base de dados SQLite, permitindo que os utilizadores acompanhem vídeos que chamaram sua atenção, foram marcados como favoritos ou que foram classificados como úteis.
 
-## Capturas de Tela
+## Capturas de Ecrãs
 
 **Receitas**
 ***
