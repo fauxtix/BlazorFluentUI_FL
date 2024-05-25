@@ -1,5 +1,5 @@
-# Blazor Fluent UI com Edaman API
-[documentação](https://fluentui-blazor.net/)
+# Blazor Fluent UI with Edaman API
+[documentation](https://fluentui-blazor.net/)
 
 ## Propósito Educacional
 
@@ -31,11 +31,17 @@ Para o frontend foram usados componentes do Blazor Fluent UI; esta aplicação o
 
 ## Recursos
 
-- **Pesquisa de Receitas:** Os utilizadores podem pesquisar receitas com base em palavras-chave, ingredientes ou preferências alimentares.
-- **Base de Dados de Alimentos:** Acesso a uma vasta base de dados de ingredientes, informações nutricionais e receitas.
-- **Interface Amigável:** Design intuitivo.
-- **Design Responsivo:** A aplicação é optimizada para vários ecrãs e dispositivos.
-- **Respostas Rápidas:** Os utilizadores podem selecionar receitas de pesquisas anteriores (guardadas em ficheiros .json), evitando assim viagens à API do Edaman; permite, assim, pesquisas offline para acesso rápido.
+- **Pesquisa de Receitas:** Os utilizadores podem pesquisar receitas com base em palavras-chave, ingredientes ou preferências alimentares. As escolhas do utilizador para salvar pesquisas de receitas favoritas são armazenadas em arquivos JSON para fácil acesso e recuperação.
+- **Detalhes da Receita:** Clique no botão 'Preparation' no 'card', e navegue até ao site 'source' para visualizar informações detalhadas, incluindo ingredientes, instruções e factos nutricionais.
+- **Explorar Base de Dados de Alimentos:** Navegue pela base de dados de alimentos para descobrir novos ingredientes, receitas e informações nutricionais.
+
+## Funcionalidades Adicionais
+
+- **Explorar Base de Dados de Vídeos:** Navegue pela base de dados para descobrir uma vasta gama de vídeos sobre diversos tópicos de interesse. Os vídeos do YouTube podem ser acessados e suas informações armazenadas em um banco de dados SQLite para referência futura.
+
+## Funcionalidades Padrão
+
+A aplicação inclui funcionalidades padrão para pesquisa e visualização de receitas, exploração da base de dados de alimentos e acesso à base de dados de vídeos.
 
 ## Capturas de Ecrã
 
@@ -49,6 +55,7 @@ Para o frontend foram usados componentes do Blazor Fluent UI; esta aplicação o
 *Pesquisa da Base de Dados de Alimentos*
 
 ---
+
 ## Instalação
 
 Para instalar o Edaman API com Fluent UI localmente, siga estes passos:
@@ -56,63 +63,5 @@ Para instalar o Edaman API com Fluent UI localmente, siga estes passos:
 1. **Clonar o Repositório:**
 git clone https://github.com/fauxtix/EdamanApiWithFluentUI
 
-
 2. **Navegar para o Diretório:**
-cd EdamanApiWithFluentUI
-
-3. **Instalar Dependências:**
-dotnet restore
-
-4. **Atualize appsettings.json:**
-   Inclua as chaves APP_ID and API_KEY da Api Edaman
-
-5. **Executar a Aplicação:**
-dotnet run
-
-
-6. **Aceder à Aplicação:**
-Abra um navegador da web e aceda a `http://localhost:<porta>`.
-
-## Utilização
-
-1. **Pesquisar Receitas:**
-Insira palavras-chave, ingredientes ou preferências alimentares na barra de pesquisa e use a opção 'Search' para ver receitas relevantes
-Limitar o número de receitas a extrair, e selecionar uma pesquisa préviamente usada.
-
-2. **Visualizar Detalhes da Receita:**
-Clique no botão 'Preparation' no 'cartão' e navegue até ao site 'fonte' para visualizar informações detalhadas, incluindo ingredientes, instruções e factos nutricionais.
-
-3. **Explorar a Base de Dados de Alimentos:**
-Navegue pela base de dados de alimentos para descobrir novos ingredientes, receitas e informações nutricionais.
-
-## Tecnologias Utilizadas
-
-- Blazor Fluent UI
-- Edaman API
-- .NET Core 8
-
-## Contribuidores
-
-- Fausto Luís (fauxtix.luix@hotmail.com)
-- Filipa Luís (filipaluis@gmail.com)
-- Margarida Luís (margaridaluis@gmail.com)
-
-## Agradecimentos
-
-Um agradecimento especial aos contribuidores e à comunidade pelo seu apoio e feedback.
-
-### Contribuições
-
-As contribuições são bem-vindas! Se tiver sugestões para novas funcionalidades ou melhorias, sinta-se à vontade para enviar um pull request ou abrir uma issue no GitHub.
-
-### Aviso Legal
-
-Este projeto está em desenvolvimento e pode sofrer alterações e atualizações sem aviso prévio. Está sendo desenvolvido apenas para fins educacionais e pode incluir recursos e componentes experimentais. Não serve a nenhum propósito comercial ou de produção.
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT - consulte o arquivo [MIT-LICENSE.TXT](https://github.com/fauxtix/EdamanApiWithFluentUI/blob/master/EdamanFluentApi/MIT-LICENSE.txt) para mais detalhes.
-
-
-
-
+cd EdamanFluentApi
