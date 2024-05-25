@@ -118,7 +118,8 @@ Open a web browser and go to `http://localhost:<port>`.
 
 ## Technologies Used
 
-- Blazor Fluent UI
+- Blazor Server
+- Blazor Fluent UI components
 - .NET Core 8
 
 ## Contributors
