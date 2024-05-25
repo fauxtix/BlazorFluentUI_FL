@@ -93,7 +93,7 @@ Open a web browser and go to `http://localhost:<port>`.
    Enter keywords, ingredients, or dietary preferences into the search bar and press enter to see relevant recipes. User choices for saving favorite recipe searches are stored in JSON files for easy access and retrieval.
 
 2. **View Recipe Details:**
-   Click on the 'Preparation' button in the card, and navigate to the 'source' site, to view detailed information including ingredients, instructions, and nutritional facts.
+   Click on the 'Preparation' button in the recipe card, and navigate to the 'source' site, to view detailed information including ingredients, instructions, and nutritional facts.
 
 3. **Explore Food Database:**
    Browse through the food database to discover new ingredients, recipes, and nutritional information.
