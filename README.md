@@ -70,6 +70,7 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 **Youtube**
 ***
 ![FluentUI_Youtube](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e2f98621-f74f-492e-91d3-fea61581ba70)
+![FluentUI_Youtube_Search](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/a71164aa-566e-4d1c-a7ed-18773d52385d)
 ![FluentUI_Youtube_Edit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/ac82d00a-bf7c-47b7-b4e9-b47527b9326d)
 ![FluentUI_Youtube_Player](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a96a4b0-535b-4df3-a65a-3d4e56335e3d)
 
