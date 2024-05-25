@@ -101,7 +101,6 @@ Browse through the food database to discover new ingredients, recipes, and nutri
 ## Technologies Used
 
 - Blazor Fluent UI
-- Edaman API
 - .NET Core 8
 
 ## Contributors
