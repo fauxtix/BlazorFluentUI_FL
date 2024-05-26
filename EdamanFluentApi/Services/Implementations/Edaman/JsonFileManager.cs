@@ -43,12 +43,13 @@ namespace EdamanFluentApi.Services.Implementations.Edaman
 
         public bool JsonFileExists(string fileName, string folderPath, string cuisineType)
         {
+            var strippedFilename = StripFileNameAndCuisineType(fileName);
+
             if (string.IsNullOrEmpty(cuisineType))
-            {
-                var strippedFilename = StripFileNameAndCuisineType(fileName);
                 cuisineType = strippedFilename.type;
-                fileName = strippedFilename.filename;
-            }
+
+            fileName = strippedFilename.filename;
+
             string filePath = Path.Combine(folderPath, cuisineType, fileName);
             return File.Exists(filePath);
         }
