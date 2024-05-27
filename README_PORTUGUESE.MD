@@ -124,11 +124,15 @@ Abra um navegador da web e aceda a `http://localhost:<porta>`.
    Navegue pela base de dados de alimentos para descobrir novos ingredientes, receitas e informações nutricionais.
 
 4. **Explorar Base de Dados de Vídeo:**
-   Navegue pela base de dados para descobrir uma ampla variedade de vídeos, cobrindo vários tópicos de interesse. Vídeos do YouTube podem ser acedidos e suas informações armazenadas
+   Navegue pela base de dados para descobrir uma ampla variedade de vídeos, cobrindo vários tópicos de interesse. Os vídeos do YouTube podem ser acedidos e as suas informações armazenadas
 
 ## Tecnologias Utilizadas
 
-- Blazor Server
+- C#
+- Entity Framework Core
+- Http para aceder a Apis externos
+- AutoMapper
+- Blazor Server com 'Interactive Rendering'
 - Componentes do Blazor Fluent UI
 - .NET Core 8
 
