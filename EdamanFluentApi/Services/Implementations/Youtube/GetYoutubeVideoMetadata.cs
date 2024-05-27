@@ -1,5 +1,4 @@
-﻿using EdamanFluentApi.Data;
-using EdamanFluentApi.Models.Youtube.Dtos;
+﻿using EdamanFluentApi.Models.Youtube.Dtos;
 using EdamanFluentApi.Services.Interfaces.Youtube;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
@@ -35,6 +34,15 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
 
                 if (youTubeVideo != null)
                 {
+                    // Test new methods
+                    string channelTitle = youTubeVideo.Snippet.ChannelTitle;
+                    string channelId = await GetChannelIdByTitle(channelTitle);
+                    if (!string.IsNullOrEmpty(channelId))
+                    {
+                        var playLists = await GetPlaylistsByChannelId(channelId);
+                    }
+
+
                     TimeSpan YouTubeDuration = System.Xml.XmlConvert.ToTimeSpan(youTubeVideo.ContentDetails.Duration);
                     string sDuration = YouTubeDuration.ToString();
 
@@ -251,5 +259,70 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
             }
             return duration;
         }
+
+        public async Task<string> GetChannelIdByTitle(string channelTitle)
+        {
+            using (var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            {
+                ApiKey = _apiKey,
+                ApplicationName = _appName
+            }))
+            {
+                var searchRequest = youtubeService.Search.List("snippet");
+                searchRequest.Q = channelTitle;
+                searchRequest.Type = "channel";
+                searchRequest.MaxResults = 1;
+
+                var searchResponse = await searchRequest.ExecuteAsync();
+                var channel = searchResponse.Items.FirstOrDefault();
+
+                return channel?.Snippet?.ChannelId;
+            }
+        }
+
+        public async Task<List<YouTubePlaylistDetails>> GetPlaylistsByChannelTitle(string channelTitle)
+        {
+            string channelId = await GetChannelIdByTitle(channelTitle);
+            if (!string.IsNullOrEmpty(channelId))
+            {
+                return await GetPlaylistsByChannelId(channelId);
+            }
+            return new List<YouTubePlaylistDetails>();
+        }
+
+
+        public async Task<List<YouTubePlaylistDetails>> GetPlaylistsByChannelId(string channelId)
+        {
+            using (var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            {
+                ApiKey = _apiKey,
+                ApplicationName = _appName
+            }))
+            {
+                var playlistRequest = youtubeService.Playlists.List("snippet");
+                playlistRequest.ChannelId = channelId;
+                playlistRequest.MaxResults = 50;
+
+                var playlistResponse = await playlistRequest.ExecuteAsync();
+                var playlists = new List<YouTubePlaylistDetails>();
+
+                foreach (var playlist in playlistResponse.Items)
+                {
+                    playlists.Add(new YouTubePlaylistDetails
+                    {
+                        PlaylistId = playlist.Id,
+                        Title = playlist.Snippet.Title,
+                        Description = playlist.Snippet.Description,
+                        Thumbnail = playlist.Snippet.Thumbnails.Standard?.Url ??
+                                    playlist.Snippet.Thumbnails.Medium?.Url ??
+                                    playlist.Snippet.Thumbnails.Maxres?.Url ??
+                                    "Images/No-image-available.png"
+                    });
+                }
+
+                return playlists;
+            }
+        }
+
     }
 }

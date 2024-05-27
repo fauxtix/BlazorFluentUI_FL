@@ -180,7 +180,7 @@ public partial class EditYoutube
             }
             else
             {
-                alertMessage = "Api não devolveu qualquer resultado";
+                alertMessage = "No data returned";
                 showAlertMessage = true;
             }
         }
