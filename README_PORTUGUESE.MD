@@ -130,7 +130,7 @@ Abra um navegador da web e aceda a `http://localhost:<porta>`.
 
 - C#
 - Entity Framework Core
-- Http para aceder a Apis externos
+- HttpClient para aceder a Apis externos
 - AutoMapper
 - Blazor Server com 'Interactive Rendering'
 - Componentes do Blazor Fluent UI
