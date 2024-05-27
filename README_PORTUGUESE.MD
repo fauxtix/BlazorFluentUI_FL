@@ -37,7 +37,7 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 
 2. **API do YouTube:** A aplicação também integra a API do YouTube para navegar em qualquer vídeo no YouTube. Além disso, armazena conteúdo de vídeo numa base de dados SQLite para um fácil acesso.
 
-Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável para uma experiência culinária e multimídia aprimorada.
+Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável para uma experiência culinária e multimédia.
 
 ## Recursos
 
