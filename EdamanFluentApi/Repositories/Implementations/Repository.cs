@@ -44,14 +44,33 @@ public class Repository<T> : IRepository<T> where T : class
 
     public async Task UpdateAsync(T entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-    }
+        try
+        {
+            // Attach the entity if it's not already being tracked
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entity);
+            }
 
+            // Mark the entity as modified
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            var msg = ex.Message;
+            throw;
+        }
+    }
     public async Task DeleteAsync(int id)
     {
         var entity = await GetByIdAsync(id);
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync();
+    }
+
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

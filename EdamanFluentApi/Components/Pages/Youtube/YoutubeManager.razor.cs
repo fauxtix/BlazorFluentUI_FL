@@ -72,74 +72,7 @@ public partial class YoutubeManager
         }
     }
 
-    private async Task GetMediaFiles()
-    {
-        spinnerVisible = true;
-        var result = await YoutubeService.GetMediaAsync();
-        items = result.AsQueryable();
-        spinnerVisible = false;
-    }
 
-    public async Task EditMediaRecord(MediaVM mediaRecord)
-    {
-
-        MediaRecordToUse = new MediaRecord()
-        {
-            SelectedRecord = mediaRecord,
-            EditMode = true
-        };
-
-        var dialogParameters = new DialogParameters
-        {
-            ShowTitle = true,
-            Modal = true,
-            Title = mediaRecord.Titulo,
-            Alignment = HorizontalAlignment.Center,
-            PrimaryAction = "Save",
-            SecondaryAction = "Cancel",
-            Width = "700px",
-            Height = "auto",
-        };
-
-        _dialog = await DialogService.ShowDialogAsync<EditYoutube>(MediaRecordToUse, dialogParameters);
-        DialogResult? result = await _dialog.Result;
-        if (!result.Cancelled)
-        {
-            ShowToast("Record successfully updated", ToastIntent.Success);
-
-            await GetMediaFiles();
-        }
-
-    }
-
-    public async Task PlayMedia(MediaVM mediaRecord)
-    {
-
-        MediaRecordToUse = new MediaRecord()
-        {
-            SelectedRecord = mediaRecord,
-            EditMode = true
-        };
-
-        var dialogParameters = new DialogParameters
-        {
-            ShowTitle = true,
-            Modal = true,
-            Title = mediaRecord.Titulo,
-            Alignment = HorizontalAlignment.Center,
-            PrimaryAction = "Close",
-            Width = "780px",
-            Height = "600px",
-        };
-
-        _dialog = await DialogService.ShowDialogAsync<Player>(MediaRecordToUse, dialogParameters);
-        DialogResult? result = await _dialog.Result;
-        if (!result.Cancelled)
-        {
-            await GetMediaFiles();
-        }
-
-    }
     public async Task NotifyAddingYoutubeRecord()
     {
         int iFormato = await YoutubeService.GetMediaFormatByDescription("A partir de URL");
@@ -179,14 +112,50 @@ public partial class YoutubeManager
 
         _dialog = await DialogService.ShowDialogAsync<EditYoutube>(MediaRecordToUse, dialogParameters);
         DialogResult? result = await _dialog.Result;
-        if (!result.Cancelled)
+        if (result.Cancelled)
         {
-            ShowToast("Record successfully created", ToastIntent.Success);
+            ShowToast("Insert cancelled", ToastIntent.Success);
+        }
+        else
+        {
             await GetMediaFiles();
         }
     }
 
-    public async Task DeleteMedia(int  mediaId, string mediaTitle)
+    public async Task EditMediaRecord(MediaVM mediaRecord)
+    {
+
+        MediaRecordToUse = new MediaRecord()
+        {
+            SelectedRecord = mediaRecord,
+            EditMode = true
+        };
+
+        var dialogParameters = new DialogParameters
+        {
+            ShowTitle = true,
+            Modal = true,
+            Title = mediaRecord.Titulo,
+            Alignment = HorizontalAlignment.Center,
+            PrimaryAction = "Save",
+            SecondaryAction = "Cancel",
+            Width = "700px",
+            Height = "auto",
+        };
+
+        _dialog = await DialogService.ShowDialogAsync<EditYoutube>(MediaRecordToUse, dialogParameters);
+        DialogResult? result = await _dialog.Result;
+        if (result.Cancelled)
+        {
+            ShowToast("Updated cancelled", ToastIntent.Warning);
+        }
+        else
+        {
+            await GetMediaFiles();
+        }
+    }
+
+    public async Task DeleteMedia(int mediaId, string mediaTitle)
     {
         var title = string.IsNullOrEmpty(mediaTitle) ? "Record" : mediaTitle;
         var dialog = await DialogService.ShowConfirmationAsync($"Confirm operation?", "Yes", "No", $"Delete '{title}'");
@@ -198,12 +167,41 @@ public partial class YoutubeManager
             if (mediaFile is not null)
             {
                 await YoutubeService.DeleteMediaAsync(mediaId);
-                ShowToast("Record successfully deleted", ToastIntent.Success);
-
+                ShowToast("Record deleted successfully", ToastIntent.Warning);
                 await GetMediaFiles();
             }
         }
     }
+
+    public async Task PlayMedia(MediaVM mediaRecord)
+    {
+
+        MediaRecordToUse = new MediaRecord()
+        {
+            SelectedRecord = mediaRecord,
+            EditMode = true
+        };
+
+        var dialogParameters = new DialogParameters
+        {
+            ShowTitle = true,
+            Modal = true,
+            Title = mediaRecord.Titulo,
+            Alignment = HorizontalAlignment.Center,
+            PrimaryAction = "Close",
+            Width = "780px",
+            Height = "600px",
+        };
+
+        _dialog = await DialogService.ShowDialogAsync<Player>(MediaRecordToUse, dialogParameters);
+        DialogResult? result = await _dialog.Result;
+        if (!result.Cancelled)
+        {
+            await GetMediaFiles();
+        }
+
+    }
+
 
     private void ShowToast(string msg, ToastIntent intent)
     {
@@ -211,5 +209,14 @@ public partial class YoutubeManager
         var message = msg;
         ToastService.ShowToast(intent, message, 1500);
     }
+
+    private async Task GetMediaFiles()
+    {
+        spinnerVisible = true;
+        var result = await YoutubeService.GetMediaAsync();
+        items = result.AsQueryable();
+        spinnerVisible = false;
+    }
+
 
 }

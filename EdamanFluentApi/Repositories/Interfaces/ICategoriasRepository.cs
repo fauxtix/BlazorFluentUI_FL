@@ -1,4 +1,5 @@
-﻿using EdamanFluentApi.Models.Youtube.Entities;
+﻿
+using EdamanFluentApi.Models.Youtube.Entities;
 
 namespace EdamanFluentApi.Repositories.Interfaces
 {

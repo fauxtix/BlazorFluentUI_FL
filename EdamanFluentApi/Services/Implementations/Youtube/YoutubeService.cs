@@ -38,9 +38,17 @@ public class YoutubeService : IYoutubeService
 
     public async Task UpdateMediaAsync(MediaVM mediaFile)
     {
-        var entity = _mapper.Map<Media>(mediaFile);
+        var existingEntity = await _youtubeRepository.GetByIdAsync(mediaFile.Id);
 
-        await _youtubeRepository.UpdateAsync(entity);
+        if (existingEntity != null)
+        {
+            _mapper.Map(mediaFile, existingEntity);
+            await _youtubeRepository.UpdateAsync(existingEntity);
+        }
+        else
+        {
+            throw new InvalidOperationException("Entity not found");
+        }
     }
 
     public async Task DeleteMediaAsync(int id)

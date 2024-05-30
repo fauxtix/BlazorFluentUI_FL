@@ -2,7 +2,6 @@ using EdamanFluentApi.Models.Youtube.Dtos;
 using EdamanFluentApi.Services.Interfaces.Youtube;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
-using System.Diagnostics.Metrics;
 
 namespace EdamanFluentApi.Components.Pages.Youtube;
 
@@ -13,6 +12,7 @@ public partial class EditYoutube
 
     [Inject]
     public IMessageService MessageService { get; set; }
+
     [Inject] public IFormatos_MediaService FormatosService { get; set; }
     [Inject] public NavigationManager NavigationManager { get; set; }
 
@@ -23,6 +23,10 @@ public partial class EditYoutube
     private IEnumerable<FormatoMediaVM> formatList;
     private IEnumerable<CategoryVM> categoryList;
 
+
+    private ToastIntent ToastIntent { get; set; }
+    private string ToastTitle { get; set; }
+
     private bool isLoadingData = false;
     private bool Loading;
     protected DateTime? transDate;
@@ -32,21 +36,25 @@ public partial class EditYoutube
     private string alertMessage = "";
     private bool hideLowerDiv = true;
 
+    private bool recordUpdated;
+
     string categoryAsString = string.Empty;
     string mediaFormatAsString = string.Empty;
     protected override async Task OnInitializedAsync()
     {
+        recordUpdated = false;
         await GetLookupData();
     }
 
     protected override void OnParametersSet()
     {
+
         var CurrentSelectedRecord = Content.SelectedRecord;
         var currentSelectedMediaId = Content.SelectedRecord.Id;
         transDate = currentSelectedMediaId == 0 ? DateTime.Now.Date : CurrentSelectedRecord.DataMov;
         categoryAsString = currentSelectedMediaId == 0 ? "28" : CurrentSelectedRecord.IdGenero.ToString(); // Other
         mediaFormatAsString = currentSelectedMediaId == 0 ? "6" : CurrentSelectedRecord.IdFormato_Media.ToString(); // from Url
-        if(currentSelectedMediaId > 0)
+        if (currentSelectedMediaId > 0)
         {
             hideLowerDiv = false;
             DisableSaveButton = false;
@@ -66,7 +74,7 @@ public partial class EditYoutube
     {
         formatList = (await FormatosService
             .GetAllAsync())
-            .OrderBy(c=>c.Descricao)
+            .OrderBy(c => c.Descricao)
             .ToList();
         categoryList = (await CategoriasService
             .AllAsync())
@@ -85,7 +93,7 @@ public partial class EditYoutube
             await InsertRecord();
         }
 
-        await InformUserAndRefreshGrid();
+        // await InformUserAndRefreshGrid();
     }
 
 
@@ -98,9 +106,13 @@ public partial class EditYoutube
 
         await YoutubeService.AddMediaAsync(data);
 
+        ToastTitle = "New record";
+        alertMessage = "Record created successully";
+        ToastIntent = ToastIntent.Info;
+        showAlertMessage = true;
+
         StateHasChanged();
-        await Task.Delay(100);
-        await Dialog.CloseAsync(Content);
+        await CloseAsync();
     }
 
     private async Task UpdateRecord()
@@ -111,14 +123,22 @@ public partial class EditYoutube
         data.IdFormato_Media = int.Parse(mediaFormatAsString);
 
 
-        await YoutubeService.UpdateMediaAsync(data);
+        try
+        {
+            await YoutubeService.UpdateMediaAsync(data);
+        }
+        catch (Exception ex)
+        {
+            var msg = ex.Message;
+            throw;
+        }
 
-        await Task.Delay(100);
-        await Dialog.CloseAsync(Content);
-
-        // ToastContent = InsertUpdateOk ? localizerApp["SuccessUpdate"] : localizerApp["FalhaGravacaoRegisto"];
-        // ToastTitle = localizerApp["editionMsg"];
-        // ToastTimeOut = 3000;
+        ToastTitle = "Edit record";
+        alertMessage = "Record updated successully";
+        ToastIntent = ToastIntent.Info;
+        showAlertMessage = true;
+        StateHasChanged();
+        await CloseAsync();
     }
 
     private async Task InformUserAndRefreshGrid()
@@ -180,7 +200,9 @@ public partial class EditYoutube
             }
             else
             {
+                ToastTitle = "Youtube API search";
                 alertMessage = "No data returned";
+                ToastIntent = ToastIntent.Error;
                 showAlertMessage = true;
             }
         }
@@ -191,12 +213,13 @@ public partial class EditYoutube
 
     private async Task CloseAsync()
     {
-        await Dialog.CloseAsync(Content);
+        await Task.Delay(200);
+        await Dialog.CloseAsync();
     }
 
     private async Task CancelAsync()
     {
+        await Task.Delay(200);
         await Dialog.CancelAsync();
     }
-
 }

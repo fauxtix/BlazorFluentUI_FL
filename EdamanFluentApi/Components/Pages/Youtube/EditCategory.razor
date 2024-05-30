@@ -1,0 +1,56 @@
+﻿@page "/editcategory"
+
+@using EdamanFluentApi.Models.Youtube.Dtos
+@using EdamanFluentApi.Services.Interfaces.Youtube
+@implements Microsoft.FluentUI.AspNetCore.Components.IDialogContentComponent
+
+
+<div class="d-flex gap-2">
+    <div class="row mb-2">
+        <div class="col-md-12">
+            @* Header *@
+            <FluentDialogHeader ShowDismiss="true">
+                <FluentStack VerticalAlignment="VerticalAlignment.Center">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.TagSearch())" />
+                    <FluentLabel Typo="Typography.PaneHeader">
+                        @(CurrentSelectedRecord.Id > 0 ? CurrentSelectedRecord.Descricao : "New Youtube API search")
+                    </FluentLabel>
+                </FluentStack>
+            </FluentDialogHeader>
+            <FluentDialogBody>
+                <EditForm Model="@Content" OnValidSubmit="ValidHandlerAsync">
+                    <div class="d-flex justify-content-center align-items-center mx-2 gap-2"
+                         hidden="@(Content.EditMode)">
+                        <FluentTextField Label="Description" 
+                                         Placeholder="Description"
+                                         Appearance="FluentInputAppearance.Outline"
+                                         Autofocus="true"  Size="300"
+                                         Required
+                                         @bind-Value="@CurrentSelectedRecord.Descricao" />
+                    </div>
+                </EditForm>
+            </FluentDialogBody>
+            <FluentDialogFooter>
+                <FluentButton Appearance="Appearance.Accent"
+                              OnClick="@AddOrSaveRecord">
+                    Save
+                </FluentButton>
+                <FluentButton Appearance="Appearance.Accent"
+                              OnClick="@CancelAsync">
+                    Cancel
+                </FluentButton>
+
+            </FluentDialogFooter>
+
+            <ToastComponent Title="@ToastTitle"
+                            Timeout="3000"
+                            Details="@alertMessage"
+                            ToastType="@ToastIntent"
+                            IsVisible="@showAlertMessage" />
+
+        </div>
+    </div>
+</div>
+
+
+

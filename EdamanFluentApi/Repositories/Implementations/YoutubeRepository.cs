@@ -5,7 +5,7 @@ using EdamanFluentApi.Repositories.Implementations;
 using EdamanFluentApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-public class YoutubeRepository : Repository<Media>, IYoutubeRepository
+public class YoutubeRepository : Repository<Media>, IYoutubeRepository, IDisposable
 {
     protected  readonly YoutubeDbContext _context;
     public YoutubeRepository(YoutubeDbContext context) : base(context)
@@ -178,5 +178,18 @@ public class YoutubeRepository : Repository<Media>, IYoutubeRepository
             }
         }
         return "0.00";
+    }
+
+    private bool _disposed = false;
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+        }
+        _disposed = true;
     }
 }

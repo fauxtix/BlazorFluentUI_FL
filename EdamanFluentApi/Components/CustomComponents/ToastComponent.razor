@@ -1,0 +1,35 @@
+﻿@inject IToastService ToastService
+
+
+@code {
+
+    [Parameter] public ToastIntent ToastType { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Details { get; set; }
+    [Parameter] public int Timeout { get; set; } = 2000;
+    [Parameter] public bool IsVisible { get; set; } = false;
+
+    protected override void OnParametersSet()
+    {
+        if (!IsVisible) return;
+
+        ToastService.ShowCommunicationToast(new ToastParameters<CommunicationToastContent>()
+            {
+                Intent = ToastType,
+                Title = Title,
+                TopCTAType = ToastTopCTAType.Timestamp,
+                Timeout = Timeout,
+                PrimaryAction = "Close",
+                OnPrimaryAction = EventCallback.Factory.Create<ToastResult>(this, ClickedPrimary),
+                Content = new CommunicationToastContent()
+                {
+                    Details = Details
+                },
+            });
+    }
+
+    private void ClickedPrimary(ToastResult result)
+    {
+        IsVisible = false;
+    }
+}

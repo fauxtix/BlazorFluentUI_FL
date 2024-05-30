@@ -80,16 +80,16 @@ else
                                                       Height="200px">
                                         </FluentSelect>
                                     </div>
-                                   @*  <div class="mt-2">
-                                        <FluentSelect TOption="FormatoMediaVM" Items="formatList"
-                                                      @bind-Value=mediaFormatAsString
-                                                      OptionText="@(i => i.Descricao)"
-                                                      Label="Media Format"
-                                                      OptionValue="@(i => i.Id.ToString())"
-                                                      Width="280px"
-                                                      Height="200px">
-                                        </FluentSelect>
-                                    </div> *@
+                                    @*  <div class="mt-2">
+                            <FluentSelect TOption="FormatoMediaVM" Items="formatList"
+                            @bind-Value=mediaFormatAsString
+                            OptionText="@(i => i.Descricao)"
+                            Label="Media Format"
+                            OptionValue="@(i => i.Id.ToString())"
+                            Width="280px"
+                            Height="200px">
+                            </FluentSelect>
+                            </div> *@
                                     <div class="mt-2">
                                         <FluentTextField Placeholder="Published by"
                                                          Class="form-control e-round" Label="Published by"
@@ -106,7 +106,7 @@ else
                                             </FluentTextField>
                                             <FluentTextField hidden="true" Size="100"></FluentTextField>
                                             <FluentTextField Placeholder="Size"
-                                                             Class="form-control e-round text-center" Label="Size" 
+                                                             Class="form-control e-round text-center" Label="Size"
                                                              Disabled="true"
                                                              @bind-Value="@Content.SelectedRecord.Tamanho">
                                             </FluentTextField>
@@ -115,6 +115,11 @@ else
 
                                 </div>
                             </div>
+@*                             <div class="mt-3">
+                                <FluentLabel Alignment="HorizontalAlignment.Start">Rating</FluentLabel>
+                                <span class="p-3"><Rating Value="@(Content.SelectedRecord.Rating >0 ?Content.SelectedRecord.Rating:1)" /></span>
+                            </div>
+ *@
 
                         </EditForm>
                     </FluentDialogBody>
@@ -135,7 +140,14 @@ else
             </div>
         </div>
     }
-    <FluentMessageBar Title="Youtube API search"
+
+    <ToastComponent Title="@ToastTitle"
+                    Timeout="3000"
+                    Details="@alertMessage"
+                    ToastType="@ToastIntent"
+                    IsVisible="@showAlertMessage" />
+
+    @*     <FluentMessageBar Title="Youtube API search"
                       Style="width: 500px; border: 1px solid var(--accent-fill-rest)"
                       AllowDismiss="true"
                       Intent="MessageIntent.Warning" Visible="@showAlertMessage"
@@ -143,4 +155,4 @@ else
                       Icon="@(new Icons.Regular.Size24.Warning())">
         @alertMessage
     </FluentMessageBar>
-}
+ *@}

@@ -40,7 +40,7 @@ else
                         </div>
                     </ColumnOptions>
                 </PropertyColumn>
-                <PropertyColumn Property="@(c => c.Autor)" Sortable="true" Title="Author" />
+                <PropertyColumn Property="@(c => c.Autor)" Sortable="true" Title="Channel" />
                 <PropertyColumn Property="@(c => c.AnoEdicao)" Sortable="true" Title="Edition" />
                 <PropertyColumn Property="@(c => c.Genero)" Sortable="true" Title="Category" />
                 <TemplateColumn Title="Actions" Align=Align.Center>
@@ -53,9 +53,9 @@ else
             </FluentDataGrid>
         </div>
     </div>
+    <FluentPaginator State="@pagination" />
 }
 
-<FluentPaginator State="@pagination" />
 
 <FluentSwitch @bind-Value="@_clearItems"
               @bind-Value:after="ToggleItemsAsync"

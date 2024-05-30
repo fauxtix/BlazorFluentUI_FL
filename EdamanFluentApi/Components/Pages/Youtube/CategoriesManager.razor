@@ -1,0 +1,53 @@
+﻿@page "/categories"
+
+@using EdamanFluentApi.Models.Youtube.Dtos
+@using EdamanFluentApi.Services.Interfaces.Youtube
+
+@if (categoryList is null)
+{
+    <Spinner IsVisible="@spinnerVisible" />
+}
+else
+{
+
+    <div class="container w-100">
+        <FluentHeader>
+            <ChildContent>
+                <h4>Categories</h4>
+            </ChildContent>
+        </FluentHeader>
+        <div class="my-3">
+            <FluentButton Class="e-btn e-primary" style="border-radius:11px;margin-left:50px;"
+                          IconStart="@(new Icons.Regular.Size32.Add())"
+                          Appearance="Appearance.Accent"
+                          @onclick="NotifyAddingCategoryRecord">
+                New<i class="fa fa-youtube" />
+            </FluentButton>
+        </div>
+        <div class="my-3">
+            <FluentDivider Orientation="Orientation.Horizontal" />
+        </div>
+        <div class="my-3">
+            <FluentDataGrid Items="@categoryList" Style="width: 100%;"
+                            GenerateHeader="GenerateHeaderOption.Sticky"
+                            Pagination="@pagination">
+                <PropertyColumn Property="@(c => c.Id)" Align="Align.Center"
+                                Sortable="true" Title="#ID" Width="100px" />
+                <PropertyColumn Property="@(c => c.Descricao)" Sortable="true" Title="Description" Width="400px" />
+                <TemplateColumn Title="Actions" Align=Align.Center>
+                    <FluentStack>
+                        <FluentButton IconStart="@(new Icons.Regular.Size24.Edit())" Appearance="Appearance.Outline" OnClick="@( async () => await EditCategory(context))" />
+                        <FluentButton IconStart="@(new Icons.Regular.Size24.Delete())" Appearance="Appearance.Outline" OnClick="@( async () => await DeleteCategory(context.Id, context.Descricao))" />
+                    </FluentStack>
+                </TemplateColumn>
+
+            </FluentDataGrid>
+        </div>
+    </div>
+    <FluentPaginator State="@pagination" />
+
+}
+
+
+
+
