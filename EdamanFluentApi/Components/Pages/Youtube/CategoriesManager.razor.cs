@@ -15,6 +15,9 @@ namespace EdamanFluentApi.Components.Pages.Youtube
 
         private IQueryable<CategoryVM> categoryList;
 
+        protected string nameFilter = string.Empty;
+
+        IQueryable<CategoryVM>? FilteredItems => categoryList?.Where(x => x.Descricao.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
         public record CategoryRecord
         {
             public CategoryVM SelectedRecord { get; set; }
@@ -31,6 +34,21 @@ namespace EdamanFluentApi.Components.Pages.Youtube
             await GetCategories();
         }
 
+        private void HandleCategoryFilter(ChangeEventArgs args)
+        {
+            if (args.Value is string value)
+            {
+                nameFilter = value;
+            }
+        }
+
+        private void HandleClear()
+        {
+            if (string.IsNullOrWhiteSpace(nameFilter))
+            {
+                nameFilter = string.Empty;
+            }
+        }
         private async Task NotifyAddingCategoryRecord()
         {
             var categoryClassToUseInDialog = new CategoryVM()
@@ -112,9 +130,16 @@ namespace EdamanFluentApi.Components.Pages.Youtube
                 var mediaFile = await CategoriesService.GetCategoriesById(categoryId);
                 if (mediaFile is not null)
                 {
-                    await CategoriesService.DeleteCategory(categoryId);
-                    ShowToast("Record deleted successfully", ToastIntent.Warning);
-                    await GetCategories();
+                    var recordDeleted = await CategoriesService.DeleteCategory(categoryId);
+                    if (recordDeleted)
+                    {
+                        ShowToast("Record deleted successfully", ToastIntent.Warning);
+                        await GetCategories();
+                    }
+                    else
+                    {
+                        DialogService.ShowError("Category cannot be removed as it is in use..", "Delete Category");
+                    }
                 }
             }
 

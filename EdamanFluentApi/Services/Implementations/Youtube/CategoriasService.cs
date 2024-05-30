@@ -46,8 +46,14 @@ namespace EdamanFluentApi.Services.Implementations.Youtube
 
         public async Task<bool> DeleteCategory(int id)
         {
-            await _mediaCategoriesRepository.DeleteAsync(id);
-            return true;
+            bool categoryInUse = await _mediaCategoriesRepository.CategoryInUse(id);
+            if (!categoryInUse)
+            {
+                await _mediaCategoriesRepository.DeleteAsync(id);
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<IEnumerable<CategoryVM>> GetAllAsync(AppDefinitions.CategoryType category)

@@ -1,45 +1,70 @@
-﻿@page "/settings"
-<h3>Settings</h3>
+﻿@using EdamanFluentApi.Components.Pages.Youtube
+@page "/settings"
 
 @using Microsoft.FluentUI.AspNetCore.Components.DesignTokens
 @inject BaseLayerLuminance BaseLayerLuminance
 @inject AccentBaseColor AccentBaseColor
 
-<div class="w-100">
-    <FluentDesignTheme @bind-Mode="@Mode"
-                       @bind-OfficeColor="@OfficeColor"
-                       OnLoaded="@OnLoaded"
-                       OnLuminanceChanged="@OnLuminanceChanged"
-                       StorageName="theme" />
+<h3>Settings</h3>
+<div class="container-fluid mt-3">
+    <FluentDivider Orientation="Orientation.Horizontal" />
+    <FluentTabs ActiveTabId="tab-1">
+        <FluentTab Id="tab-1">
+            <Header>
+                <FluentIcon Value="@(new Icons.Regular.Size24.Color())" />
+                Themes
+            </Header>
+            <Content>
+                <div class="w-100 mt-2">
+                    <FluentDesignTheme @bind-Mode="@Mode"
+                                       @bind-OfficeColor="@OfficeColor"
+                                       OnLoaded="@OnLoaded"
+                                       OnLuminanceChanged="@OnLuminanceChanged"
+                                       StorageName="theme" />
 
-    <div style="min-height: 250px;">
-        <FluentGrid>
-            <FluentGridItem>
-                <FluentSelect Label="Theme"
-                              Width="250px"
-                              Items="@(Enum.GetValues<DesignThemeModes>())"
-                              @bind-SelectedOption="@Mode" />
-            </FluentGridItem>
+                    <div style="min-height: 250px;">
+                        <FluentGrid>
+                            <FluentGridItem>
+                                <FluentSelect Label="Theme"
+                                              Width="250px"
+                                              Items="@(Enum.GetValues<DesignThemeModes>())"
+                                              @bind-SelectedOption="@Mode" />
+                            </FluentGridItem>
 
-            <FluentGridItem>
-                <FluentSelect Label="Color"
-                              Items="@(Enum.GetValues<OfficeColor>().Select(i => (OfficeColor?)i))"
-                              Height="200px"
-                              Width="250px"
-                              @bind-SelectedOption="@OfficeColor">
-                    <OptionTemplate>
-                        <FluentStack>
-                            <FluentIcon Value="@(new Icons.Filled.Size20.RectangleLandscape())"
-                                        Color="Color.Custom"
-                                        CustomColor="#036ac4" />
-                            <FluentLabel>@context</FluentLabel>
-                        </FluentStack>
-                    </OptionTemplate>
-                </FluentSelect>
-                <FluentButton Appearance="Appearance.Accent" OnClick="PickRandomColor">Feeling lucky?</FluentButton>
-            </FluentGridItem>
-        </FluentGrid>
-    </div>
+                            <FluentGridItem>
+                                <FluentSelect Label="Color"
+                                              Items="@(Enum.GetValues<OfficeColor>().Select(i => (OfficeColor?)i))"
+                                              Height="200px"
+                                              Width="250px"
+                                              @bind-SelectedOption="@OfficeColor">
+                                    <OptionTemplate>
+                                        <FluentStack>
+                                            <FluentIcon Value="@(new Icons.Filled.Size20.RectangleLandscape())"
+                                                        Color="Color.Custom"
+                                                        CustomColor="#036ac4" />
+                                            <FluentLabel>@context</FluentLabel>
+                                        </FluentStack>
+                                    </OptionTemplate>
+                                </FluentSelect>
+                                <FluentButton Appearance="Appearance.Accent" OnClick="PickRandomColor">Feeling lucky?</FluentButton>
+                            </FluentGridItem>
+                        </FluentGrid>
+                    </div>
+                </div>
+            </Content>
+        </FluentTab>
+        <FluentTab Id="tab-2">
+            <Header>
+                <FluentIcon Value="@(new Icons.Regular.Size24.TableSettings())" />
+                Categories
+            </Header>
+            <Content>
+                <div class="mt-2">
+                    <CategoriesManager />
+                </div>
+            </Content>
+        </FluentTab>
+    </FluentTabs>
 </div>
 
 @code {

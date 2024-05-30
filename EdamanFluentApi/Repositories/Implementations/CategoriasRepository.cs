@@ -25,5 +25,22 @@ namespace EdamanFluentApi.Repositories.Implementations
             var resultList = await query.ToListAsync();
             return resultList;
         }
+
+        public async Task<bool> CategoryInUse(int categoryId)
+        {
+            var category = await _context.Categorias.FindAsync(categoryId);
+            if (category == null)
+            {
+                return false;
+            }
+
+            bool hasReferences = await _context.MediaFiles.AnyAsync(mf => mf.IdGenero == categoryId);
+            if (hasReferences)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

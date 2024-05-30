@@ -11,11 +11,6 @@ else
 {
 
     <div class="container w-100">
-        <FluentHeader>
-            <ChildContent>
-                <h4>Categories</h4>
-            </ChildContent>
-        </FluentHeader>
         <div class="my-3">
             <FluentButton Class="e-btn e-primary" style="border-radius:11px;margin-left:50px;"
                           IconStart="@(new Icons.Regular.Size32.Add())"
@@ -28,12 +23,22 @@ else
             <FluentDivider Orientation="Orientation.Horizontal" />
         </div>
         <div class="my-3">
-            <FluentDataGrid Items="@categoryList" Style="width: 100%;"
+            <FluentDataGrid Items="@FilteredItems" Style="width: 100%;"
                             GenerateHeader="GenerateHeaderOption.Sticky"
+                            ShowHover="true"
                             Pagination="@pagination">
                 <PropertyColumn Property="@(c => c.Id)" Align="Align.Center"
                                 Sortable="true" Title="#ID" Width="100px" />
-                <PropertyColumn Property="@(c => c.Descricao)" Sortable="true" Title="Description" Width="400px" />
+                <PropertyColumn Property="@(c => c.Descricao)"
+                                Filtered="@(!string.IsNullOrWhiteSpace(nameFilter))"
+                                Sortable="true"
+                                Title="Description" Width="400px">
+                    <ColumnOptions>
+                        <div class="search-box">
+                            <FluentSearch Autofocus=true @bind-Value=nameFilter @oninput="HandleCategoryFilter" @bind-Value:after="HandleClear" Placeholder="Category name..." />
+                        </div>
+                    </ColumnOptions>
+                </PropertyColumn>
                 <TemplateColumn Title="Actions" Align=Align.Center>
                     <FluentStack>
                         <FluentButton IconStart="@(new Icons.Regular.Size24.Edit())" Appearance="Appearance.Outline" OnClick="@( async () => await EditCategory(context))" />
