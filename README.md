@@ -79,10 +79,10 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 
 ![fluentUI_Settings_Themes](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/bc772a07-bae0-4075-8447-dd50133ad593)
 ![fluentUI_Settings_CategoriesManager](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e56ce542-383a-4084-8ddb-3d626e05415c)
-![fluentUI_Settings_CategoriesSearch](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/db8a80d3-f955-4154-8442-fd49b78dccbe)
 ![fluentUI_Settings_CategoryEdit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/fe207476-6fa8-4948-8c1c-eefac989ee71)
 ![fluentUI_Settings_CategoryDelete](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/5a48e8b3-5655-4ac8-b845-bf73ed104649)
 ![fluentUI_Settings_CategoryDelete_InUse](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e537f17f-f7e7-45e0-80bd-3c44acdd328b)
+![fluentUI_Settings_CategoriesSearch](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/db8a80d3-f955-4154-8442-fd49b78dccbe)
 
 ***
 ## Installation
