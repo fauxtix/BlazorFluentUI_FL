@@ -5,8 +5,6 @@
 
 ## Educational Purpose
 
-## Educational Purpose
-
 This project was developed as a way of learning and exploring the capabilities of Blazor Fluent UI. 
 The main objective is to get to know and experiment its various components and standards. 
 Additionally, the YouTube API was incorporated to broaden the scope of exploration, allowing for experimentation with integrating multimedia features into the application.
