@@ -50,6 +50,8 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 - **Fast Responses:** Users can select recipes from prior searches, thus avoiding trips to the Edaman API, allowing offline searches for quick access.
 - **YouTube Video Search:** Users can browse and watch any videos on YouTube.
 - **Video Database Storage:** Video URLs can be stored in a SQLite database, allowing users to keep track of videos that have caught their attention, are marked as favorites, or found useful.
+- **Settings:** Configure the application theme (light or dark).
+- **Video Categories Management:** Add, edit, delete, and search video categories.
 
 ## Screenshots
 
