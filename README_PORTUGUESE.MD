@@ -48,6 +48,8 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 - **Respostas Rápidas:** Os utilizadores podem selecionar receitas de pesquisas anteriores, evitando viagens à API do Edaman, permitindo pesquisas offline para acesso rápido.
 - **Pesquisa de Vídeo do YouTube:** Os utilizadores podem navegar e assistir a qualquer vídeo no YouTube, através de 'Player' incluído.
 - **Armazenamento de Banco de Dados de Vídeo:** Os URLs dos vídeo são armazenados numa base de dados SQLite, permitindo que os utilizadores acompanhem vídeos que chamaram sua atenção, foram marcados como favoritos ou que foram classificados como úteis.
+- **Configurações:** Configurar o tema da aplicação (claro ou escuro).
+- **Gestão de Categorias de Vídeos:** Adicionar, editar, excluir e pesquisar categorias de vídeos.
 
 ## Capturas de Ecrãs
 
