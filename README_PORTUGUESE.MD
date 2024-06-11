@@ -24,7 +24,6 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 ### Melhorias Futuras
 
 - **Componentes Adicionais:** O projeto pode incorporar novos componentes e recursos para melhorar a sua utilização e funcionalidade.
-- **Experiência do Usuário Aprimorada:** Esforços serão feitos para melhorar a interface do usuário e a experiência geral do usuário.
 - **Correções de Bugs e Otimização:** Quaisquer bugs relatados serão corrigidos, e otimizações de código serão realizadas para melhor desempenho.
 
 ---
@@ -33,9 +32,9 @@ Por favor, note que este projeto está atualmente em desenvolvimento. Embora for
 
 **BlazorFluentUI_FL** é uma aplicação web que aproveita várias APIs para fornecer recursos abrangentes.
 
-1. **API Edaman:** Esta aplicação utiliza a API Edaman para funcionalidade de _pesquisa de receitas_ e acesso a um _banco de dados de alimentos_ abrangente. Permite que os utilizadores pesquisem, naveguem e salvem as suas receitas favoritas.
+1. **API Edaman:** Esta aplicação utiliza a API Edaman para funcionalidade de _pesquisa de receitas_ e acesso a um _banco de dados de alimentos_ abrangente. Permite que os utilizadores pesquisem, naveguem e guardem as suas receitas favoritas.
 
-2. **API do YouTube:** A aplicação também integra a API do YouTube para navegar em qualquer vídeo no YouTube. Além disso, armazena conteúdo de vídeo numa base de dados SQLite para um fácil acesso.
+2. **API do YouTube:** A aplicação também integra a API do YouTube para navegar em qualquer vídeo no YouTube. Além disso, armazena o conteúdo de vídeo numa base de dados SQLite para um fácil acesso.
 
 Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável para uma experiência culinária e multimédia.
 
@@ -48,6 +47,8 @@ Construída com Blazor Fluent UI, a aplicação oferece uma interface amigável 
 - **Respostas Rápidas:** Os utilizadores podem selecionar receitas de pesquisas anteriores, evitando viagens à API do Edaman, permitindo pesquisas offline para acesso rápido.
 - **Pesquisa de Vídeo do YouTube:** Os utilizadores podem navegar e assistir a qualquer vídeo no YouTube, através de 'Player' incluído.
 - **Armazenamento de Banco de Dados de Vídeo:** Os URLs dos vídeo são armazenados numa base de dados SQLite, permitindo que os utilizadores acompanhem vídeos que chamaram sua atenção, foram marcados como favoritos ou que foram classificados como úteis.
+- **Configurações:** Configurar o tema da aplicação (claro ou escuro).
+- **Gestão de Categorias de Vídeos:** Adicionar, editar, excluir e pesquisar categorias de vídeos.
 
 ## Capturas de Ecrãs
 
@@ -84,9 +85,14 @@ Na grelha de apresentação dos dados, existe uma opção para reprodução de v
 
 ![FluentUI_Youtube_Player](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/0a96a4b0-535b-4df3-a65a-3d4e56335e3d)
 
-**Configuração (Temas da aplicação)**
+**Configuração (Temas da aplicação e Gestão de Categorias de Vídeos)**
 ***
-![fluentUI_Settings](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/31ce2c8c-d401-4a2b-88f2-7cc2cca522d9)
+![fluentUI_Settings_Themes](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/bc772a07-bae0-4075-8447-dd50133ad593)
+![fluentUI_Settings_CategoriesManager](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e56ce542-383a-4084-8ddb-3d626e05415c)
+![fluentUI_Settings_CategoryEdit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/fe207476-6fa8-4948-8c1c-eefac989ee71)
+![fluentUI_Settings_CategoryDelete](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/5a48e8b3-5655-4ac8-b845-bf73ed104649)
+![fluentUI_Settings_CategoryDelete_InUse](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e537f17f-f7e7-45e0-80bd-3c44acdd328b)
+![fluentUI_Settings_CategoriesSearch](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/db8a80d3-f955-4154-8442-fd49b78dccbe)
 
 ***
 ## Instalação

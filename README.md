@@ -5,8 +5,6 @@
 
 ## Educational Purpose
 
-## Educational Purpose
-
 This project was developed as a way of learning and exploring the capabilities of Blazor Fluent UI. 
 The main objective is to get to know and experiment its various components and standards. 
 Additionally, the YouTube API was incorporated to broaden the scope of exploration, allowing for experimentation with integrating multimedia features into the application.
@@ -52,6 +50,8 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 - **Fast Responses:** Users can select recipes from prior searches, thus avoiding trips to the Edaman API, allowing offline searches for quick access.
 - **YouTube Video Search:** Users can browse and watch any videos on YouTube.
 - **Video Database Storage:** Video URLs can be stored in a SQLite database, allowing users to keep track of videos that have caught their attention, are marked as favorites, or found useful.
+- **Settings:** Configure the application theme (light or dark).
+- **Video Categories Management:** Add, edit, delete, and search video categories.
 
 ## Screenshots
 
@@ -76,7 +76,13 @@ Built with Blazor Fluent UI, the application offers a user-friendly interface fo
 
 **Settings (App themes)**
 ***
-![fluentUI_Settings](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/31ce2c8c-d401-4a2b-88f2-7cc2cca522d9)
+
+![fluentUI_Settings_Themes](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/bc772a07-bae0-4075-8447-dd50133ad593)
+![fluentUI_Settings_CategoriesManager](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e56ce542-383a-4084-8ddb-3d626e05415c)
+![fluentUI_Settings_CategoryEdit](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/fe207476-6fa8-4948-8c1c-eefac989ee71)
+![fluentUI_Settings_CategoryDelete](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/5a48e8b3-5655-4ac8-b845-bf73ed104649)
+![fluentUI_Settings_CategoryDelete_InUse](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/e537f17f-f7e7-45e0-80bd-3c44acdd328b)
+![fluentUI_Settings_CategoriesSearch](https://github.com/fauxtix/BlazorFluentUI_FL/assets/49880538/db8a80d3-f955-4154-8442-fd49b78dccbe)
 
 ***
 ## Installation
