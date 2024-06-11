@@ -31,6 +31,7 @@ namespace EdamanFluentApi.Components.Pages.Edaman
         protected List<string> jsonFiles = new();
         protected List<CuisineType> cuisines = new();
         protected string selectedCuisineType = string.Empty;
+        protected bool selectedSavedSearch = false;
 
         private string SearchValue
         {
@@ -130,6 +131,12 @@ namespace EdamanFluentApi.Components.Pages.Edaman
             _jsonFileManager.WriteToJsonFile(fileName, folderPath, cuisineType, recipes);
         }
 
+        private void OnSavedSearchesSelected(ChangeEventArgs args)
+        {
+            selectedSavedSearch = true;
+            searchQuery.Disabled = true;
+            StateHasChanged();
+        }
         private void ShowToast(string message)
         {
             ToastService.ShowWarning(message, 2000);

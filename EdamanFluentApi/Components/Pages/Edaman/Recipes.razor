@@ -1,4 +1,5 @@
 ﻿@page "/recipes"
+
 @rendermode InteractiveServer
 
 <PageTitle>Edaman Api Recipes</PageTitle>
@@ -9,23 +10,27 @@
 else
 {
     <div class="container-fluid">
+        <FluentHeader Class="d-flex justify-content-center align-items-center fs-3 fw-bolder mb-2" Style="background-color:transparent; color:white">Recipes</FluentHeader>
         <div class="card-box" />
         <div class="fluent-container">
-            <FluentNumberField @bind-Value=maxTries Label="Results"
-                               Appearance="FluentInputAppearance.Outline"
-                               Min="0" Max="@configMaxTries.ToString()" Step="5"></FluentNumberField>
-            <FluentCombobox Items="@jsonFiles"
+            <FluentNumberField @bind-Value=maxTries Label ="Results per page"
+                               Appearance="FluentInputAppearance.Outline" MaxLength="2" MinLength="1" Size="10"
+                               Min="0" Max="@configMaxTries.ToString()" Step="5"
+                               Disabled="@selectedSavedSearch"/>
+            <FluentCombobox Items="@jsonFiles" @onchange=@((x) => OnSavedSearchesSelected(x))
                             Appearance="Appearance.Outline"
                             Placeholder="Saved searches"
-                            @bind-Value="@SearchValue"></FluentCombobox>
+                            @bind-Value="@SearchValue"/>
             <FluentCombobox Items="@cuisineTypes"
                             Appearance="Appearance.Outline"
                             Placeholder="Cuisine type"
-                            @bind-Value="@selectedCuisineType"></FluentCombobox>
+                            Disabled="@selectedSavedSearch"
+                            @bind-Value="@selectedCuisineType"/>
             <FluentSearch @ref=searchQuery
                           @bind-Value="SearchValue"
                           @bind-Value:after="HandleClear" Placeholder="Keyword(s)"
                           @oninput="@(e => SearchValue = e.Value?.ToString())"
+                          Disabled="@selectedSavedSearch"
                           Appearance="FluentInputAppearance.Outline" Spellcheck=false />
         </div>
         <div class="d-flex justify-content-end align-items-center gap-2 my-3">
@@ -68,7 +73,7 @@ else
                                             @if (recipe.Cautions.Length > 0)
                                             {
                                                 <div class="row">
-                                                    <div class="col-lg-4"><small>Cautions</small></div>
+                                                    <div class="col-lg-4"><small><b>Cautions</b></small></div>
                                                     <div class="d-flex gap-1 col-lg-8" style="flex-wrap:wrap">
                                                         @foreach (var cautionMsg in recipe.Cautions)
                                                         {
@@ -95,7 +100,16 @@ else
                                                 </div>
                                             }
                                             <div class="row my-1">
-                                                <div class="col-lg-4"><small>Calories</small></div>
+                                                <div class="col-lg-4">
+                                                    @if (@recipe.Calories <= 2000)
+                                                    {
+                                                        <small>Calories</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <small><b>Calories</b></small>
+                                                    }
+                                                </div>
                                                 <div class="col-lg-8">
                                                     @if (@recipe.Calories <= 2000)
                                                     {
@@ -110,12 +124,12 @@ else
                                         </div>
                                         <div class="preparation-link mt-2 text-center">
                                             <hr />
-                                            <a class="btn btn-outline-success" href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
+                                            <a class="btn btn-outline-success" style="border-radius:11px" href="@recipe.Url.AbsoluteUri" target="_blank">Preparation</a>
                                         </div>
                                     </div>
-                                    <div class="recipe-details">
-                                        <div class="card" style="font-weight:bold; font-size:large;">
-                                            <h5>Ingredients</h5>
+                                    <div class="recipe-details mx-1 mt-0">
+                                        <div style="font-weight:bold; font-size:small;">
+                                            <h6><em>Ingredients</em></h6>
                                         </div>
                                         <div class="ingredient-list">
                                             <ul class="list-group list-group-flush">
@@ -222,9 +236,15 @@ else
 
     .fluent-card {
         flex: 1 1 auto; /* Let flexbox handle the sizing */
+        border: thick solid  #32a1ce;
         max-width: calc(33.33% - 10px); /* 3 cards per row on large screens */
         min-width: 300px; /* Set a minimum width for the card */
     }
+
+    .border-card {
+        
+    }
+
     /* Adjust the styles for medium screens */
     @@media (max-width: 1199.98px) {
         .fluent-card {
