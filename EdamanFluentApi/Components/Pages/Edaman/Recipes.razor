@@ -35,7 +35,7 @@ else
         </div>
         <div class="d-flex justify-content-end align-items-center gap-2 my-3">
             <FluentButton IconStart="@(new Icons.Regular.Size16.Search())" Appearance="Appearance.Accent" Style="border-radius:11px;"
-                          @onclick="OnSearch">
+                          @onclick="OnSearch" Disabled="@isLoading">
                 Search
             </FluentButton>
             <FluentButton IconStart="@(new Icons.Regular.Size16.ReadingList())" Appearance="Appearance.Outline" Style="border-radius:11px;"

@@ -1,5 +1,6 @@
 ﻿@page "/edityoutube"
 
+
 @using EdamanFluentApi.Models.Youtube.Dtos
 @using EdamanFluentApi.Services.Interfaces.Youtube
 @using static EdamanFluentApi.Data.Enums.AppDefinitions
@@ -28,7 +29,7 @@ else
 
                     @* Body *@
                     <FluentDialogBody>
-                        <EditForm Model="@Content" OnValidSubmit="ValidHandlerAsync">
+                        <EditForm Model="@Content">
                             <div class="d-flex justify-content-center align-items-center mx-2 gap-2"
                                  hidden="@(Content.EditMode)">
                                 <FluentTextField Label="Youtube Url: " Style="width:400px;"
@@ -147,12 +148,4 @@ else
                     ToastType="@ToastIntent"
                     IsVisible="@showAlertMessage" />
 
-    @*     <FluentMessageBar Title="Youtube API search"
-                      Style="width: 500px; border: 1px solid var(--accent-fill-rest)"
-                      AllowDismiss="true"
-                      Intent="MessageIntent.Warning" Visible="@showAlertMessage"
-                      Type="@MessageType.MessageBar"
-                      Icon="@(new Icons.Regular.Size24.Warning())">
-        @alertMessage
-    </FluentMessageBar>
- *@}
+}

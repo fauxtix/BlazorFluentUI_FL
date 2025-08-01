@@ -20,37 +20,38 @@ else
             </FluentButton>
         </div>
         <div class="my-3">
-        <FluentDivider Orientation="Orientation.Horizontal" />
+            <FluentDivider Style="height: 1rem;" Role="DividerRole.Presentation" Orientation="Orientation.Horizontal" />
         </div>
         <div class="my-3">
-            <FluentDataGrid Items="@items" Style="width: 100%;"
-                            GenerateHeader="GenerateHeaderOption.Sticky"
-                            GridTemplateColumns="0.2fr 1.2fr 0.8fr 0.2fr 1fr 0.6fr"
-                            Pagination="@pagination" TGridItem="MediaVM">
-                <TemplateColumn Tooltip="true" Title="Image">
-                    <img class="cover" src="@(context.CoverFile)" alt="Image of @(context.CoverFile)" width="80" height="60" />
-                </TemplateColumn>
+            <FluentStack Orientation="@Orientation.Vertical">
 
-                <PropertyColumn Property="@(c => c.FileName)"
-                                Sortable="true" Filtered="!string.IsNullOrWhiteSpace(nameFilter)" Title="Title" Tooltip="true"
-                                Style="font-weight:bold;">
-                    <ColumnOptions>
-                        <div class="search-box">
-                            <FluentSearch Autofocus=true @bind-Value=nameFilter @oninput="HandleCountryFilter" @bind-Value:after="HandleClear" Placeholder="Search...." />
-                        </div>
-                    </ColumnOptions>
-                </PropertyColumn>
-                <PropertyColumn Property="@(c => c.Autor)" Sortable="true" Title="Channel" />
-                <PropertyColumn Property="@(c => c.AnoEdicao)" Sortable="true" Title="Edition" />
-                <PropertyColumn Property="@(c => c.Genero)" Sortable="true" Title="Category" />
-                <TemplateColumn Title="Actions" Align=Align.Center>
-                    <FluentStack>
+                <FluentDataGrid Items="@items" Style="width: 100%;"
+                                GenerateHeader="GenerateHeaderOption.Sticky"
+                                GridTemplateColumns="0.2fr 1.2fr 0.8fr 0.2fr 1fr 0.6fr"
+                                Pagination="@pagination" TGridItem="MediaVM">
+                    <TemplateColumn Tooltip="true" Title="Image">
+                        <img class="cover" src="@(context.CoverFile)" alt="Image of @(context.CoverFile)" width="80" height="60" />
+                    </TemplateColumn>
+
+                    <PropertyColumn Property="@(c => c.FileName)"
+                                    Sortable="true" Filtered="!string.IsNullOrWhiteSpace(nameFilter)" Title="Title" Tooltip="true"
+                                    Style="font-weight:bold;">
+                        <ColumnOptions>
+                            <div class="search-box">
+                                <FluentSearch Autofocus=true @bind-Value=nameFilter @oninput="HandleCountryFilter" @bind-Value:after="HandleClear" Placeholder="Search...." />
+                            </div>
+                        </ColumnOptions>
+                    </PropertyColumn>
+                    <PropertyColumn Property="@(c => c.Autor)" Sortable="true" Title="Channel" />
+                    <PropertyColumn Property="@(c => c.AnoEdicao)" Sortable="true" Title="Edition" />
+                    <PropertyColumn Property="@(c => c.Genero)" Sortable="true" Title="Category" />
+                    <TemplateColumn Title="Actions" Align=Align.Center>
                         <FluentButton IconStart="@(new Icons.Regular.Size24.Edit())" Appearance="Appearance.Outline" OnClick="@( async () => await EditMediaRecord(context))" />
                         <FluentButton IconStart="@(new Icons.Regular.Size24.Delete())" Appearance="Appearance.Outline" OnClick="@( async () => await DeleteMedia(context.Id, context.FileName))" />
                         <FluentButton IconStart="@(new Icons.Regular.Size24.Play())" Appearance="Appearance.Outline" OnClick="@( async () => await PlayMedia(context))" />
-                    </FluentStack>
-                </TemplateColumn>
-            </FluentDataGrid>
+                    </TemplateColumn>
+                </FluentDataGrid>
+            </FluentStack>
         </div>
     </div>
     <FluentPaginator State="@pagination" />

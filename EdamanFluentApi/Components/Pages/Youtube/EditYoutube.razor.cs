@@ -3,10 +3,12 @@ using EdamanFluentApi.Services.Interfaces.Youtube;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 
+
 namespace EdamanFluentApi.Components.Pages.Youtube;
 
 public partial class EditYoutube
 {
+    
     [CascadingParameter] public FluentDialog Dialog { get; set; } = default!;
     [Parameter] public YoutubeManager.MediaRecord Content { get; set; } = default!;
 
@@ -61,15 +63,6 @@ public partial class EditYoutube
         }
     }
 
-    private async Task ValidHandlerAsync()
-    {
-        Loading = true;
-
-        // Simulate asynchronous loading
-        await Task.Delay(1000);
-
-        Loading = false;
-    }
     private async Task GetLookupData()
     {
         formatList = (await FormatosService
