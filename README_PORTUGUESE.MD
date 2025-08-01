@@ -8,7 +8,7 @@
 Este projeto foi desenvolvido como uma forma de aprender e explorar as capacidades do Blazor Fluent UI.
 O objetivo principal é o de conhecer e experimentar os seus vários componentes e padrões.
 Além disso, a API do YouTube foi incorporada para ampliar o escopo de exploração, permitindo a experimentação com a integração de recursos multimédia na aplicação.
-As APIs Edaman e YouTube foram utilizadas para obter dados de receitas e conteúdo multimédia, respectivamente, para testar o frontend e explorar suas capacidades.
+As APIs Edaman e YouTube foram utilizadas para obter dados de receitas e conteúdo multimédia, respectivamente, para testar o frontend e explorar as suas capacidades.
 
 ### Objetivos de Aprendizagem
 
