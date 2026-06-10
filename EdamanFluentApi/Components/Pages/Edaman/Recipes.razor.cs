@@ -98,7 +98,7 @@ namespace EdamanFluentApi.Components.Pages.Edaman
                 var output = await recipeService.SearchRecipes(query, "", "", maxTries.ToString(), selectedCuisineType);
                 isLoading = false;
 
-                if (output.Count > 0)
+                if (output is not null && output.Count > 0)
                 {
                     string folderPath = Path.Combine(_environment.WebRootPath, "JsonFiles");
 

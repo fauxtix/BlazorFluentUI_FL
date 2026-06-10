@@ -23,7 +23,12 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddDbContextFactory<YoutubeDbContext>(options => options.UseSqlite(connectionString));
-builder.Services.AddAutoMapper(typeof(AppMappings));
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<AppMappings>();
+});
+//builder.Services.AddAutoMapper(typeof(AppMappings));
 
 builder.Services.AddHttpClient();
 builder.Services.AddFluentUIComponents();
